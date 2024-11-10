@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { useAuth } from "../AuthContext"
+// import "../styles/login.css"
 
 const DashboardPage: React.FC = () => {
     const [broadcaster, setBroadcaster] = useState<{upn: string, email: string}>({upn: '', email: ''})
@@ -52,7 +53,7 @@ const DashboardPage: React.FC = () => {
     if (error) return <p>Error: {error}</p>;
 
     return (
-        <div>Welcome, {broadcaster.upn}</div>
+        <div className="body">Welcome, {broadcaster.upn}</div>
     )
 }
 
