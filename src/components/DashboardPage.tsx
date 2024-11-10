@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { useAuth } from "../AuthContext"
+import config from '../config'
 
 const DashboardPage: React.FC = () => {
     const [broadcaster, setBroadcaster] = useState<{upn: string, email: string}>({upn: '', email: ''})
@@ -22,7 +23,7 @@ const DashboardPage: React.FC = () => {
 
                 let testAccess = accessToken || `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cG4iOiIyNDY4MTAiLCJlbWFpbCI6ImRvbmJhcml6YWFAZ21haWwuY29tIiwiaWF0IjoxNzMwOTI3ODY5LCJleHAiOjE3MzA5MzE0MDl9.Xt_ZthGPDvcwqHU-Dt983-IoCI8OSO7_O3WmHnboFxQ`
                 setLoading(true)
-                const response = await fetch('http://localhost:3000/api/anb-broadcaster/', {
+                const response = await fetch(`${config.API_BASE_URL}`, {
                     method: 'GET',
                     headers: {
                         'Authorization': `Bearer ${testAccess}`,
@@ -52,7 +53,7 @@ const DashboardPage: React.FC = () => {
     if (error) return <p>Error: {error}</p>;
 
     return (
-        <div>Welcome, {broadcaster.upn}</div>
+        <div className="">Welcome, {broadcaster.upn}</div>
     )
 }
 
