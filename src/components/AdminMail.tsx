@@ -40,6 +40,7 @@ const AdminMail: React.FC = () => {
     }
 
     return (
+        
         <div>
             <form action="post" onSubmit={handleAdminMailSubmit}>
             <label htmlFor="upn">Enter upn</label>
