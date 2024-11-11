@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react"
 import { useAuth } from "../AuthContext"
 import config from '../config'
+import { useNavigate } from "react-router-dom"
 // import "../styles/login.css"
 
 const DashboardPage: React.FC = () => {
     const [broadcaster, setBroadcaster] = useState<{upn: string, email: string}>({upn: '', email: ''})
     const [loading, setLoading] = useState(true)
     const { accessToken, setAccessToken } = useAuth()
+    const navigate = useNavigate()
     const [error, setError] = useState('')
 
     useEffect(() => {
@@ -58,7 +60,10 @@ const DashboardPage: React.FC = () => {
     if (error) return <p>Error: {error}</p>;
 
     return (
-        <div className="">Welcome, {broadcaster.upn}</div>
+        <div>
+            <div className="">Welcome, {broadcaster.upn}</div>
+            <button type="button" onClick={() => navigate('/api/anb-broadcaster/videos')}>Videos</button>
+        </div>
     )
 }
 

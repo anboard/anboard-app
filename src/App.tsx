@@ -8,6 +8,7 @@ import DashboardPage from './components/DashboardPage'
 import VideoList from './components/VideoList'
 import VideoPlayer from './components/VideoPlayer'
 import ProfilePage from './components/ProfilePage'
+import VideoUploader from './components/VideoUploader'
 
 const App: React.FC = () => {
     return (
@@ -19,6 +20,7 @@ const App: React.FC = () => {
                     <Route path="/api/admin/mail" element={<AdminMail />} />
                     <Route path="/api/anb-broadcaster/dashboard" element={<DashboardPage />} />
                     <Route path="/api/anb-broadcaster/videos" element={<VideoList />} />
+                    <Route path="/api/anb-broadcaster/videos/upload" element={<VideoUploader />} />
                     <Route path="/api/anb-broadcaster/videos/stream/:filename" element={<VideoPlayer />} />
                     <Route path="/api/anb-broadcaster/profile" element={<ProfilePage />} />
 

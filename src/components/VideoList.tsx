@@ -3,12 +3,14 @@ import VideoItem from './VideoItem'
 import { useAuth } from "../AuthContext"
 import Ivideo from '../interface/IVideo'
 import config from '../config'
+import { useNavigate } from 'react-router-dom'
 
 
 const VideoList: React.FC = () => {
     const [videos, setVideos] = useState<Ivideo[]>([])
     const [loading, setLoading] = useState(true)
     const { accessToken } = useAuth()
+    const navigate = useNavigate()
     const [error, setError] = useState(null)
 
     console.log(accessToken)
@@ -50,7 +52,10 @@ const VideoList: React.FC = () => {
 
     return (
         <div>
-            <h1>Videos</h1>
+            <div>
+                <h1>Videos</h1>
+                <button type="button" onClick={() => navigate('/api/anb-broadcaster/videos/upload')}>+ add video</button>
+            </div>
             <ul>
                 {videos.map(video => (
                     <li key={video.filename}>
