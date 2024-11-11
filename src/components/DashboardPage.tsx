@@ -26,6 +26,7 @@ const DashboardPage: React.FC = () => {
                 setLoading(true)
                 const response = await fetch(`${config.API_BASE_URL}`, {
                     method: 'GET',
+                    credentials: 'include',
                     headers: {
                         'Authorization': `Bearer ${testAccess}`,
                         'Content-Type': 'application/json'
@@ -33,7 +34,10 @@ const DashboardPage: React.FC = () => {
                 })
 
                 if (!response.ok) {
-                    throw new Error('Network request was not ok')
+                    const error = await response.json()
+                    setError(error.error)
+                    console.log(error.error)
+                    return 
                 }
 
                 const { broadcaster } = await response.json()

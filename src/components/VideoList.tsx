@@ -19,13 +19,16 @@ const VideoList: React.FC = () => {
                 const response = await fetch(`${config.API_BASE_URL}/videos`, {
                     method: 'GET',
                     headers: {
-                        'Authorization': `Bearer ${accessToken || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cG4iOiIyNDY4MTAiLCJlbWFpbCI6ImRvbmJhcml6YWFAZ21haWwuY29tIiwiaWF0IjoxNzMxMjY3NTU1LCJleHAiOjE3MzEyNzEwOTV9.ouzjbfVWw2DRAQnV4Nmnn8rs7slliHNyKT-ntzA1DQ4'}`,
+                        'Authorization': `Bearer ${accessToken}`,
                         'Content-Type': 'application/json'
                     }
                 })
 
                 if (!response.ok) {
-                    throw new Error('Failed to fetch videos')
+                    const error = await response.json()
+                    setError(error.error)
+                    console.log(error.error)
+                    return 
                 }
 
                 const { videos } = await response.json()
@@ -43,7 +46,7 @@ const VideoList: React.FC = () => {
     }, [])
 
     if (loading) return <div>Loading...</div>
-    if (error) return <div>Error: {error}</div>
+    // if (error) return <div>Error: {error}</div>
 
     return (
         <div>
@@ -55,6 +58,7 @@ const VideoList: React.FC = () => {
                     </li>
                 ))}
             </ul>
+            {error && <p className="error-message">{error}</p>}
         </div>
     )
 }

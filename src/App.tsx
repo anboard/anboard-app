@@ -18,7 +18,7 @@ const App: React.FC = () => {
                     <Route path="/api/admin/mail" element={<AdminMail />} />
                     <Route path="/api/anb-broadcaster/dashboard" element={<DashboardPage />} />
                     <Route path="/api/anb-broadcaster/videos" element={<VideoList />} />
-                    <Route path="/videos/stream/:filename" element={<VideoPlayer />} />
+                    <Route path="/api/anb-broadcaster/videos/stream/:filename" element={<VideoPlayer />} />
                 </Routes>
             </Router>
         </AuthProvider>

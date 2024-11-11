@@ -6,9 +6,9 @@ const VideoItem: React.FC<{ video: Ivideo }> = ({ video }) => {
 
     return (
         <div>
-            <h2>{video.title}</h2>
+            <h2>{video.videoname}</h2>
             <p>{video.description}</p>
-            <button onClick={() => navigate(`/api/videos/stream/${video.filename}`)}>
+            <button onClick={() => navigate(`/api/anb-broadcaster/videos/stream/${video.filename}`)}>
                 Watch Video
             </button>
         </div>
