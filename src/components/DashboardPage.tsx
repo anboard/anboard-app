@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react"
 import { useAuth } from "../AuthContext"
 import config from '../config'
+import { Link } from 'react-router-dom' // Import the Link component
 // import "../styles/login.css"
 
 const DashboardPage: React.FC = () => {
@@ -54,7 +55,12 @@ const DashboardPage: React.FC = () => {
     if (error) return <p>Error: {error}</p>;
 
     return (
-        <div className="">Welcome, {broadcaster.upn}</div>
+        <div className="">Welcome, {broadcaster.upn}
+        <br /><br /><br />
+        <Link to="/api/anb-broadcaster/profile">
+                <button type="button">Set up your Profile</button>
+        </Link>
+        </div>
     )
 }
 
