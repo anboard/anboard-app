@@ -9,6 +9,8 @@ import VideoList from './components/VideoList'
 import VideoPlayer from './components/VideoPlayer'
 import ProfilePage from './components/ProfilePage'
 import ProtectedRoute from './components/ProtectedRoute';
+import VideoUploader from './components/VideoUploader'
+
 const App: React.FC = () => {
     return (
         <AuthProvider> 
@@ -21,6 +23,11 @@ const App: React.FC = () => {
                     <Route path="/api/anb-broadcaster/videos" element={<ProtectedRoute>  <VideoList /> </ProtectedRoute>} />
                     <Route path="/videos/stream/:filename" element={<VideoPlayer />} />
                     <Route path="/api/anb-broadcaster/profile" element={<ProtectedRoute> <ProfilePage/> </ProtectedRoute>} />
+                    <Route path="/api/anb-broadcaster/dashboard" element={<DashboardPage />} />
+                    <Route path="/api/anb-broadcaster/videos" element={<VideoList />} />
+                    <Route path="/api/anb-broadcaster/videos/upload" element={<VideoUploader />} />
+                    <Route path="/api/anb-broadcaster/videos/stream/:filename" element={<VideoPlayer />} />
+                    <Route path="/api/anb-broadcaster/profile" element={<ProfilePage />} />
 
                 </Routes>
             </Router>

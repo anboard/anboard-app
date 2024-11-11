@@ -3,12 +3,14 @@ import VideoItem from './VideoItem'
 import { useAuth } from "../AuthContext"
 import Ivideo from '../interface/IVideo'
 import config from '../config'
+import { useNavigate } from 'react-router-dom'
 
 
 const VideoList: React.FC = () => {
     const [videos, setVideos] = useState<Ivideo[]>([])
     const [loading, setLoading] = useState(true)
     const { accessToken } = useAuth()
+    const navigate = useNavigate()
     const [error, setError] = useState(null)
 
     console.log(accessToken)
@@ -25,7 +27,10 @@ const VideoList: React.FC = () => {
                 })
 
                 if (!response.ok) {
-                    throw new Error('Failed to fetch videos')
+                    const error = await response.json()
+                    setError(error.error)
+                    console.log(error.error)
+                    return 
                 }
 
                 const { videos } = await response.json()
@@ -43,11 +48,14 @@ const VideoList: React.FC = () => {
     }, [])
 
     if (loading) return <div>Loading...</div>
-    if (error) return <div>Error: {error}</div>
+    // if (error) return <div>Error: {error}</div>
 
     return (
         <div>
-            <h1>Videos</h1>
+            <div>
+                <h1>Videos</h1>
+                <button type="button" onClick={() => navigate('/api/anb-broadcaster/videos/upload')}>+ add video</button>
+            </div>
             <ul>
                 {videos.map(video => (
                     <li key={video.filename}>
@@ -55,6 +63,7 @@ const VideoList: React.FC = () => {
                     </li>
                 ))}
             </ul>
+            {error && <p className="error-message">{error}</p>}
         </div>
     )
 }

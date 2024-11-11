@@ -2,12 +2,14 @@ import React, { useEffect, useState } from "react"
 import { useAuth } from "../AuthContext"
 import config from '../config'
 import { Link } from 'react-router-dom' // Import the Link component
+import { useNavigate } from "react-router-dom"
 // import "../styles/login.css"
 
 const DashboardPage: React.FC = () => {
     const [broadcaster, setBroadcaster] = useState<{upn: string, email: string}>({upn: '', email: ''})
     const [loading, setLoading] = useState(true)
     const { accessToken, setAccessToken } = useAuth()
+    const navigate = useNavigate()
     const [error, setError] = useState('')
 
     useEffect(() => {
@@ -27,6 +29,7 @@ const DashboardPage: React.FC = () => {
                 setLoading(true)
                 const response = await fetch(`${config.API_BASE_URL}`, {
                     method: 'GET',
+                    credentials: 'include',
                     headers: {
                         'Authorization': `Bearer ${testAccess}`,
                         'Content-Type': 'application/json'
@@ -34,7 +37,10 @@ const DashboardPage: React.FC = () => {
                 })
 
                 if (!response.ok) {
-                    throw new Error('Network request was not ok')
+                    const error = await response.json()
+                    setError(error.error)
+                    console.log(error.error)
+                    return 
                 }
 
                 const { broadcaster } = await response.json()
@@ -55,11 +61,13 @@ const DashboardPage: React.FC = () => {
     if (error) return <p>Error: {error}</p>;
 
     return (
-        <div className="">Welcome, {broadcaster.upn}
-        <br /><br /><br />
+        <div>
+            <div className="">Welcome, {broadcaster.upn}</div>
+            <br /><br /><br />
         <Link to="/api/anb-broadcaster/profile">
                 <button type="button">Set up your Profile</button>
         </Link>
+            <button type="button" onClick={() => navigate('/api/anb-broadcaster/videos')}>Videos</button>
         </div>
     )
 }
