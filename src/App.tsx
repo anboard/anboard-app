@@ -7,6 +7,7 @@ import { AuthProvider } from './AuthContext'
 import DashboardPage from './components/DashboardPage'
 import VideoList from './components/VideoList'
 import VideoPlayer from './components/VideoPlayer'
+import ProfilePage from './components/ProfilePage'
 
 const App: React.FC = () => {
     return (
@@ -19,6 +20,8 @@ const App: React.FC = () => {
                     <Route path="/api/anb-broadcaster/dashboard" element={<DashboardPage />} />
                     <Route path="/api/anb-broadcaster/videos" element={<VideoList />} />
                     <Route path="/api/anb-broadcaster/videos/stream/:filename" element={<VideoPlayer />} />
+                    <Route path="/api/anb-broadcaster/profile" element={<ProfilePage />} />
+
                 </Routes>
             </Router>
         </AuthProvider>
