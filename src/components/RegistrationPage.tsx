@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react"
 import { useNavigate } from 'react-router-dom'
 import "../styles/register.css"
+import config from "../config"
 
 
 
@@ -29,7 +30,7 @@ const RegistrationPage: React.FC = () => {
         }
     
         try {
-            const response = await fetch('http://localhost:3000/auth/register/', {
+            const response = await fetch(`${config.AUTH_BASE_URL}/register/`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

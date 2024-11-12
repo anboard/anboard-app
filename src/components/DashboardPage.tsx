@@ -8,30 +8,22 @@ import { useNavigate } from "react-router-dom"
 const DashboardPage: React.FC = () => {
     const [broadcaster, setBroadcaster] = useState<{upn: string, email: string}>({upn: '', email: ''})
     const [loading, setLoading] = useState(true)
-    const { accessToken, setAccessToken } = useAuth()
+    const { accessToken } = useAuth()
     const navigate = useNavigate()
     const [error, setError] = useState('')
 
     useEffect(() => {
 
-        if (!accessToken) {
-            // setError('No access token found.');
-            // setLoading(false);
-            // return;
-
-            setAccessToken(`eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cG4iOiIyNDY4MTAiLCJlbWFpbCI6ImRvbmJhcml6YWFAZ21haWwuY29tIiwiaWF0IjoxNzMwOTI3NjkzLCJleHAiOjE3MzA5MzEyMzN9.QSJWUL5glyFcEVCZVUNNAh19jR0SUsCM9QgtvXvM5jg`)
-        }
-
         const fetchData = async () => {
             try {
 
-                let testAccess = accessToken || `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cG4iOiIyNDY4MTAiLCJlbWFpbCI6ImRvbmJhcml6YWFAZ21haWwuY29tIiwiaWF0IjoxNzMwOTI3ODY5LCJleHAiOjE3MzA5MzE0MDl9.Xt_ZthGPDvcwqHU-Dt983-IoCI8OSO7_O3WmHnboFxQ`
+                
                 setLoading(true)
                 const response = await fetch(`${config.API_BASE_URL}`, {
                     method: 'GET',
                     credentials: 'include',
                     headers: {
-                        'Authorization': `Bearer ${testAccess}`,
+                        'Authorization': `Bearer ${accessToken}`,
                         'Content-Type': 'application/json'
                     }
                 })
