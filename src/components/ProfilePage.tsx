@@ -33,6 +33,7 @@ const NProfilePage: React.FC = () => {
 
                 const data = await response.json()
                 const broadcasterProfile = data.data
+                console.log(broadcasterProfile)
                 setProfileData(broadcasterProfile)
                 setLoading(false)
             } catch (error: any) {
