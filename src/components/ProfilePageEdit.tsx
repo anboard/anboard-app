@@ -120,7 +120,7 @@ const EditProfileForm: React.FC<{ profileData: IProfile, updateProfileData: any,
                     <label>Date of Birth:</label>
                     <input
                         type="date"
-                        value={dateOfBirth}
+                        value={dateOfBirth.split('T')[0]}
                         onChange={(e) => handleInputChange(setDateOfBirth, 'date_of_birth', e.target.value)}
                     />
                 </div>

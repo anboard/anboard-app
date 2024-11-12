@@ -36,7 +36,7 @@ const ProfilePageView: React.FC<IProfile> = ({
                 </div>
                 <div className="profile-data-group">
                     <h3 className="profile-data-label">Date of Birth</h3>
-                    <p className="profile-data-value">{date_of_birth}</p>
+                    <p className="profile-data-value">{date_of_birth.split('T')[0]}</p>
                 </div>
                 <div className="profile-data-group">
                     <h3 className="profile-data-label">Educational Background</h3>
@@ -47,7 +47,7 @@ const ProfilePageView: React.FC<IProfile> = ({
             <div className="station-profile-section">
                 <h2>Station</h2>
                 <div className="profile-data-group">
-                    <h3 className="profile-data-label">Name</h3>
+                    <h3 className="profile-data-label">Station Name</h3>
                     <p className="profile-data-value">{station}</p>
                 </div>
                 <div className="profile-data-group">
