@@ -13,7 +13,7 @@ const AdminMail: React.FC = () => {
         
         try {
             
-            const response = await fetch(`${config.API_BASE_URL}/api/admin/mail/`, {
+            const response = await fetch(`${config.API_ADMIN_URL}/mail/`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
