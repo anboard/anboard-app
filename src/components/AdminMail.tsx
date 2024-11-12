@@ -1,4 +1,5 @@
 import { useState } from "react"
+import config from "../config"
 
 const AdminMail: React.FC = () => {
     const [upn, setUpn] = useState<string>('')
@@ -12,7 +13,7 @@ const AdminMail: React.FC = () => {
         
         try {
             
-            const response = await fetch('http://localhost:3000/api/admin/mail/', {
+            const response = await fetch(`${config.API_BASE_URL}/api/admin/mail/`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
