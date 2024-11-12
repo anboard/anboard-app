@@ -1,16 +1,16 @@
-import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+// import React, { useEffect } from "react";
+// import { useNavigate } from "react-router-dom";
 
 const Index: React.FC = () => {
-    const navigate = useNavigate()
+    // const navigate = useNavigate()
 
-    useEffect(() => {
-        const test = () => {
-            navigate("/auth/login")
-        }
+    // useEffect(() => {
+    //     const test = () => {
+    //         navigate("/auth/login")
+    //     }
     
-        test()
-    })
+    //     test()
+    // })
     
     return (
         <div>
