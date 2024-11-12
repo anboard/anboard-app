@@ -1,5 +1,6 @@
 import React from 'react'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
+import Index from './components/Index'
 import RegistrationPage from './components/RegistrationPage'
 import LoginPage from './components/LoginPage'
 import AdminMail from './components/AdminMail'
@@ -16,8 +17,12 @@ const App: React.FC = () => {
         <AuthProvider> 
             <Router>
                 <Routes>
+                    <Route path="/" element={<Index />} />
+                    
                     <Route path="/auth/register" element={<RegistrationPage />} />
                     <Route path="/auth/login" element={<LoginPage />} />
+
+
 
                     <Route path="/api/admin/mail" element={<AdminMail />} />
 

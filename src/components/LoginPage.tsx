@@ -1,27 +1,27 @@
-import React, { useState } from "react";
-import { useAuth } from "../AuthContext";
-import { useNavigate } from "react-router-dom";
-import "../styles/login.css";
-import config from "../config";
+import React, { useState } from "react"
+import { useAuth } from "../AuthContext"
+import { useNavigate } from "react-router-dom"
+import "../styles/login.css"
+import config from "../config"
 
 interface ResponseData {
-    status: string;
+    status: string
     data: {
-        accessToken: string;
-    };
+        accessToken: string
+    }
 }
 
 const LoginPage: React.FC = () => {
-    const [upn, setUpn] = useState<string>("");
-    const [password, setPassword] = useState<string>("");
-    const { setAccessToken } = useAuth();
-    const [error, setError] = useState("");
-    const navigate = useNavigate();
+    const [upn, setUpn] = useState<string>("")
+    const [password, setPassword] = useState<string>("")
+    const { setAccessToken } = useAuth()
+    const [error, setError] = useState("")
+    const navigate = useNavigate()
     console.log(config.API_BASE_URL)
 
     const handleLoginSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        setError("");
+        e.preventDefault()
+        setError("")
 
         try {
             const response = await fetch(`${config.AUTH_BASE_URL}/login/`, {
@@ -30,19 +30,19 @@ const LoginPage: React.FC = () => {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({ upn, password }),
-            });
+            })
 
-            if (!response.ok) throw new Error("Login failed");
+            if (!response.ok) throw new Error("Login failed")
 
-            const fetchedData = (await response.json()) as ResponseData;
-            setAccessToken(fetchedData.data.accessToken);
-            navigate("/api/anb-broadcaster/dashboard");
+            const fetchedData = (await response.json()) as ResponseData
+            setAccessToken(fetchedData.data.accessToken)
+            navigate("/api/anb-broadcaster/dashboard")
 
         } catch (error) {
-            setError("Login failed. Please check your credentials and try again.");
-            console.error(error);
+            setError("Login failed. Please check your credentials and try again.")
+            console.error(error)
         }
-    };
+    }
 
     return (
         <div className="login-page">
@@ -75,7 +75,7 @@ const LoginPage: React.FC = () => {
                 </form>
             </main>
         </div>
-    );
-};
+    )
+}
 
-export default LoginPage;
+export default LoginPage
