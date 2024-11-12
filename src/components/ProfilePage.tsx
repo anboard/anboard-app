@@ -44,6 +44,7 @@ const ProfilePage: React.FC = () => {
         };
 
         try {
+            console.log(profileData)
             // Send data to the server
             const response = await fetch(`${config.API_BASE_URL}/profile`, {
                 method: 'POST',
@@ -51,7 +52,7 @@ const ProfilePage: React.FC = () => {
                     'Authorization': `Bearer ${accessToken}`,
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(profileData)
+                body: JSON.stringify({profileData})
             });
 
             // Check if response is ok

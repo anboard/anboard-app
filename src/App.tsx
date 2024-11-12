@@ -10,6 +10,7 @@ import VideoPlayer from './components/VideoPlayer'
 import ProfilePage from './components/ProfilePage'
 import ProtectedRoute from './components/ProtectedRoute';
 import VideoUploader from './components/VideoUploader'
+import NProfilePage from './components/NProfilePage'
 
 const App: React.FC = () => {
     return (
@@ -18,16 +19,14 @@ const App: React.FC = () => {
                 <Routes>
                     <Route path="/auth/register" element={<RegistrationPage />} />
                     <Route path="/auth/login" element={<LoginPage />} />
+
                     <Route path="/api/admin/mail" element={<AdminMail />} />
+
                     <Route path="/api/anb-broadcaster/dashboard" element={<ProtectedRoute> <DashboardPage /> </ProtectedRoute>} />
                     <Route path="/api/anb-broadcaster/videos" element={<ProtectedRoute>  <VideoList /> </ProtectedRoute>} />
-                    <Route path="/videos/stream/:filename" element={<VideoPlayer />} />
-                    <Route path="/api/anb-broadcaster/profile" element={<ProtectedRoute> <ProfilePage/> </ProtectedRoute>} />
-                    <Route path="/api/anb-broadcaster/dashboard" element={<DashboardPage />} />
-                    <Route path="/api/anb-broadcaster/videos" element={<VideoList />} />
-                    <Route path="/api/anb-broadcaster/videos/upload" element={<VideoUploader />} />
                     <Route path="/api/anb-broadcaster/videos/stream/:filename" element={<VideoPlayer />} />
-                    <Route path="/api/anb-broadcaster/profile" element={<ProfilePage />} />
+                    <Route path="/api/anb-broadcaster/profile" element={<ProtectedRoute> <ProfilePage/> </ProtectedRoute>} />
+                    <Route path="/api/anb-broadcaster/profile" element={<ProtectedRoute> <NProfilePage/> </ProtectedRoute>} />
 
                 </Routes>
             </Router>
