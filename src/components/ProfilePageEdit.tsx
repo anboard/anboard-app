@@ -52,7 +52,6 @@ const EditProfileForm: React.FC<{ profileData: IProfile, updateProfileData: any,
         e.preventDefault()
 
         setIsSaving(true)
-        console.log(profileData)
         try {
 
            const response =  await fetch(`${config.API_BASE_URL}/profile`, {

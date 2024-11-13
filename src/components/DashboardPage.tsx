@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom"
 const DashboardPage: React.FC = () => {
     const [broadcaster, setBroadcaster] = useState<{upn: string, email: string}>({upn: '', email: ''})
     const [loading, setLoading] = useState(true)
-    const { accessToken } = useAuth()
+    const { accessToken, logout } = useAuth()
     const navigate = useNavigate()
     const [error, setError] = useState('')
 
@@ -31,13 +31,11 @@ const DashboardPage: React.FC = () => {
                 if (!response.ok) {
                     const error = await response.json()
                     setError(error.error)
-                    console.log(error.error)
                     return 
                 }
 
                 const { broadcaster } = await response.json()
                 setBroadcaster(broadcaster)
-                console.log(broadcaster)
 
             } catch (error: any) {
                 setError(error.message || 'Something went wrong')
@@ -47,7 +45,7 @@ const DashboardPage: React.FC = () => {
         }
 
         fetchData()
-    }, [accessToken])
+    }, [])
 
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error: {error}</p>;
@@ -60,6 +58,7 @@ const DashboardPage: React.FC = () => {
                 <button type="button">Set up your Profile</button>
         </Link>
             <button type="button" onClick={() => navigate('/api/anb-broadcaster/videos')}>Videos</button>
+            <button type="button" onClick={() => logout()}>Logout</button>
         </div>
     )
 }

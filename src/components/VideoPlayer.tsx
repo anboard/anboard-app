@@ -6,7 +6,6 @@ const VideoPlayer: React.FC = () => {
     const videoRef = useRef<HTMLVideoElement>(null)
     const { filename } = useParams()
 
-    console.log(filename)
     useEffect(() => {
         if (videoRef.current) {
             videoRef.current.src = `${config.API_BASE_URL}/videos/stream/${filename}`

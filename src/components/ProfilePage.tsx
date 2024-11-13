@@ -7,7 +7,7 @@ import IProfile from '../interface/IProfile'
 import EditProfileForm from './ProfilePageEdit'
 
 const NProfilePage: React.FC = () => {
-    const { accessToken } = useAuth()
+    const { accessToken, logout } = useAuth()
     const [isEditing, setIsEditing] = useState(false)
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState('')
@@ -33,7 +33,6 @@ const NProfilePage: React.FC = () => {
 
                 const data = await response.json()
                 const broadcasterProfile = data.data
-                console.log(broadcasterProfile)
                 setProfileData(broadcasterProfile)
                 setLoading(false)
             } catch (error: any) {
@@ -75,6 +74,8 @@ const NProfilePage: React.FC = () => {
                 <div>
                     <ProfilePageView {...profileData}/>
                     <button type="button" onClick={handleEditClick}>Edit</button>
+                    <button type="button" onClick={() => logout()}>Logout</button>
+                    
                 </div>
                 :
                 <EditProfileForm profileData={profileData} updateProfileData={updateProfileData} handleCancel={handleCancel} setIsEditing={setIsEditing} />

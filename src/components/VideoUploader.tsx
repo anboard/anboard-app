@@ -51,8 +51,6 @@ const VideoUploader: React.FC = () => {
 
     const data = await response.json()
 
-      console.log(data)
-
       if (data.status === 'success') {
         setError(null)
         setUploading(false)

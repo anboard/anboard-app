@@ -13,7 +13,6 @@ const VideoList: React.FC = () => {
     const navigate = useNavigate()
     const [error, setError] = useState(null)
 
-    console.log(accessToken)
 
     useEffect(() => {
         const fetchVideos = async () => {
@@ -29,12 +28,10 @@ const VideoList: React.FC = () => {
                 if (!response.ok) {
                     const error = await response.json()
                     setError(error.error)
-                    console.log(error.error)
                     return 
                 }
 
                 const { videos } = await response.json()
-                console.log(videos)
                 setVideos(videos)
                 setLoading(false)
             } catch (err: any) {

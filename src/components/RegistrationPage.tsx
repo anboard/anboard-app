@@ -44,13 +44,11 @@ const RegistrationPage: React.FC = () => {
             })
     
             const data = await response.json()
-            // console.log(data)
     
             if (data.status === 'success') {
                 navigate('/auth/login')
             } else if (data.status === 'error') {
                 setError('Link expired')
-                // console.log('Response Data:', data.error)  
             } else {
                 setError(data.error[0].msg)
             }

@@ -7,14 +7,15 @@ import config from "../config"
 interface ResponseData {
     status: string
     data: {
-        accessToken: string
+        accessToken: string,
+        refreshToken: string
     }
 }
 
 const LoginPage: React.FC = () => {
     const [upn, setUpn] = useState<string>("")
     const [password, setPassword] = useState<string>("")
-    const { setAccessToken } = useAuth()
+    const { setAccessToken, setAuthError } = useAuth()
     const [error, setError] = useState("")
     const navigate = useNavigate()
     console.log(config.API_BASE_URL)
@@ -36,6 +37,8 @@ const LoginPage: React.FC = () => {
 
             const fetchedData = (await response.json()) as ResponseData
             setAccessToken(fetchedData.data.accessToken)
+            setAuthError(false)
+            localStorage.setItem('vvvAAA', fetchedData.data.refreshToken)
             navigate("/api/anb-broadcaster/dashboard")
 
         } catch (error) {
