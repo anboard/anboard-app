@@ -75,14 +75,17 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
               }
             
             if (accessToken && isTokenExpired(accessToken)) {
+                console.log('we are refreshing the token')
                 await refreshAccessToken()
             }
         }
 
-        checkAndRefreshToken()
-        const interval = setInterval(checkAndRefreshToken, 14 * 60 * 1000) 
+        if (accessToken) {
+            checkAndRefreshToken();
+            const interval = setInterval(checkAndRefreshToken, 1 * 60 * 1000); // Refresh every 5 minutes
 
-        return () => clearInterval(interval)
+            return () => clearInterval(interval);
+        }
     }, [accessToken])
 
     return (
