@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import VideoItem from './VideoItem'
+import VideoPlayer from './VideoPlayer'
 import { useAuth } from "../AuthContext"
 import Ivideo from '../interface/IVideo'
 import config from '../config'
@@ -56,7 +57,8 @@ const VideoList: React.FC = () => {
             <ul>
                 {videos.map(video => (
                     <li key={video.filename}>
-                        <VideoItem video={video} />
+                        {/* <VideoItem video={video} /> */}
+                        <VideoPlayer video={video} />
                     </li>
                 ))}
             </ul>
