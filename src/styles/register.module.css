@@ -13,7 +13,7 @@
 }
 
 /* Header Styles */
-header {
+.headermain {
     /* background-color: var(--dblue); */
     background: linear-gradient(180deg, #005076 0%, #203760 100%);
     width: 100%; /* Adjust to full width for small screens */
@@ -25,7 +25,7 @@ header {
     color: white;
 }
 
-header h1 {
+.headermain h1 {
     text-align: center;
     font-size: 1.8rem;
 }
@@ -123,7 +123,7 @@ h2 {
         flex-direction: row; /* Row layout for medium and large screens */
     }
 
-    header {
+    .headermain {
         width: 30%;
         height: 100vh;
         padding: 2rem;
@@ -140,7 +140,7 @@ h2 {
 }
 
 @media (max-width: 480px) {
-    header h1 {
+    .headermain h1 {
         font-size: 1.5rem;
     }
 

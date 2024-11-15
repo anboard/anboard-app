@@ -61,7 +61,7 @@ const RegistrationPage: React.FC = () => {
     
     return (
         <div className={styles.registrationpage}>
-            <header>
+            <header className={styles.headermain}>
                 <h1>Welcome to ANBOARD</h1>
             </header>
             <div className={styles.registrationcontainer}>

@@ -2,10 +2,9 @@ import React, { useEffect, useRef, useState } from 'react'
 import { useAuth } from '../AuthContext'
 import config from '../config'
 import ProfilePageView from './ProfilePageView'
-import "../styles/profile.css"
+import styles  from "../styles/profile.module.css"
 import IProfile from '../interface/IProfile'
 import EditProfileForm from './ProfilePageEdit'
-
 const NProfilePage: React.FC = () => {
     const { accessToken, logout } = useAuth()
     const [isEditing, setIsEditing] = useState(false)
