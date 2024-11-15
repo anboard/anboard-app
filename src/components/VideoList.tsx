@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import VideoItem from './VideoItem'
 import VideoPlayer from './VideoPlayer'
 import { useAuth } from "../AuthContext"
 import Ivideo from '../interface/IVideo'
@@ -33,6 +32,7 @@ const VideoList: React.FC = () => {
                 }
 
                 const { videos } = await response.json()
+                console.log(videos)
                 setVideos(videos)
                 setLoading(false)
             } catch (err: any) {

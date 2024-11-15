@@ -5,6 +5,7 @@ export default interface Ivideo {
     filename: string
     file_path: string
     mime_type: string
+    url: string
     size: number
     upload_date?: Date
 }
