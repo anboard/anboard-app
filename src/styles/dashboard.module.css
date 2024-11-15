@@ -5,7 +5,7 @@
 }
 
 /* Header Styles */
-header {
+.headerdashboard {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -22,13 +22,13 @@ header {
     height: auto;
 }
 
-.header-text {
+.headertext {
     font-size: 1.5em;
     text-align: center;
     flex-grow: 1;
 }
 
-.header-right {
+.headerright {
     display: flex;
     align-items: center;
     gap: 15px;
@@ -39,7 +39,7 @@ header {
     cursor: pointer;
     position: relative;
 }
-.icon-container {
+.iconcontainer {
 display: inline-flex;
 align-items: center;
 justify-content: center;
@@ -48,20 +48,20 @@ border-radius: 50%; /* Rounded background */
 transition: background-color 0.3s ease; /* Smooth transition */
 }
 
-.icon-container:hover {
+.iconcontainer:hover {
 background-color: rgba(0, 0, 0, 0.1); /* Light gray shade */
 cursor: pointer;
 }
 
 
-.profile-pic {
+.profilepic {
     width: 40px;
     height: 40px;
     border-radius: 50%;
 }
 
 /* Popup Search Box */
-#search-popup {
+.searchpopup {
     display: none;
     position: absolute;
     top: 70px;
@@ -74,7 +74,7 @@ cursor: pointer;
     z-index: 10;
 }
 
-#search-popup input {
+.searchinput {
     width: 200px;
     padding: 8px;
     border: 1px solid #ddd;
@@ -82,10 +82,11 @@ cursor: pointer;
     margin-bottom: 10px;
 }
 
-#search-result {
+.searchresult {
     color: #333;
     font-size: 0.9em;
 }
+
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
@@ -96,33 +97,33 @@ text-align: center;
 }
 
 /* Adjust welcome text */
-header .welcome-text {
+header .welcometext {
 font-size: 1.25rem;  /* Slightly smaller text on mobile */
 }
 
 /* Icons container adjustments */
-header .icons-container {
+header .iconscontainer {
 flex-direction: row; /* Keep the icons in one row */
 gap: 15px; /* Smaller gap between icons */
 }
 
 /* Adjust icon size */
-.icon-container svg {
+.iconcontainer svg {
 width: 20px;
 height: 20px;
 }
 
 /* Center logo on small screens */
-header .logo {
+header .logo {  
 margin-bottom: 10px;
 }
 }
 @media (max-width: 480px) {
-header .welcome-text {
+header .welcometext {
 font-size: 1.1rem;
 }
 
-.icon-container svg {
+.iconcontainer svg {
 width: 18px;
 height: 18px;
 }
@@ -146,14 +147,14 @@ height: 18px;
 }
 
 /* Profile container */
-.profile-container {
+.profilecontainer {
     width: fit-content;
     text-align: left;
     margin-bottom: 30px;
     /* background-color: aquamarine; */
 }
 
-.profile-image {
+.profileimage {
     width: 200px;
     height: 200px;
     border-radius: 50%;
@@ -167,7 +168,7 @@ height: 18px;
 }
 
 /* User name */
-.user-name {
+.username {
     font-size: 1.25rem;
     font-weight: bold;
     color: white;
@@ -175,7 +176,7 @@ height: 18px;
 }
 
 /* Links list styles */
-.links-list {
+.linkslist {
     list-style-type: none;
     padding: 0;
     margin: 0;
@@ -185,7 +186,7 @@ height: 18px;
     gap: 20px; /* space between links */
 }
 
-.link-item {
+.linkitem {
     display: flex;
     align-items: center;
     color: white;
@@ -197,21 +198,21 @@ height: 18px;
     white-space: nowrap;
 }
 
-.link-item svg {
+.linkitem svg {
     margin-right: 10px;
     width: 20px;
     height: 20px;
 }
 
 /* Hover effect for links */
-.link-item:hover, svg :hover {
+.linkitem:hover, svg :hover {
     background-color: #e0e0e0;
     color: black;
     fill: black;
 }
 
 /* Footer link */
-.footer-link {
+.footerlink {
     margin-top: 4rem;
 }
 
@@ -219,7 +220,7 @@ height: 18px;
 
 /* Small screens (mobile devices) */
 /* Default Sidebar Styles */
-.toggle-btn {
+.togglebtn {
     display: none;
     position: fixed;
     top: 20px;
@@ -259,28 +260,28 @@ height: 18px;
         break-inside: avoid ;
     }
 
-    .profile-container {
+    .profilecontainer {
         display: none; /* Hide profile on smaller screens */
     }
 
-    .links-list {
+    .linkslist {
         flex-direction: row;
         gap: 2rem;
         width: fit-content;
     }
 
-    .link-item {
+    .linkitem {
         padding: 5px;
         font-size: 0.9rem;
     }
     
-    .footer-link {
+    .footerlink {
         margin: 0;
         white-space: nowrap;
     }
 }
 @media (max-width: 768px) {
-    .toggle-btn {
+    .togglebtn {
         display: block;
     }
 
@@ -291,17 +292,17 @@ height: 18px;
     }
 
     /* Sidebar fully expanded */
-    .sidebar-expanded {
+    .sidebarexpanded {
         display: none;
     }
 }
-.link-item:first{
+.linkitem:first{
     text-decoration: none;
     color: green;
 }
 
 /* main-content */
-.main-content {
+.maincontent {
     width: 70%;
     height: 100vh;
     overflow-y: auto; 
