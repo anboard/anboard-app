@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import { useAuth } from "../AuthContext"
 import { useNavigate } from "react-router-dom"
-import "../styles/login.css"
+import styles from "../styles/login.module.css"
 import config from "../config"
 
 interface ResponseData {
@@ -48,21 +48,21 @@ const LoginPage: React.FC = () => {
     }
 
     return (
-        <div className="login-page">
-            <header className="login-header">
+        <div className={styles.loginpage}>
+            <header className={styles.loginheader}>
                 <h1>Welcome to ANBOARD</h1>
             </header>
 
-            <main className="login-content">
-                <img src="../images/logo.png" alt="ANBOARD logo" className="logo" />
+            <main className={styles.logincontent}>
+                <img src="../images/logo.png" alt="ANBOARD logo" className={styles.logo} />
                 <h2>Welcome back!</h2>
-                <form onSubmit={handleLoginSubmit} className="login-form">
+                <form onSubmit={handleLoginSubmit} className={styles.loginform}>
                     <label htmlFor="upn">Enter UPN</label>
                     <input
                         type="text"
                         id="upn"
                         required
-                        className="login-input"
+                        className={styles.logininput}
                         onChange={(e) => setUpn(e.target.value)}
                     />
                     <label htmlFor="password">Enter Password</label>
@@ -70,11 +70,11 @@ const LoginPage: React.FC = () => {
                         type="password"
                         id="password"
                         required
-                        className="login-input"
+                        className={styles.logininput}
                         onChange={(e) => setPassword(e.target.value)}
                     />
-                    {error && <p className="error-message">{error}</p>}
-                    <button type="submit" className="login-button">Log in</button>
+                    {error && <p className={styles.errormessage}>{error}</p>}
+                    <button type="submit" className={styles.loginbutton}>Log in</button>
                 </form>
             </main>
         </div>

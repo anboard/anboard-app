@@ -1,7 +1,7 @@
 /* General Reset */
 * {
-    margin: 1px;
-    /* padding: 0; */
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
 }
 
@@ -12,14 +12,14 @@
 }
 
 /* Layout Styling */
-.login-page {
+.loginpage {
     display: flex;
     flex-direction: column; /* Default for smaller screens */
     height: 100vh;
 }
 
 /* Header Styling */
-.login-header {
+.loginheader {
     background-color: var(--dblue);
     width: 100%; /* Full width for smaller screens */
     color: white;
@@ -37,12 +37,12 @@
     margin-bottom: 1rem;
 }
 
-.login-header h1 {
+.loginheader h1 {
     font-size: 1.75rem;
 }
 
 /* Main Content Styling */
-.login-content {
+.logincontent {
     width: 100%; /* Full width for smaller screens */
     display: flex;
     flex-direction: column;
@@ -51,14 +51,14 @@
     padding: 1.5rem;
 }
 
-.login-content h2 {
+.logincontent h2 {
     color: var(--dblue);
     font-size: 1.25rem;
     margin-bottom: 1rem;
 }
 
 /* Form Styling */
-.login-form {
+.loginform {
     width: 100%;
     max-width: 350px;
     display: flex;
@@ -66,12 +66,12 @@
     gap: 1rem;
 }
 
-.login-form label {
+.loginform label {
     font-size: 0.9rem;
     color: var(--dblue);
 }
 
-.login-input {
+.logininput {
     width: 100%;
     padding: 0.75rem;
     border: 2px solid var(--dblue);
@@ -80,13 +80,13 @@
     font-size: 0.9rem;
 }
 
-.login-input:focus {
+.logininput:focus {
     outline: none;
     border-color: #3a65b0;
 }
 
 /* Button Styling */
-.login-button {
+.loginbutton {
     width: 100%;
     padding: 0.75rem;
     background-color: #0A89C0;
@@ -99,12 +99,12 @@
     transition: background-color 0.3s;
 }
 
-.login-button:hover {
+.loginbutton:hover {
     background-color: var(--dblue);
 }
 
 /* Error Message Styling */
-.error-message {
+.errormessage {
     background-color: #f8d7da;
     color: #721c24;
     padding: 0.5rem;
@@ -116,50 +116,50 @@
 
 /* Media Queries for Responsiveness */
 @media (min-width: 768px) {
-    .login-page {
+    .loginpage {
         flex-direction: row; /* Side-by-side layout for larger screens */
     }
 
-    .login-header {
+    .loginheader {
         width: 30%;
         padding: 2rem;
     }
 
-    .login-content {
+    .logincontent {
         width: 70%;
         padding: 2rem;
     }
 
-    .login-header h1 {
+    .loginheader h1 {
         font-size: 2rem;
     }
 
-    .login-content h2 {
+    .logincontent h2 {
         font-size: 1.5rem;
     }
 
-    .login-form {
+    .loginform {
         max-width: 400px;
     }
 }
 
 @media (max-width: 480px) {
-    .login-input {
+    .logininput {
         padding: 0.5rem;
         font-size: 0.8rem;
     }
 
-    .login-button {
+    .loginbutton {
         font-size: 0.9rem;
         padding: 0.5rem;
         border-radius: 20px;
     }
 
-    .login-header h1 {
+    .loginheader h1 {
         font-size: 1.5rem;
     }
 
-    .login-content h2 {
+    .logincontent h2 {
         font-size: 1.1rem;
     }
 }

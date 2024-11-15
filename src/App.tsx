@@ -7,10 +7,11 @@ import LoginPage from './components/LoginPage'
 import AdminMail from './components/AdminMail'
 import DashboardPage from './components/DashboardPage'
 import VideoList from './components/VideoList'
-import VideoPlayer from './components/VideoPlayer'
 import ProfilePage from './components/ProfilePage'
 import ProtectedRoute from './components/ProtectedRoute'
 import VideoUploader from './components/VideoUploader'
+import "./styles/dashboard.css"
+
 
 const App: React.FC = () => {
     return (
@@ -28,7 +29,6 @@ const App: React.FC = () => {
                     <Route path="/api/anb-broadcaster/dashboard" element={<ProtectedRoute><DashboardPage /></ProtectedRoute>} />
                     <Route path="/api/anb-broadcaster/videos" element={<ProtectedRoute><VideoList /></ProtectedRoute>} />
                     <Route path="/api/anb-broadcaster/videos/upload" element={<ProtectedRoute><VideoUploader /></ProtectedRoute>} />
-                    <Route path="/api/anb-broadcaster/videos/stream/:filename" element={<ProtectedRoute><VideoPlayer /></ProtectedRoute>} />
                     <Route path="/api/anb-broadcaster/profile" element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
                 </Routes>
             </Router>
