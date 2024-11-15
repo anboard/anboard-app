@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { useNavigate } from 'react-router-dom'
-import "../styles/register.css"
+import styles from "../styles/register.module.css"
 import config from "../config"
 
 
@@ -60,15 +60,15 @@ const RegistrationPage: React.FC = () => {
     
     
     return (
-        <div className="registration-page">
+        <div className={styles.registrationpage}>
             <header>
                 <h1>Welcome to ANBOARD</h1>
             </header>
-            <div className="registration-container">
+            <div className={styles.registrationcontainer}>
                 <img src="/images/logo.png" alt="ANBOARD Logo" />
                 <h2>Register your account</h2>
                 <form onSubmit={handleRegisterSubmit}>
-                    <div className="form-group">
+                    <div className={styles.formgroup}>
                         <label htmlFor="upn">UPN</label>
                         <input
                             type="text"
@@ -78,7 +78,7 @@ const RegistrationPage: React.FC = () => {
                             onChange={(e) => setUpn(e.target.value)}
                         />
                     </div>
-                    <div className="form-group">
+                    <div className={styles.formgroup}>
                         <label htmlFor="email">Email</label>
                         <input
                             type="email"
@@ -88,7 +88,7 @@ const RegistrationPage: React.FC = () => {
                             onChange={(e) => setEmail(e.target.value)}
                         />
                     </div>
-                    <div className="form-group">
+                    <div className={styles.formgroup}>
                         <label htmlFor="password">Password</label>
                         <input
                             type="password"
@@ -98,7 +98,7 @@ const RegistrationPage: React.FC = () => {
                             onChange={(e) => setPassword(e.target.value)}
                         />
                     </div>
-                    <div className="form-group">
+                    <div className={styles.formgroup}>
                         <label htmlFor="confirmPassword">Confirm Password</label>
                         <input
                             type="password"
@@ -108,8 +108,8 @@ const RegistrationPage: React.FC = () => {
                             onChange={(e) => setConfirmPassword(e.target.value)}
                         />
                     </div>
-                    {error && <p className="error-message">{error}</p>}
-                    <button type="submit" className="submit-button">Register</button>
+                    {error && <p className={styles.errormessage}>{error}</p>}
+                    <button type="submit" className={styles.submitbutton}>Register</button>
                 </form>
             </div>
         </div>

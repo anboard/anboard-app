@@ -27,6 +27,7 @@ const VideoList: React.FC = () => {
 
                 if (!response.ok) {
                     const error = await response.json()
+                    console.log(error)
                     setError(error.error)
                     return 
                 }

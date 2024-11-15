@@ -10,6 +10,8 @@ import VideoList from './components/VideoList'
 import ProfilePage from './components/ProfilePage'
 import ProtectedRoute from './components/ProtectedRoute'
 import VideoUploader from './components/VideoUploader'
+import "./styles/dashboard.css"
+
 
 const App: React.FC = () => {
     return (
