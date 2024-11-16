@@ -2,21 +2,25 @@ import React, { useState } from "react";
 import { useAuth } from "../AuthContext";
 import IProfile from "../interface/IProfile";
 import config from "../config";
+import styles from "../styles/dashboard.module.css";
+
 
 const EditProfileForm: React.FC<{
   profileData: IProfile;
   updateProfileData: any;
   handleCancel: () => void;
   setIsEditing: any;
-  pfpLink: string;
+    pfpLink: string;
+  setPfpLink: any
 }> = ({
   profileData,
   updateProfileData,
   handleCancel,
   setIsEditing,
-  pfpLink,
+    pfpLink,
+  setPfpLink
 }) => {
-  pfpLink;
+  
   const [name, setName] = useState(profileData.name || "");
   const [dateOfBirth, setDateOfBirth] = useState(
     profileData.date_of_birth || ""
@@ -111,8 +115,9 @@ const EditProfileForm: React.FC<{
         });
 
         if (response.ok) {
-          const data = await response.json();
-          console.log("Profile picture saved:", data);
+          const { pfpUrl } = await response.json();
+            console.log("Profile picture saved:", pfpUrl);
+            setPfpLink(pfpUrl);
             setPfpSave(false);
             setIsPfpEdit(false)
         } else {
@@ -160,10 +165,9 @@ const EditProfileForm: React.FC<{
         <img
           width={"100px"}
           height={"100px"}
-          src="/images/pfp.jpg"
-          
+          src={pfpLink}
           alt="Profile Picture"
-          className="edit-pfp"
+          className={styles.profileimage}
           onClick={() => {
             setIsPfpEdit(!isPfpEdit);
             console.log("clicked");

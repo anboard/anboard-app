@@ -6,8 +6,10 @@ import IProfile from '../interface/IProfile'
 import EditProfileForm from './ProfilePageEdit'
 const NProfilePage: React.FC<{
     pfpLink: string;
+    setPfpLink: any
 }> = ({
-    pfpLink
+    pfpLink,
+    setPfpLink
 }) => {
     const { accessToken, logout } = useAuth()
     const [isEditing, setIsEditing] = useState(false)
@@ -81,7 +83,7 @@ const NProfilePage: React.FC<{
                     
                 </div>
                 :
-                <EditProfileForm profileData={profileData} updateProfileData={updateProfileData} handleCancel={handleCancel} setIsEditing={setIsEditing} pfpLink={pfpLink} />
+                <EditProfileForm profileData={profileData} updateProfileData={updateProfileData} handleCancel={handleCancel} setIsEditing={setIsEditing} pfpLink={pfpLink} setPfpLink={setPfpLink} />
             }            
         </div>
     )
