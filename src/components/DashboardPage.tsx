@@ -23,13 +23,14 @@ const DashboardPage: React.FC = () => {
     const { accessToken, logout } = useAuth()
     const [error, setError] = useState('')
     const [currentPage, setCurrentPage] = useState<string>('home');
-
+    const [pfpLink, setPfp] = useState<string>('')
+setPfp
     const renderContent = () => {
         switch (currentPage) {
           case 'picture':
             return <Video />;
           case 'profile':
-            return <Profile />;
+            return <Profile pfpLink={pfpLink} />;
           case 'video':
             return <Video />;
         }
@@ -91,14 +92,14 @@ const DashboardPage: React.FC = () => {
             });
     
             // Close search popup when clicked outside
-            document.addEventListener("click", (event) => {
-                if (searchPopup) {
-                    searchPopup.style.display = searchPopup.style.display === "block" ? "none" : "block";
-                }
-                if (searchPopup) {
-                    searchPopup.style.display = "none";
-                }
-            });
+            // document.addEventListener("click", (event) => {
+            //     if (searchPopup) {
+            //         searchPopup.style.display = searchPopup.style.display === "block" ? "none" : "block";
+            //     }
+            //     if (searchPopup) {
+            //         searchPopup.style.display = "none";
+            //     }
+            // });
     
             // Search function
             function searchMember() {
@@ -147,7 +148,7 @@ const DashboardPage: React.FC = () => {
 
             <div className={styles.profilecontainer}>
                 <img src={nas} alt="User Profile" className={styles.profileimage} />
-                <h3 className={styles.username}>Bola Ahmed</h3>
+                        <h3 className={styles.username}>{ broadcaster.email }</h3>
              </div>
         
             <ul className={styles.linkslist}>

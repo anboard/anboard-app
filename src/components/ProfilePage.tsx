@@ -2,16 +2,20 @@ import React, { useEffect, useRef, useState } from 'react'
 import { useAuth } from '../AuthContext'
 import config from '../config'
 import ProfilePageView from './ProfilePageView'
-import styles  from "../styles/profile.module.css"
+// import styles  from "../styles/profile.module.css"
 import IProfile from '../interface/IProfile'
 import EditProfileForm from './ProfilePageEdit'
-const NProfilePage: React.FC = () => {
+const NProfilePage: React.FC<{
+    pfpLink: string;
+}> = ({
+    pfpLink
+}) => {
     const { accessToken, logout } = useAuth()
     const [isEditing, setIsEditing] = useState(false)
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState('')
     const originalProfileDataRef = useRef<IProfile>({} as IProfile)
-    const [profileData, setProfileData] = useState<IProfile>({} as IProfile)
+    const [profileData, setProfileData] = useState<IProfile>({} as IProfile as any)
 
     useEffect(() => {
         const fetchProfile = async () => {
@@ -32,6 +36,7 @@ const NProfilePage: React.FC = () => {
 
                 const data = await response.json()
                 const broadcasterProfile = data.data
+                console.log(broadcasterProfile)
                 setProfileData(broadcasterProfile)
                 setLoading(false)
             } catch (error: any) {
@@ -77,7 +82,7 @@ const NProfilePage: React.FC = () => {
                     
                 </div>
                 :
-                <EditProfileForm profileData={profileData} updateProfileData={updateProfileData} handleCancel={handleCancel} setIsEditing={setIsEditing} />
+                <EditProfileForm profileData={profileData} updateProfileData={updateProfileData} handleCancel={handleCancel} setIsEditing={setIsEditing} pfpLink={pfpLink} />
             }            
         </div>
     )
