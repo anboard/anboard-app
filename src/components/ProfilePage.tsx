@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from 'react'
 import { useAuth } from '../AuthContext'
 import config from '../config'
 import ProfilePageView from './ProfilePageView'
-// import styles  from "../styles/profile.module.css"
 import IProfile from '../interface/IProfile'
 import EditProfileForm from './ProfilePageEdit'
 const NProfilePage: React.FC<{

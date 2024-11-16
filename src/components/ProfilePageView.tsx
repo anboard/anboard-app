@@ -1,5 +1,6 @@
 import React from "react"
 import IProfile from "../interface/IProfile"
+import styles from '../styles/profile.module.css'
 
 const ProfilePageView: React.FC<IProfile> = ({
     name,
