@@ -1,0 +1,57 @@
+.container {
+position: fixed; 
+  top: 0; 
+  left: 0; 
+  width: 400px; 
+  height: 100vh; 
+  background-color: rgb(18, 66, 106, 1); 
+  color: white; 
+  z-index: 1000; 
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5); 
+ padding: 10px 20px;
+
+}
+
+.flex_wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  height: 100%;
+}
+
+.nav {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  list-style: none;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.nav li {
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.2em;
+  font-weight: bold;
+  color: white;
+  text-decoration: none;
+}
+
+.top {
+  display: flex;
+  justify-content: space-between;
+  /* background-color: red; */
+  width: 100%;
+}
+
+.close {
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+  color: white;
+}
