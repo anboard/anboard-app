@@ -50,7 +50,7 @@ const DashboardPage: React.FC = () => {
       case "picture":
         return <Video />;
       case "profile":
-        return <Profile pfpLink={pfpLink} setPfpLink={setPfp} />;
+        return <Profile  />;
       case "video":
         return <Video />;
       default:

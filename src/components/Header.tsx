@@ -1,11 +1,11 @@
-import React, { useEffect, useRef, useState } from "react";
-import { useLocation } from "react-router-dom";
+import React from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
 import header from "../styles/header.module.css";
-import { useAuth } from "../AuthContext";
-import config from "../config";
+
+
 
 const Header: React.FC<
   { handleMenuClick: () => void, broadcaster: { upn: string; email: string }, pfpLink: string }> = ({
@@ -15,18 +15,21 @@ const Header: React.FC<
 }) => {
   
 
+    const navigate = useNavigate();
   const location = useLocation();
   let title = "";
   
 
-  if (location.pathname === "/api/anb-broadcaster/") {
-    title = "Dashboard";
+  if (location.pathname === "/api/anb-broadcaster/dashboard") {
+    title = "dashboard";
   } else if (location.pathname === "/api/anb-broadcaster/profile") {
-    title = "Profile";
+    title = "profile";
   } else if (location.pathname === "/api/anb-broadcaster/videos") {
-    title = "Videos";
+    title = "videos";
+  } else if (location.pathname === "/api/anb-broadcaster/videos/upload") {
+    title = "video_upload";
   } else if (location.pathname === "/api/anb-broadcaster/audio") {
-    title = "Audio";
+    title = "audio";
   }
   
   
@@ -56,7 +59,7 @@ const Header: React.FC<
           className={header.notification}
         />
         {/* profile icon */}
-        <img src={pfpLink} alt="Profile" className={header.profile} />
+        <img src={pfpLink} alt="Profile" className={header.profile} onClick={() => navigate('/api/anb-broadcaster/profile')} />
       </div>
     </header>
   );

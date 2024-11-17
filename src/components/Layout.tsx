@@ -4,10 +4,9 @@ import Header from "./Header";
 import Sidebar from "./Sidebar";
 import { useAuth } from "../AuthContext";
 import config from "../config";
+import '../styles/layout.css'
+import Ivideo from "../interface/IVideo";
 
-interface LayoutProps {
-  children: React.ReactNode;
-}
 
 const Layout: React.FC = ({  }) => {
   const [broadcaster, setBroadcaster] = useState<{
@@ -15,13 +14,16 @@ const Layout: React.FC = ({  }) => {
     email: string;
   }>({ upn: "", email: "" });
   const [menuOpen, setMenuOpen] = useState(false);
-  const [pfpLink, setPfp] = useState<string>("");
+  const [pfpLink, setPfpLink] = useState<string>("");
   const [loading, setLoading] = useState(true);
-  const { accessToken, logout } = useAuth();
+  const { accessToken } = useAuth();
   const [error, setError] = useState("");
+  const [videos, setVideos] = useState<Ivideo[]>([])
 
+  
 
-
+  loading
+  error
 
   useEffect(() => {
     const fetchData = async () => {
@@ -52,7 +54,6 @@ const Layout: React.FC = ({  }) => {
     };
 
     const fetchPfp = async () => {
-      console.log("dash pfp fetch");
       try {
         const response = await fetch(`${config.API_BASE_URL}/profile/photo`, {
           method: "GET",
@@ -63,15 +64,45 @@ const Layout: React.FC = ({  }) => {
           },
         });
         const { pfpUrl } = await response.json();
-        console.log(pfpUrl);
-        setPfp(pfpUrl);
+        setPfpLink(pfpUrl);
       } catch (error: any) {
         setError(error.message || "Something went wrong");
       }
     };
 
+    const fetchVideos = async () => {
+            try {
+                const response = await fetch(`${config.API_BASE_URL}/videos`, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${accessToken}`,
+                        'Content-Type': 'application/json'
+                    }
+                })
+
+                if (!response.ok) {
+                    const error = await response.json()
+                    console.log(error)
+                    setError(error.error)
+                    return 
+                }
+
+                const { videos } = await response.json()
+                setVideos(videos)
+                setLoading(false)
+            } catch (err: any) {
+                setError(err.message)
+            } finally {
+                setLoading(false)
+            }
+        }
+
+    
+        
+
     if (!broadcaster.upn) fetchData();
     if (!pfpLink) fetchPfp();
+    if (videos.length === 0) fetchVideos();
   }, [accessToken]);
 
   const handleMenuClick = () => {
@@ -88,11 +119,11 @@ const Layout: React.FC = ({  }) => {
       />
       {menuOpen && <Sidebar
         handleMenuClick={handleMenuClick}
-        broadcaster={broadcaster}
       />} 
       
+      
       <main className="main-content">
-        <Outlet />
+        <Outlet context={{ videos, pfpLink, setPfpLink, broadcaster }} />
       </main>
         
     </div>

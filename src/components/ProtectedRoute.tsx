@@ -13,7 +13,6 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
     if (!accessToken || authError) {
         return <Navigate to="/auth/login" replace />;
     }
-console.log(children)
     return <>{children}</>;
 };
 

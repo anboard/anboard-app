@@ -5,7 +5,7 @@ import config from "../config";
 import styles from "../styles/dashboard.module.css";
 
 
-const EditProfileForm: React.FC<{
+const ProfilePageEdit: React.FC<{
   profileData: IProfile;
   updateProfileData: any;
   handleCancel: () => void;
@@ -370,4 +370,4 @@ const EditProfileForm: React.FC<{
   );
 };
 
-export default EditProfileForm;
+export default ProfilePageEdit;

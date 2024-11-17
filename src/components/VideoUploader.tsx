@@ -2,6 +2,9 @@ import React, { useState } from 'react'
 import config from '../config'
 import { useAuth } from '../AuthContext'
 import { useNavigate } from 'react-router-dom'
+import videoUploader from '../styles/videoUploader.module.css'
+import VideoFilePicker from "./VideoFilePicker";
+
 
 const VideoUploader: React.FC = () => {
   const [title, setTitle] = useState('')
@@ -12,7 +15,7 @@ const VideoUploader: React.FC = () => {
   const { accessToken } = useAuth()
   const navigate = useNavigate()
   const [error, setError] = useState<string | null>(null)
-
+setVideoFile(videoFile) // error
   const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(event.target.value)
   }
@@ -21,11 +24,11 @@ const VideoUploader: React.FC = () => {
     setDescription(event.target.value)
   }
 
-  const handleVideoFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files && event.target.files.length > 0) {
-        setVideoFile(event.target.files[0])
-      }
-  }
+  // const handleVideoFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   if (event.target.files && event.target.files.length > 0) {
+  //       setVideoFile(event.target.files[0])
+  //     }
+  // }
 
   const handleUpload = async () => {
     if (!videoFile) {
@@ -68,33 +71,64 @@ const VideoUploader: React.FC = () => {
     }
   }
 
+  const handleFilesSelected = (files: FileList | null) => {
+    if (files) {
+      Array.from(files).forEach((file) => {
+        console.log("Selected file:", file.name);
+      });
+    } else {
+      console.log("No files selected");
+    }
+  };
+
   return (
-    <div>
+    <div className={`${videoUploader.container}`}>
       <h1>Upload Video</h1>
-      <form>
-        <label>
-          Title:
+
+      <div className={`${videoUploader.video_preview}`}>
+        <video className={videoUploader.thumbnail} controls>
+          <source
+            src={`${config.API_BASE_URL}/videos/stream?filename=${videoFile?.name}`}
+            type="video/mp4"
+          />
+          Your browser does not support the video tag.
+        </video>
+      </div>
+
+      <form className={`${videoUploader.form}`}>
+        <div className={`${videoUploader.form_group}`}>
+          <label>Title:</label>
           <input type="text" value={title} onChange={handleTitleChange} />
-        </label>
-        <br />
-        <label>
-          Description:
+        </div>
+        <div className={`${videoUploader.form_group}`}>
+          <label>Description:</label>
           <textarea value={description} onChange={handleDescriptionChange} />
-        </label>
-        <br />
-        <label>
-          Video File:
-          <input type="file" accept="video/*" onChange={handleVideoFileChange} />
-        </label>
-        <br />
-        <button type="button" onClick={handleUpload} disabled={uploading}>
-          {uploading ? 'Uploading...' : 'Upload'}
+        </div>
+        <div className={`${videoUploader.form_group}`}>
+          <label>Video File:</label>
+          {/* <input
+              type="file"
+              accept="video/*"
+              onChange={handleVideoFileChange}
+            /> */}
+          <VideoFilePicker onFilesSelected={handleFilesSelected} />
+        </div>
+
+        <button
+          type="button"
+          onClick={handleUpload}
+          disabled={uploading}
+          className={`${videoUploader.submit_button}`}
+        >
+          {uploading ? "Uploading..." : "Upload"}
         </button>
-        {uploaded && <p style={{ color: 'green' }}>Video uploaded successfully</p>}
-        {error && <p style={{ color: 'red' }}>{error}</p>}
+        {uploaded && (
+          <p style={{ color: "green" }}>Video uploaded successfully</p>
+        )}
+        {error && <p style={{ color: "red" }}>{error}</p>}
       </form>
     </div>
-  )
+  );
 }
 
 export default VideoUploader

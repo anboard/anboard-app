@@ -4,12 +4,22 @@ import config from '../config'
 import ProfilePageView from './ProfilePageView'
 import IProfile from '../interface/IProfile'
 import EditProfileForm from './ProfilePageEdit'
-const NProfilePage: React.FC<{
-    pfpLink: string;
+import { useOutletContext } from 'react-router-dom'
+import Ivideo from '../interface/IVideo'
+
+interface LayoutContext {
+  //   userData: { name: string; email: string } | null;
+    videos: Ivideo[];
+    pfpLink: string
     setPfpLink: any
+}
+
+const NProfilePage: React.FC<{
+    // pfpLink: string;
+    // setPfpLink: any
 }> = ({
-    pfpLink,
-    setPfpLink
+    // pfpLink,
+    // setPfpLink
 }) => {
     const { accessToken, logout } = useAuth()
     const [isEditing, setIsEditing] = useState(false)
@@ -17,6 +27,9 @@ const NProfilePage: React.FC<{
     const [error, setError] = useState('')
     const originalProfileDataRef = useRef<IProfile>({} as IProfile)
     const [profileData, setProfileData] = useState<IProfile>({} as IProfile as any)
+
+  const { pfpLink, setPfpLink }: LayoutContext = useOutletContext();
+
 
     useEffect(() => {
         const fetchProfile = async () => {
@@ -37,7 +50,6 @@ const NProfilePage: React.FC<{
 
                 const data = await response.json()
                 const broadcasterProfile = data.data
-                console.log(broadcasterProfile)
                 setProfileData(broadcasterProfile)
                 setLoading(false)
             } catch (error: any) {

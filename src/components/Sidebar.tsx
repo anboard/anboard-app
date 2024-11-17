@@ -6,13 +6,17 @@ import DashboardIcon from "@mui/icons-material/Dashboard";
 import VideoLibraryIcon from '@mui/icons-material/VideoLibrary';
 import AlbumIcon from "@mui/icons-material/Album";
 import RadioIcon from "@mui/icons-material/Radio";
-import { NavLink } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../AuthContext";
+import LogoutIcon from "@mui/icons-material/Logout";
 
 const Sidebar: React.FC<{
   handleMenuClick: () => void;
-  broadcaster: { upn: string; email: string };
   // title: string;
-}> = ({ handleMenuClick, broadcaster }) => {
+}> = ({ handleMenuClick }) => {
+  const navigation = useNavigate()
+  const { logout } = useAuth()
+
   return (
     <div className={sidebar.container}>
       <div className={sidebar.flex_wrapper}>
@@ -27,25 +31,44 @@ const Sidebar: React.FC<{
         </div>
 
         <ul className={sidebar.nav}>
-          <li onClick={handleMenuClick}>
-            <NavLink to="/api/anb-broadcaster/">
-              <DashboardIcon />
-              <span>Dashboard</span>
-            </NavLink>
+          <li
+            onClick={() => {
+              handleMenuClick();
+              navigation("/api/anb-broadcaster/dashboard");
+            }}
+          >
+            <DashboardIcon />
+            <span>Dashboard</span>
           </li>
-          <li onClick={handleMenuClick}>
-            <NavLink to="/api/anb-broadcaster/videos">
-              <VideoLibraryIcon />
-              <span>Video</span>
-            </NavLink>
+          <li
+            onClick={() => {
+              handleMenuClick();
+              navigation("/api/anb-broadcaster/videos");
+            }}
+          >
+            <VideoLibraryIcon />
+            <span>Video</span>
           </li>
           <li>
             <AlbumIcon />
             <span>Audio</span>
           </li>
-          <li>
+          <li
+            onClick={() => {
+              handleMenuClick();
+              // navigation(`/api/anb-broadcaster/profile`);
+            }}
+          >
             <RadioIcon />
             <span>Station</span>
+          </li>
+          <li
+            onClick={() => {
+              logout()
+            }}
+          >
+            <LogoutIcon />
+            <span>Log Out</span>
           </li>
         </ul>
       </div>

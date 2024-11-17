@@ -5,12 +5,13 @@ import Index from "./components/Index";
 import RegistrationPage from "./components/RegistrationPage";
 import LoginPage from "./components/LoginPage";
 import AdminMail from "./components/AdminMail";
-import DashboardPage from "./components/DashboardPage";
-import VideoList from "./components/VideoList";
 import ProtectedRoute from "./components/ProtectedRoute";
 import VideoUploader from "./components/VideoUploader";
 import Layout from "./components/Layout";
 import Dash from "./components/Dash";
+import NewVideoList from "./components/NewVideoList";
+import NProfilePage from "./components/ProfilePage";
+
 
 const App: React.FC = () => {
   return (
@@ -34,14 +35,39 @@ const App: React.FC = () => {
               </ProtectedRoute>
             }
           >
-
-            <Route path="/api/anb-broadcaster/" element={<Dash />} />
-            <Route path="/api/anb-broadcaster/videos" element={<VideoList />} />
+            <Route
+              path="/api/anb-broadcaster/dashboard"
+              element={
+                <ProtectedRoute>
+                  <Dash />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/api/anb-broadcaster/videos"
+              element={
+                <ProtectedRoute>
+                  <NewVideoList />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/api/anb-broadcaster/videos/upload"
+              element={
+                <ProtectedRoute>
+                  <VideoUploader />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/api/anb-broadcaster/profile"
+              element={
+                <ProtectedRoute>
+                  <NProfilePage />
+                </ProtectedRoute>
+              }
+            />
           </Route>
-          <Route
-            path="/api/anb-broadcaster/videos/upload"
-            element={<VideoUploader />}
-          />
         </Routes>
         {/* </Layout> */}
       </Router>
