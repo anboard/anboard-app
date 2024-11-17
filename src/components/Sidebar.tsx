@@ -27,11 +27,13 @@ const Sidebar: React.FC<{
         </div>
 
         <ul className={sidebar.nav}>
-          <li>
-            <DashboardIcon />
-            <span>Dashboard</span>
+          <li onClick={handleMenuClick}>
+            <NavLink to="/api/anb-broadcaster/">
+              <DashboardIcon />
+              <span>Dashboard</span>
+            </NavLink>
           </li>
-          <li>
+          <li onClick={handleMenuClick}>
             <NavLink to="/api/anb-broadcaster/videos">
               <VideoLibraryIcon />
               <span>Video</span>

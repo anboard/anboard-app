@@ -10,6 +10,7 @@ import VideoList from "./components/VideoList";
 import ProtectedRoute from "./components/ProtectedRoute";
 import VideoUploader from "./components/VideoUploader";
 import Layout from "./components/Layout";
+import Dash from "./components/Dash";
 
 const App: React.FC = () => {
   return (
@@ -24,10 +25,18 @@ const App: React.FC = () => {
 
           <Route path="/api/admin/mail" element={<AdminMail />} />
 
-          {/* Protected routes */}
-          <Route path="/api/anb-broadcaster/" element={<ProtectedRoute>{/* <DashboardPage /> */}<Layout /></ProtectedRoute>}>
-          
-          <Route path="/api/anb-broadcaster/videos" element={<VideoList />} />
+          <Route
+            path="/api/anb-broadcaster/"
+            element={
+              <ProtectedRoute>
+                {/* <DashboardPage /> */}
+                <Layout />
+              </ProtectedRoute>
+            }
+          >
+
+            <Route path="/api/anb-broadcaster/" element={<Dash />} />
+            <Route path="/api/anb-broadcaster/videos" element={<VideoList />} />
           </Route>
           <Route
             path="/api/anb-broadcaster/videos/upload"
