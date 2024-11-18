@@ -43,19 +43,19 @@ const App: React.FC = () => {
                 </ProtectedRoute>
               }
             />
+              <Route
+                path="/api/anb-broadcaster/videos/upload"
+                element={
+                  <ProtectedRoute>
+                    <VideoUploader />
+                  </ProtectedRoute>
+                }
+                />
             <Route
               path="/api/anb-broadcaster/videos"
               element={
                 <ProtectedRoute>
                   <NewVideoList />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/api/anb-broadcaster/videos/upload"
-              element={
-                <ProtectedRoute>
-                  <VideoUploader />
                 </ProtectedRoute>
               }
             />

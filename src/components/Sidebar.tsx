@@ -6,15 +6,16 @@ import DashboardIcon from "@mui/icons-material/Dashboard";
 import VideoLibraryIcon from '@mui/icons-material/VideoLibrary';
 import AlbumIcon from "@mui/icons-material/Album";
 import RadioIcon from "@mui/icons-material/Radio";
-import { useNavigate } from "react-router-dom";
+import { NavLink} from "react-router-dom";
 import { useAuth } from "../AuthContext";
 import LogoutIcon from "@mui/icons-material/Logout";
+
 
 const Sidebar: React.FC<{
   handleMenuClick: () => void;
   // title: string;
 }> = ({ handleMenuClick }) => {
-  const navigation = useNavigate()
+  // const navigation = useNavigate()
   const { logout } = useAuth()
 
   return (
@@ -34,20 +35,26 @@ const Sidebar: React.FC<{
           <li
             onClick={() => {
               handleMenuClick();
-              navigation("/api/anb-broadcaster/dashboard");
+              // navigation("/api/anb-broadcaster/dashboard");
             }}
           >
+            <NavLink to="/api/anb-broadcaster/dashboard">
+            
             <DashboardIcon />
             <span>Dashboard</span>
+            </NavLink>
           </li>
           <li
             onClick={() => {
               handleMenuClick();
-              navigation("/api/anb-broadcaster/videos");
+              // navigation("/api/anb-broadcaster/videos");
             }}
           >
+            <NavLink to="/api/anb-broadcaster/videos">
+            
             <VideoLibraryIcon />
             <span>Video</span>
+            </NavLink>
           </li>
           <li>
             <AlbumIcon />
