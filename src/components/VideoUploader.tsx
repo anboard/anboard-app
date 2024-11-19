@@ -19,7 +19,6 @@ setVideoFile(videoFile) // error
   const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(event.target.value)
   }
-console.log('here')
   const handleDescriptionChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setDescription(event.target.value)
   }
@@ -80,6 +79,8 @@ console.log('here')
       console.log("No files selected");
     }
   };
+
+console.log("here");
 
   return (
     <div className={`${videoUploader.container}`}>
