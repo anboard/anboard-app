@@ -11,8 +11,9 @@ interface LayoutContext {
     videos: Ivideo[];
     pfpLink: string;
     setPfpLink: any;
+    stationData: IBroadcast;
+    setBroadcastData: React.Dispatch<React.SetStateAction<IBroadcast>>;
 }
-
 
 const NBroadcastStation: React.FC<{
     // pfpLink: string;
@@ -26,9 +27,12 @@ const NBroadcastStation: React.FC<{
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState('')
     const originalBroadcastStationRef = useRef<IBroadcast>({} as IBroadcast)
-    const [broadcastdata, setbroadcastdata] = useState<IBroadcast>({} as IBroadcast as any)
-
-  const { pfpLink, setPfpLink }: LayoutContext = useOutletContext();
+    // const [stationData, setBroadcastData] = useState<IBroadcast>({} as IBroadcast as any)
+    
+    
+    const { pfpLink, setPfpLink, stationData, setBroadcastData } = useOutletContext<LayoutContext>();
+    // console.log(useOutletContext<LayoutContext>())
+    // const { setBroadcastData } = useOutletContext();
 
 
     useEffect(() => {
@@ -51,7 +55,7 @@ const NBroadcastStation: React.FC<{
 
             //     const data = await response.json()
             //     const broadcasterStation = data.data
-            //     setbroadcastdata(broadcasterStation)
+            //     setBroadcastData(broadcasterStation)
                 setLoading(false)
             } catch (error: any) {
                 setError(error.message)
@@ -66,20 +70,31 @@ const NBroadcastStation: React.FC<{
     }, [])
 
     const updatebroadcastdata = (updatedFields: any) => {
-        setbroadcastdata((prevData) => ({
+        console.log(stationData)
+        
+        const tester = (prevData: any) => ({
             ...prevData,
             ...updatedFields
-        }))
+        })
+        setBroadcastData(tester(stationData))
+        console.log(tester)
+        // setBroadcastData((prevData: any) => ({
+        //     ...prevData,
+        //     ...updatedFields
+        // }))
 
-    }
+    };
 
     const handleEditClick = () => {
-        originalBroadcastStationRef.current = broadcastdata
-        setIsEditing(!isEditing)
+        console.log("Before Editing:", isEditing); // Check the current state
+        originalBroadcastStationRef.current = stationData
+        setIsEditing(true);
+        console.log("After Editing:", isEditing); // Should now be true
+
       }
       
       const handleCancel = () => {
-        setbroadcastdata(originalBroadcastStationRef.current)
+        setBroadcastData(originalBroadcastStationRef.current)
         setIsEditing(false)
       }
 
@@ -89,16 +104,22 @@ const NBroadcastStation: React.FC<{
     return (
         <div>
             { 
-                !isEditing
-                ?
-                <div>
-                    <BroadcastStationView broadcastdata= {broadcastdata}/>
-                    <button type="button" onClick={handleEditClick}>Edit</button>
-                    <button type="button" onClick={() => logout()}>Logout</button>
-                    
-                </div>
-                :
-                <EditBroadcastStation broadcastdata ={broadcastdata} updatebroadcastdata={updatebroadcastdata} handleCancel={handleCancel} setIsEditing={setIsEditing} pfpLink={pfpLink} setPfpLink={setPfpLink} />
+                !isEditing ? (
+                    <div>
+                      <BroadcastStationView stationData={stationData} />
+                      <button type="button" onClick={handleEditClick}>Edit</button>
+                      <button type="button" onClick={() => logout()}>Logout</button>
+                    </div>
+                ):(
+                    <EditBroadcastStation
+                    // stationData={stationData}
+                    updatebroadcastdata={updatebroadcastdata}
+                    handleCancel={handleCancel}
+                    setIsEditing={setIsEditing}
+                    pfpLink={pfpLink}
+                    setPfpLink={setPfpLink}
+                    />
+                )
             }            
         </div>
     )

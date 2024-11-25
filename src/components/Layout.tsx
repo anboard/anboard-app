@@ -21,7 +21,7 @@ const Layout: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [videos, setVideos] = useState<Ivideo[]>([]);
-  const [broadcastdata, setBroadcastData] = useState<IBroadcast[]>([]);
+  const [stationData, setBroadcastData] = useState<IBroadcast>({base_location: "", association_chapter: "", year_started: "", radio_shows: [], station_name: ""});
   error
   const { accessToken } = useAuth();
 
@@ -98,7 +98,7 @@ const Layout: React.FC = () => {
 
     const fetchBroadcastData = async () => {
       try {
-        const response = await fetch(`${config.API_BASE_URL}/broadcastview`, {
+        const response = await fetch(`${config.API_BASE_URL}/station`, {
           method: "GET",
           headers: {
             Authorization: `Bearer ${accessToken}`,
@@ -110,15 +110,17 @@ const Layout: React.FC = () => {
           const error = await response.json();
           console.log("error fetching broadcast data ",error);
           setError(error.error);
+          throw new Error(`HTTP error! status: ${response.status}`);
           return;
         }
 
-        const {broadcastdata} = await response.json();
-        console.log("Fetched Broadcast Data:", broadcastdata);
-        setBroadcastData(broadcastdata);
-        setLoading(false);
+        const {data} = await response.json();
+        console.log("Fetched Broadcast Data:", data);
+        setBroadcastData(data);
+        // setLoading(false);
       } catch (err: any) {
         setError(err.message);
+        console.error('Error fetching broadcast data:', error);
       } finally {
         setLoading(false);
       }
@@ -127,7 +129,7 @@ const Layout: React.FC = () => {
     if (!broadcaster.upn) fetchData();
     if (!pfpLink) fetchPfp();
     if (videos.length === 0) fetchVideos();
-    if (!broadcastdata) fetchBroadcastData();
+     fetchBroadcastData();
   }, [accessToken]);
 
   const handleMenuClick = () => {
@@ -137,7 +139,7 @@ const Layout: React.FC = () => {
   if (loading) {
     return <p>Loading...</p>;
   }
-
+console.log(stationData)  
   return (
     <div className="layout">
       <Header
@@ -154,7 +156,8 @@ const Layout: React.FC = () => {
             pfpLink,
             setPfpLink,
             broadcaster,
-            broadcastdata, // Pass broadcast data to Outlet context
+            stationData, // Pass broadcast data to Outlet context
+            setBroadcastData
           }}
         />
       </main>

@@ -7,7 +7,7 @@ import {  useOutletContext } from "react-router-dom";
 
 interface LayoutContext {
   //   userData: { name: string; email: string } | null;
-  broadcastdata: IBroadcast[];
+  stationData: IBroadcast[];
   videos: Ivideo[];
   pfpLink: string;
     setPfpLink: any;

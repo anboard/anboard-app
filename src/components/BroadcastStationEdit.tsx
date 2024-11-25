@@ -3,38 +3,60 @@ import config from "../config";
 import IBroadcast from "../interface/IBroadcast";
 import { useAuth } from "../AuthContext";
 import styles from "../styles/broadcastedit.module.css";
+import { useOutletContext } from "react-router-dom";
+
+interface LayoutContext {
+  //   userData: { name: string; email: string } | null;
+  stationData: IBroadcast;
+}
 
 const BroadcastStationEdit: React.FC<{
-  broadcastdata: IBroadcast;
+  // stationData: IBroadcast;
   updatebroadcastdata: any;
   handleCancel: () => void;
-  setIsEditing: any;
+  setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
   pfpLink: string;
 setPfpLink: any
 }> = ({
-  broadcastdata,
+  // stationData,
   updatebroadcastdata,
   handleCancel,
-  setIsEditing,
+  setIsEditing
 
 }) => {
-  const [editedStation, setEditedStation] = useState(broadcastdata.station);
-  const [editedBaseLocation, setEditedBaseLocation] = useState(broadcastdata.base_location);
+  const { stationData }: LayoutContext = useOutletContext();
+  console.log("Edit Broadcast Data:", stationData);
+
+  const [editedStation, setEditedStation] = useState(stationData.station_name);
+  const [editedBaseLocation, setEditedBaseLocation] = useState(stationData.base_location);
   const [editedAssociationChapter, setEditedAssociationChapter] = useState(
-    broadcastdata.association_chapter
+    stationData.association_chapter
   );
-  const [editedYearStarted, setEditedYearStarted] = useState(broadcastdata.year_started);
-  const [editedRadioShows, setEditedRadioShows] = useState(broadcastdata.radio_shows);
+  const [editedYearStarted, setEditedYearStarted] = useState(stationData.year_started);
+  const [editedRadioShows, setEditedRadioShows] = useState<string[]>(stationData.radio_shows);
 
   const { accessToken } = useAuth();
   const [isSaved, setIsSaved] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
 
+  // if (!stationData || Object.keys(stationData).length === 0) {
+  //   return <div>Loading broadcast data...</div>;
+  // }
+  const handleInputChange = (
+    setter: (value: string ) => void,
+    key: string,
+    value: string
+  ) => {
+    setter(value);
+    updatebroadcastdata({ ...stationData, [key]: value });
+  };
+  
+
   const handleRadioShowChange = (index: number, value: string) => {
     const updatedRadioShows = [...editedRadioShows];
     updatedRadioShows[index] = value;
     setEditedRadioShows(updatedRadioShows);
-    updatebroadcastdata({ ...broadcastdata.radio_shows, radio_shows: updatedRadioShows });
+    updatebroadcastdata({ ...stationData, radio_shows: updatedRadioShows });
   };
 
   const addRadioShowField = () => {
@@ -42,16 +64,16 @@ setPfpLink: any
   };
 const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
+    setIsEditing(false);
     setIsSaving(true);
     try {
-      const response = await fetch(`${config.API_BASE_URL}/broadcast`, {
+      const response = await fetch(`${config.API_BASE_URL}/station`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${accessToken}`,
         },
-        body: JSON.stringify({ broadcastdata }),
+        body: JSON.stringify({ stationData }),
       });
 
       const data = await response.json();
@@ -62,6 +84,8 @@ const handleSubmit = async (e: React.FormEvent) => {
         setTimeout(() => {
           setIsEditing(false);
         }, 2000);
+      }else{
+        console.error("Error saving broadcast data:", data.error);
       }
     } catch (error) {
       console.error("Error saving broadcast data:", error);
@@ -80,7 +104,7 @@ const handleSubmit = async (e: React.FormEvent) => {
         <input
           type="text"
           value={editedStation}
-          onChange={(e) => setEditedStation(e.target.value)}
+          onChange={(e) => handleInputChange(setEditedStation, "station_name", e.target.value)}
         />
       </div>
       <div className={styles.group}>
@@ -88,7 +112,7 @@ const handleSubmit = async (e: React.FormEvent) => {
         <input
           type="text"
           value={editedBaseLocation}
-          onChange={(e) => setEditedBaseLocation(e.target.value)}
+          onChange={(e) => handleInputChange(setEditedBaseLocation, "base_location", e.target.value)}//setEditedBaseLocation(e.target.value)}
         />
       </div>
       <div className={styles.group}>
@@ -96,7 +120,7 @@ const handleSubmit = async (e: React.FormEvent) => {
         <input
           type="text"
           value={editedAssociationChapter}
-          onChange={(e) => setEditedAssociationChapter(e.target.value)}
+          onChange={(e) => handleInputChange(setEditedAssociationChapter, "association_chapter", e.target.value)}//setEditedAssociationChapter(e.target.value)}
         />
       </div>
       <div className={styles.group}>
@@ -104,7 +128,7 @@ const handleSubmit = async (e: React.FormEvent) => {
         <input
           type="text"
           value={editedYearStarted}
-          onChange={(e) => setEditedYearStarted(parseInt(e.target.value))}
+          onChange={(e) => handleInputChange(setEditedYearStarted, "year_started", e.target.value)}//setEditedYearStarted(parseInt(e.target.value))}
         />
       </div>
       <div className={styles.group}>
@@ -123,7 +147,7 @@ const handleSubmit = async (e: React.FormEvent) => {
         </button>
       </div>
       <button type="submit" disabled={isSaved}>
-          {isSaving ? "Saving broadcast data..." : "Broadcast Dta Saved"}
+          {isSaving ? "Saving broadcast data..." : "Broadcast Data Saved"}
         </button>
         <button type="button" onClick={handleCancel}>
           Cancel
