@@ -22,7 +22,7 @@ const Layout: React.FC = () => {
   const [error, setError] = useState("");
   const [videos, setVideos] = useState<Ivideo[]>([]);
   const [broadcastdata, setBroadcastData] = useState<IBroadcast[]>([]);
-
+  error
   const { accessToken } = useAuth();
 
   useEffect(() => {
