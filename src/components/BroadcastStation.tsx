@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useAuth } from '../AuthContext'
-import config from '../config'
 import BroadcastStationView from './BroadcastStationView'
 import IBroadcast from '../interface/IBroadcast'
 import EditBroadcastStation from './BroadcastStationEdit'
@@ -22,7 +21,7 @@ const NBroadcastStation: React.FC<{
     // pfpLink,
     // setPfpLink
 }) => {
-    const { accessToken, logout } = useAuth()
+    const { logout } = useAuth()
     const [isEditing, setIsEditing] = useState(false)
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState('')
@@ -35,24 +34,24 @@ const NBroadcastStation: React.FC<{
     useEffect(() => {
         const fetchBroadcastdata = async () => {
             try {
-                const response = await fetch(`${config.API_BASE_URL}/broadcaststation`, {
-                    method: 'GET',
-                    headers: {
-                        'Authorization': `Bearer ${accessToken}`,
-                        'Content-Type': 'application/json'
-                    }
-                })
+            //     const response = await fetch(`${config.API_BASE_URL}/broadcaststation`, {
+            //         method: 'GET',
+            //         headers: {
+            //             'Authorization': `Bearer ${accessToken}`,
+            //             'Content-Type': 'application/json'
+            //         }
+            //     })
 
-                if (!response.ok) {
-                    const error = await response.json()
-                    setError(error.error)
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                    return 
-                }
+            //     if (!response.ok) {
+            //         const error = await response.json()
+            //         setError(error.error)
+            //         throw new Error(`HTTP error! status: ${response.status}`);
+            //         return 
+            //     }
 
-                const data = await response.json()
-                const broadcasterStation = data.data
-                setbroadcastdata(broadcasterStation)
+            //     const data = await response.json()
+            //     const broadcasterStation = data.data
+            //     setbroadcastdata(broadcasterStation)
                 setLoading(false)
             } catch (error: any) {
                 setError(error.message)

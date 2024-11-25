@@ -41,9 +41,9 @@ const BroadcastStationView: React.FC<LayoutContext> = () => {
       <div className={styles.group}>
         <h3>Radio Shows:</h3>
         <ol>
-          {broadcastdata.radio_shows.map((show, index) => (
+          {/* {broadcastdata.radio_shows.map((show, index) => (
             <li key={index}>{show}</li>
-          ))}
+          ))} */}
         </ol>
       </div>
     </div>

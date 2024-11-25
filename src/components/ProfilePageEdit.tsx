@@ -57,9 +57,10 @@ const ProfilePageEdit: React.FC<{
   const handlePhotoFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
       const file = e.target.files[0];
+      console.log("Selected file:", file);
 
       const validTypes = ["image/jpeg", "image/png", "image/gif"];
-      if (!validTypes.includes(file.type)) {
+      if (!validTypes.includes(file.type) || !file.type.startsWith("image/")) {
         alert("Invalid file type. Please select an image.");
         return;
       }
@@ -69,7 +70,7 @@ const ProfilePageEdit: React.FC<{
         alert("File is too large. Please select a file under 5MB.");
         return;
       }
-        setPhotoFile(e.target.files[0]);
+      setPhotoFile(e.target.files[0]);
       setPfpSave(true);
     }
   };
@@ -98,6 +99,8 @@ const ProfilePageEdit: React.FC<{
             setPfpSave(false);
             setIsPfpEdit(false)
         } else {
+          const errorMessage = await response.text();
+          console.error(`Error: ${response.status} - ${errorMessage}`);
           throw new Error("Failed to save profile picture.");
         }
       } catch (error) {
