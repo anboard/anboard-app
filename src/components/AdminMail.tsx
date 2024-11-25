@@ -1,62 +1,85 @@
-import { useState } from "react"
-import config from "../config"
+import { useState } from "react";
+import config from "../config";
+import styles from "../styles/adminmail.module.css";
 
 const AdminMail: React.FC = () => {
-    const [upn, setUpn] = useState<string>('')
-    const [email, setEmail] = useState<string>('')
-    const [error, setError] = useState<string>('')
-    const [success, setSuccess] = useState<string>('')
-    
+    const [upn, setUpn] = useState<string>("");
+    const [email, setEmail] = useState<string>("");
+    const [error, setError] = useState<string>("");
+    const [success, setSuccess] = useState<string>("");
+
     const handleAdminMailSubmit = async (e: React.FormEvent) => {
-        e.preventDefault()
-        setError('')
-        
+        e.preventDefault();
+        setError("");
+        setSuccess("");
+
         try {
-            
             const response = await fetch(`${config.API_ADMIN_URL}/mail/`, {
-                method: 'POST',
+                method: "POST",
                 headers: {
-                    'Content-Type': 'application/json'
+                    "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
                     upn,
-                    email      
-                })
-            })
+                    email,
+                }),
+            });
 
-            const message = await response.json()
-            if(message.status === 'conflictError') {
-                setError(message.error)
+            const message = await response.json();
+            if (message.status === "conflictError") {
+                setError(message.error);
+                return;
             }
 
             if (!response.ok) {
-                console.log(response)
+                setError("An error occurred while sending the mail.");
+                console.log(response);
+                return;
             }
 
-            setSuccess(message.success)
-
+            setSuccess(message.success);
         } catch (error) {
-            
+            setError("Something went wrong. Please try again later.");
         }
-    }
+    };
 
     return (
-        
-        <div>
-            <form action="post" onSubmit={handleAdminMailSubmit}>
-            <label htmlFor="upn">Enter upn</label>
-            <input type="text" name="upn" id="upn" onChange={(e) => {setUpn(e.target.value)}} />
+        <div className={styles.container}>
+            <div className={styles.formWrapper}>
+                <h2>Admin Mail</h2>
+                <form onSubmit={handleAdminMailSubmit} className={styles.form}>
+                    <label htmlFor="upn">Enter UPN</label>
+                    <input
+                        type="text"
+                        name="upn"
+                        id="upn"
+                        placeholder="Enter the member UPN"
+                        value={upn}
+                        onChange={(e) => setUpn(e.target.value)}
+                        required
+                    />
 
-            <label htmlFor="email">Enter email</label>
-            <input type="email" name="email" id="email" onChange={(e) => {setEmail(e.target.value)}} />
+                    <label htmlFor="email">Enter Email</label>
+                    <input
+                        type="email"
+                        name="email"
+                        id="email"
+                        placeholder="Enter the member email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        required
+                    />
 
-            {error && <p style={{backgroundColor: 'red'}}>{error}</p>}
-            <button type="submit" >Send link</button>
-        </form>
+                    {error && <p className={styles.errorMessage}>{error}</p>}
+                    {success && <p className={styles.successMessage}>{success}</p>}
 
-        {success && <p style={{backgroundColor: 'green'}}>{success}</p>}
+                    <button type="submit" className={styles.submitButton}>
+                        Send Link
+                    </button>
+                </form>
+            </div>
         </div>
-    )
-}
+    );
+};
 
-export default AdminMail
+export default AdminMail;

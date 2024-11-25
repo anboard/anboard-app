@@ -20,7 +20,7 @@
 
 /* Header Styling */
 .loginheader {
-    background-color: var(--dblue);
+    background: linear-gradient(180deg, #005076 0%, #203760 100%);
     width: 100%; /* Full width for smaller screens */
     color: white;
     display: flex;
@@ -100,7 +100,7 @@
 }
 
 .loginbutton:hover {
-    background-color: var(--dblue);
+    background-color: #085374;
 }
 
 /* Error Message Styling */

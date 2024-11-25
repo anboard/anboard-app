@@ -30,6 +30,8 @@ const Header: React.FC<
     title = "video_upload";
   } else if (location.pathname === "/api/anb-broadcaster/audio") {
     title = "audio";
+  }else if (location.pathname === "/api/anb-broadcaster/broadcaststation") {
+    title = "Station";
   }
   
   

@@ -2,10 +2,12 @@ import React from "react"
 import IProfile from "../interface/IProfile"
 import profileView from '../styles/profilView.module.css'
 import Ivideo from "../interface/IVideo";
+import IBroadcast from "../interface/IBroadcast";
 import {  useOutletContext } from "react-router-dom";
 
 interface LayoutContext {
   //   userData: { name: string; email: string } | null;
+  broadcastdata: IBroadcast[];
   videos: Ivideo[];
   pfpLink: string;
     setPfpLink: any;
@@ -13,22 +15,20 @@ interface LayoutContext {
 }
 
 
+
+
 const ProfilePageView: React.FC<IProfile> = ({
     name,
     date_of_birth,
     state_of_origin,
     local_government,
-    base_location,
-    association_chapter,
     post_held,
-    radio_shows,
-    station,
-    year_started,
     educational_background,
 }) => {
 
-    const { pfpLink, broadcaster }: LayoutContext = useOutletContext();
-    // const navigate = useNavigate();
+    const { pfpLink,
+       broadcaster }: LayoutContext = useOutletContext();
+    const navigate = useNavigate();
 
 
     return (
@@ -77,37 +77,14 @@ const ProfilePageView: React.FC<IProfile> = ({
             </div>
           </div>
         </section>
-
-        <section className={`${profileView.section}`}>
-          <h2>Station</h2>
-          <div className={`${profileView.section_body}`}>
-            <div className={`${profileView.group}`}>
-              <h3 className="profile-data-label">Station Name</h3>
-              <p className="profile-data-value">{station}</p>
-            </div>
-            <div className={`${profileView.group}`}>
-              <h3 className="profile-data-label">Base Location</h3>
-              <p className="profile-data-value">{base_location}</p>
-            </div>
-            <div className={`${profileView.group}`}>
-              <h3 className="profile-data-label">Association Chapter</h3>
-              <p className="profile-data-value">{association_chapter}</p>
-            </div>
-            <div className={`${profileView.group}`}>
-              <h3 className="profile-data-label">Year Started</h3>
-              <p className="profile-data-value">{year_started}</p>
-            </div>
-            <div className={`${profileView.group}`}>
-              <h3 className="profile-data-label">Radio Shows</h3>
-              <ol>
-                {radio_shows &&
-                  radio_shows.map((show) => <li key={show}>{show}</li>)}
-              </ol>
-            </div>
-          </div>
-        </section>
+        <button onClick={() => navigate("/api/anb-broadcaster/broadcastview")}>
+            View Broadcast Station
+        </button>
       </div>
+
     );
 }
+import { useNavigate } from "react-router-dom";
+
 
 export default ProfilePageView

@@ -6,7 +6,7 @@ import DashboardIcon from "@mui/icons-material/Dashboard";
 import VideoLibraryIcon from '@mui/icons-material/VideoLibrary';
 import AlbumIcon from "@mui/icons-material/Album";
 import RadioIcon from "@mui/icons-material/Radio";
-import { NavLink} from "react-router-dom";
+// import { NavLink} from "react-router-dom";
 import { useAuth } from "../AuthContext";
 import LogoutIcon from "@mui/icons-material/Logout";
 
@@ -38,11 +38,16 @@ const Sidebar: React.FC<{
               // navigation("/api/anb-broadcaster/dashboard");
             }}
           >
-            <NavLink to="/api/anb-broadcaster/dashboard">
-            
-            <DashboardIcon />
-            <span>Dashboard</span>
-            </NavLink>
+            <div 
+              onClick={() => {
+                handleMenuClick();
+                window.location.href = "/api/anb-broadcaster/dashboard";
+              }}
+              style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '10px' }}
+            >
+              <DashboardIcon />
+              <span>Dashboard</span>
+            </div>
           </li>
           <li
             onClick={() => {
@@ -50,11 +55,16 @@ const Sidebar: React.FC<{
               // navigation("/api/anb-broadcaster/videos");
             }}
           >
-            <NavLink to="/api/anb-broadcaster/videos">
-            
-            <VideoLibraryIcon />
-            <span>Video</span>
-            </NavLink>
+            <div 
+              onClick={() => {
+                handleMenuClick();
+                window.location.href = "/api/anb-broadcaster/videos";
+              }}
+              style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '10px' }}
+            >
+              <VideoLibraryIcon />
+              <span>Videos</span>
+            </div>
           </li>
           <li>
             <AlbumIcon />
@@ -66,8 +76,16 @@ const Sidebar: React.FC<{
               // navigation(`/api/anb-broadcaster/profile`);
             }}
           >
-            <RadioIcon />
-            <span>Station</span>
+            <div 
+              onClick={() => {
+                handleMenuClick();
+                window.location.href = "/api/anb-broadcaster/broadcaststation";
+              }}
+              style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '10px' }}
+            >
+              <RadioIcon />
+              <span>Station</span>
+            </div>
           </li>
           <li
             onClick={() => {

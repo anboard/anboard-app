@@ -11,6 +11,9 @@ import Layout from "./components/Layout";
 import Dash from "./components/Dash";
 import NewVideoList from "./components/NewVideoList";
 import NProfilePage from "./components/ProfilePage";
+import NBroadcastStation from "./components/BroadcastStation";
+
+
 
 
 const App: React.FC = () => {
@@ -67,6 +70,17 @@ const App: React.FC = () => {
                 </ProtectedRoute>
               }
             />
+      
+            <Route
+              path="/api/anb-broadcaster/broadcaststation"
+              element={
+                <ProtectedRoute>
+                  <NBroadcastStation/>
+                </ProtectedRoute>
+              }
+            />
+            
+
           </Route>
         </Routes>
         {/* </Layout> */}

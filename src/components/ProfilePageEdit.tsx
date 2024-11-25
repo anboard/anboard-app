@@ -20,8 +20,8 @@ const ProfilePageEdit: React.FC<{
     pfpLink,
   setPfpLink
 }) => {
-  
   const [name, setName] = useState(profileData.name || "");
+  const navigate = useNavigate();
   const [dateOfBirth, setDateOfBirth] = useState(
     profileData.date_of_birth || ""
   );
@@ -31,20 +31,7 @@ const ProfilePageEdit: React.FC<{
   const [localGovernment, setLocalGovernment] = useState(
     profileData.local_government || ""
   );
-  const [baseLocation, setBaseLocation] = useState(
-    profileData.base_location || ""
-  );
-  const [associationChapter, setAssociationChapter] = useState(
-    profileData.association_chapter || ""
-  );
   const [postHeld, setPostHeld] = useState(profileData.post_held || "");
-  const [radio_shows, setRadioShows] = useState(
-    profileData.radio_shows || [""]
-  );
-  const [station, setStation] = useState(profileData.station || "");
-  const [yearStarted, setYearStarted] = useState(
-    profileData.year_started || ""
-  );
   const [educationalBackground, setEducationalBackground] = useState(
     profileData.educational_background || ""
   );
@@ -66,16 +53,6 @@ const ProfilePageEdit: React.FC<{
     updateProfileData({ ...profileData, [key]: value });
   };
 
-  const handleRadioShowChange = (index: number, value: string) => {
-    const updatedRadioShows = [...radio_shows];
-    updatedRadioShows[index] = value;
-    setRadioShows(updatedRadioShows);
-    updateProfileData({ ...profileData, radio_shows: updatedRadioShows });
-  };
-
-  const addRadioShowField = () => {
-    setRadioShows([...radio_shows, ""]);
-  };
 
   const handlePhotoFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
@@ -179,6 +156,7 @@ const ProfilePageEdit: React.FC<{
             accept="images/*"
             onChange={handlePhotoFileChange}
             style={{ display: isPfpEdit ? "block" : "none" }}
+            name="pfp"
           />
 
           <div>
@@ -282,80 +260,10 @@ const ProfilePageEdit: React.FC<{
           </div>
         </fieldset>
 
-        {/* BROADCAST STATION FIELDSET */}
-        <fieldset>
-          <legend>
-            <h2>Broadcast Station</h2>
-          </legend>
-          <div>
-            <label>Station Name:</label>
-            <input
-              type="text"
-              value={station}
-              onChange={(e) =>
-                handleInputChange(setStation, "station", e.target.value)
-              }
-            />
-          </div>
-          <div>
-            <label>Base Location:</label>
-            <input
-              type="text"
-              value={baseLocation}
-              onChange={(e) =>
-                handleInputChange(
-                  setBaseLocation,
-                  "base_location",
-                  e.target.value
-                )
-              }
-            />
-          </div>
-          <div>
-            <label>Association Chapter:</label>
-            <input
-              type="text"
-              value={associationChapter}
-              onChange={(e) =>
-                handleInputChange(
-                  setAssociationChapter,
-                  "association_chapter",
-                  e.target.value
-                )
-              }
-            />
-          </div>
-          <div>
-            <label>Year Started:</label>
-            <input
-              type="number"
-              value={yearStarted}
-              onChange={(e) =>
-                handleInputChange(
-                  setYearStarted,
-                  "year_started",
-                  String(parseInt(e.target.value)) || ""
-                )
-              }
-            />
-          </div>
-          <div>
-            <label>Radio Shows:</label>
-            {radio_shows.map((show, index) => (
-              <div key={index}>
-                <input
-                  type="text"
-                  value={show}
-                  onChange={(e) => handleRadioShowChange(index, e.target.value)}
-                />
-              </div>
-            ))}
-            <button type="button" onClick={addRadioShowField}>
-              Add Show
-            </button>
-          </div>
-        </fieldset>
-
+        <button onClick={() => navigate("/api/anb-broadcaster/broadcastedit")}>
+        Edit Broadcast Station
+      </button>
+      
         <button type="submit" disabled={isSaved}>
           {isSaving ? "Saving profile" : "Save profile"}
         </button>
@@ -369,5 +277,9 @@ const ProfilePageEdit: React.FC<{
     </div>
   );
 };
+
+import { useNavigate } from "react-router-dom";
+
+
 
 export default ProfilePageEdit;

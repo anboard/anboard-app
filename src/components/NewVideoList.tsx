@@ -11,7 +11,7 @@ const NewVideoList: React.FC = () => {
   // const handleFilesSelected = (files: FileList | null) => {
   //   if (files) {
   //     Array.from(files).forEach((file) => {
-  //       console.log("Selected file:", file.name);
+  //       console.log("Selected file:", file.name);>
   //     });
   //   } else {
   //     console.log("No files selected");
@@ -42,7 +42,7 @@ const NewVideoList: React.FC = () => {
       </div>
 
       <div className={`${videoList.body_text}`}>
-        <p className={`${videoList.highlight}`}>Recenct videos</p>
+        <p className={`${videoList.highlight}`}>Recent videos</p>
       </div>
 
       <VideoGrid />
