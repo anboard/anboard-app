@@ -72,7 +72,7 @@ const App: React.FC = () => {
             />
       
             <Route
-              path="/api/anb-broadcaster/broadcaststation"
+              path="/api/anb-broadcaster/station"
               element={
                 <ProtectedRoute>
                   <NBroadcastStation/>

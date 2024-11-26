@@ -4,21 +4,25 @@ import IProfile from "../interface/IProfile";
 import config from "../config";
 import styles from "../styles/dashboard.module.css";
 
-const ProfilePageEdit: React.FC<{
+interface LayoutContext {
+  pfpLink: string;
+  setPfpLink: React.Dispatch<React.SetStateAction<string>>;
   profileData: IProfile;
+}
+
+const ProfilePageEdit: React.FC<{
   updateProfileData: any;
   handleCancel: () => void;
   setIsEditing: any;
-  pfpLink: string;
-  setPfpLink: any;
 }> = ({
-  profileData,
   updateProfileData,
   handleCancel,
   setIsEditing,
-  pfpLink,
-  setPfpLink,
 }) => {
+
+  const { pfpLink, setPfpLink, profileData }: LayoutContext = useOutletContext();
+
+
   const [name, setName] = useState(profileData.name || "");
   const navigate = useNavigate();
   const [dateOfBirth, setDateOfBirth] = useState(
@@ -103,6 +107,7 @@ const ProfilePageEdit: React.FC<{
         const { pfpUrl } = await response.json();
         console.log("Profile picture saved:", pfpUrl);
         setPfpLink(pfpUrl);
+        localStorage.setItem('pfpLink', pfpUrl)
         setPfpSave(false);
         setIsPfpEdit(false);
       } else {
@@ -288,6 +293,6 @@ const ProfilePageEdit: React.FC<{
   );
 };
 
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useOutletContext } from "react-router-dom";
 
 export default ProfilePageEdit;
