@@ -9,152 +9,164 @@ import Ivideo from "../interface/IVideo";
 import IBroadcast from "../interface/IBroadcast";
 import IProfile from "../interface/IProfile";
 
-
-
 const Layout: React.FC = () => {
   const [broadcaster, setBroadcaster] = useState<{
     upn: string;
     email: string;
   }>({ upn: "", email: "" });
   const [menuOpen, setMenuOpen] = useState(false);
-  const [pfpLink, setPfpLink] = useState<string>(localStorage.getItem('pfpUrl') ?? "");
+  const [pfpLink, setPfpLink] = useState<string>(
+    localStorage.getItem("pfpUrl") ?? ""
+  );
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [videos, setVideos] = useState<Ivideo[]>([]);
-  const [stationData, setStationData] = useState<IBroadcast | null>({base_location: "", association_chapter: "", year_started: "", radio_shows: [], station_name: ""});
-  const [profileData, setProfileData] = useState<IProfile | null>({} as IProfile as any)
+  const [stationData, setStationData] = useState<IBroadcast | null>({
+    base_location: "",
+    association_chapter: "",
+    year_started: "",
+    radio_shows: [],
+    station_name: "",
+  });
+  const [profileData, setProfileData] = useState<IProfile | null>(
+    {} as IProfile as any
+  );
 
-  error
+  error;
   const { accessToken } = useAuth();
 
   useEffect(() => {
-    
-    try {
-      
-      const fetchData = async () => {
-        try {
-          const response = await fetch(`${config.API_BASE_URL}`, {
-            method: "GET",
-            credentials: "include",
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-              "Content-Type": "application/json",
-            },
-          });
-  
-          if (!response.ok) {
-            const error = await response.json();
-            setError(error.error);
-            return;
-          }
-  
-          const { broadcaster } = await response.json();
-          setBroadcaster(broadcaster);
-        } catch (error: any) {
-          setError(error.message || "Something went wrong");
-        }
-      };
-  
-      const fetchPfp = async () => {
-        try {
-          const response = await fetch(`${config.API_BASE_URL}/profile/photo`, {
-            method: "GET",
-            credentials: "include",
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-              "Content-Type": "application/json",
-            },
-          });
-          const { pfpUrl } = await response.json();
-          setPfpLink(pfpUrl);
-        } catch (error: any) {
-          setError(error.message || "Something went wrong");
-        }
-      };
-  
-      const fetchVideos = async () => {
-        try {
-          const response = await fetch(`${config.API_BASE_URL}/videos`, {
-            method: "GET",
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-              "Content-Type": "application/json",
-            },
-          });
-  
-          if (!response.ok) {
-            const error = await response.json();
-            setError(error.error);
-            return;
-          }
-  
-          const { videos } = await response.json();
-          setVideos(videos);
-        } catch (err: any) {
-          setError(err.message);
-        }
-      };
-  
-      const fetchStationData = async () => {
-        try {
-          const response = await fetch(`${config.API_BASE_URL}/station`, {
-            method: "GET",
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-              "Content-Type": "application/json",
-            },
-          });
-  
-          if (!response.ok) {
-            const error = await response.json();
-            console.log("error fetching broadcast data ",error);
-            setError(error.error);
-            throw new Error(`HTTP error! status: ${response.status}`);
-            return;
-          }
-  
-          const {data} = await response.json();
-          setStationData(data);
-        } catch (err: any) {
-          setError(err.message);
-        }
-      };
-  
-      const fetchProfile = async () => {
-        try {
-            const response = await fetch(`${config.API_BASE_URL}/profile`, {
-                method: 'GET',
-                headers: {
-                    'Authorization': `Bearer ${accessToken}`,
-                    'Content-Type': 'application/json'
-                }
-            })
-  
-            if (!response.ok) {
-                const error = await response.json()
-                setError(error.error)
-                return 
-            }
-  
-            const data = await response.json()
-            const broadcasterProfile = data.data
-            setProfileData(broadcasterProfile)
-        } catch (error: any) {
-            setError(error.message)
-        }
-    }
-  
-      if (!broadcaster.upn) fetchData();
-      if (!pfpLink) fetchPfp();
-      if (videos.length === 0) fetchVideos();
-       fetchStationData();
-       fetchProfile()
+    const init = async () => {
+      try {
+        const fetchData = async () => {
+          try {
+            const response = await fetch(`${config.API_BASE_URL}`, {
+              method: "GET",
+              credentials: "include",
+              headers: {
+                Authorization: `Bearer ${accessToken}`,
+                "Content-Type": "application/json",
+              },
+            });
 
-    } catch (error) {
-      console.log(error)
-    } finally {
-      setLoading(false)
-    }
+            if (!response.ok) {
+              const error = await response.json();
+              setError(error.error);
+              return;
+            }
+
+            const { broadcaster } = await response.json();
+            setBroadcaster(broadcaster);
+          } catch (error: any) {
+            setError(error.message || "Something went wrong");
+          }
+        };
+
+        const fetchPfp = async () => {
+          try {
+            const response = await fetch(
+              `${config.API_BASE_URL}/profile/photo`,
+              {
+                method: "GET",
+                credentials: "include",
+                headers: {
+                  Authorization: `Bearer ${accessToken}`,
+                  "Content-Type": "application/json",
+                },
+              }
+            );
+            const { pfpUrl } = await response.json();
+            setPfpLink(pfpUrl);
+          } catch (error: any) {
+            setError(error.message || "Something went wrong");
+          }
+        };
+
+        const fetchVideos = async () => {
+          try {
+            const response = await fetch(`${config.API_BASE_URL}/videos`, {
+              method: "GET",
+              headers: {
+                Authorization: `Bearer ${accessToken}`,
+                "Content-Type": "application/json",
+              },
+            });
+
+            if (!response.ok) {
+              const error = await response.json();
+              setError(error.error);
+              return;
+            }
+
+            const { videos } = await response.json();
+            setVideos(videos);
+          } catch (err: any) {
+            setError(err.message);
+          }
+        };
+
+        const fetchStationData = async () => {
+          try {
+            const response = await fetch(`${config.API_BASE_URL}/station`, {
+              method: "GET",
+              headers: {
+                Authorization: `Bearer ${accessToken}`,
+                "Content-Type": "application/json",
+              },
+            });
+
+            if (!response.ok) {
+              const error = await response.json();
+              console.log("error fetching broadcast data ", error);
+              setError(error.error);
+              throw new Error(`HTTP error! status: ${response.status}`);
+              return;
+            }
+
+            const { data } = await response.json();
+            setStationData(data);
+          } catch (err: any) {
+            setError(err.message);
+          }
+        };
+
+        const fetchProfile = async () => {
+          try {
+            const response = await fetch(`${config.API_BASE_URL}/profile`, {
+              method: "GET",
+              headers: {
+                Authorization: `Bearer ${accessToken}`,
+                "Content-Type": "application/json",
+              },
+            });
+
+            if (!response.ok) {
+              const error = await response.json();
+              setError(error.error);
+              return;
+            }
+
+            const data = await response.json();
+            const broadcasterProfile = data.data;
+            setProfileData(broadcasterProfile);
+          } catch (error: any) {
+            setError(error.message);
+          }
+        };
+
+        if (!pfpLink) await fetchPfp();
+        if (!broadcaster.upn) await fetchData();
+        if (videos.length === 0) await fetchVideos();
+        await fetchStationData();
+        await fetchProfile();
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    init();
   }, [accessToken]);
 
   const handleMenuClick = () => {
@@ -183,7 +195,7 @@ const Layout: React.FC = () => {
             stationData,
             setStationData,
             profileData,
-            setProfileData
+            setProfileData,
           }}
         />
       </main>
