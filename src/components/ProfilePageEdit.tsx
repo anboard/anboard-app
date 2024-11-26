@@ -156,7 +156,7 @@ const ProfilePageEdit: React.FC<{
         <div>
           <input
             type="file"
-            accept="images/*"
+            accept="image/*"
             onChange={handlePhotoFileChange}
             style={{ display: isPfpEdit ? "block" : "none" }}
             name="pfp"
