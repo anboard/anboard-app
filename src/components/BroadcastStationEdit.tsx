@@ -19,15 +19,15 @@ const BroadcastStationEdit: React.FC<{
   setIsEditing
 
 }) => {
-  const { stationData }: LayoutContext = useOutletContext();
+  const { stationData }: LayoutContext = useOutletContext() || { stationData: {} as IBroadcast };
 
-  const [editedStation, setEditedStation] = useState(stationData.station_name);
-  const [editedBaseLocation, setEditedBaseLocation] = useState(stationData.base_location);
+  const [editedStation, setEditedStation] = useState(stationData.station_name || '');
+  const [editedBaseLocation, setEditedBaseLocation] = useState(stationData.base_location || '');
   const [editedAssociationChapter, setEditedAssociationChapter] = useState(
     stationData.association_chapter
-  );
-  const [editedYearStarted, setEditedYearStarted] = useState(stationData.year_started);
-  const [editedRadioShows, setEditedRadioShows] = useState<string[]>(stationData.radio_shows);
+   || '');
+  const [editedYearStarted, setEditedYearStarted] = useState(stationData.year_started || '');
+  const [editedRadioShows, setEditedRadioShows] = useState<string[]>(stationData?.radio_shows || []);
 
   const { accessToken } = useAuth();
   const [isSaved, setIsSaved] = useState(false);
