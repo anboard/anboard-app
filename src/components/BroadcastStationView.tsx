@@ -37,7 +37,7 @@ const BroadcastStationView: React.FC<LayoutContext> = () => {
       <div className={styles.group}>
         <h3>Radio Shows:</h3>
         <ol>
-          {stationData &&
+          {stationData.radio_shows &&
             stationData.radio_shows.map((show, index) => (
               <li key={index}>{show}</li>
             ))}
