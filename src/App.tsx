@@ -17,6 +17,7 @@ import NBroadcastStation from "./components/BroadcastStation";
 
 
 const App: React.FC = () => {
+  console.log(import.meta.env.VITE_API_URL)
   return (
     <AuthProvider>
       <Router>
