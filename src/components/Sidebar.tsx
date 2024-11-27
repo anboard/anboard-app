@@ -3,20 +3,18 @@ import sidebar from "../styles/sidebar.module.css";
 import header from "../styles/header.module.css";
 import CloseIcon from "@mui/icons-material/Close";
 import DashboardIcon from "@mui/icons-material/Dashboard";
-import VideoLibraryIcon from '@mui/icons-material/VideoLibrary';
+import VideoLibraryIcon from "@mui/icons-material/VideoLibrary";
 import AlbumIcon from "@mui/icons-material/Album";
 import RadioIcon from "@mui/icons-material/Radio";
-// import { NavLink} from "react-router-dom";
 import { useAuth } from "../AuthContext";
 import LogoutIcon from "@mui/icons-material/Logout";
-
+import { useNavigate } from "react-router-dom";
 
 const Sidebar: React.FC<{
   handleMenuClick: () => void;
-  // title: string;
 }> = ({ handleMenuClick }) => {
-  // const navigation = useNavigate()
-  const { logout } = useAuth()
+  const navigation = useNavigate();
+  const { logout } = useAuth();
 
   return (
     <div className={sidebar.container}>
@@ -35,15 +33,16 @@ const Sidebar: React.FC<{
           <li
             onClick={() => {
               handleMenuClick();
-              // navigation("/api/anb-broadcaster/dashboard");
+              navigation("/api/anb-broadcaster/dashboard");
             }}
           >
-            <div 
-              onClick={() => {
-                handleMenuClick();
-                window.location.href = "/api/anb-broadcaster/dashboard";
+            <div
+              style={{
+                cursor: "pointer",
+                display: "flex",
+                alignItems: "center",
+                gap: "10px",
               }}
-              style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '10px' }}
             >
               <DashboardIcon />
               <span>Dashboard</span>
@@ -52,15 +51,16 @@ const Sidebar: React.FC<{
           <li
             onClick={() => {
               handleMenuClick();
-              // navigation("/api/anb-broadcaster/videos");
+              navigation("/api/anb-broadcaster/videos");
             }}
           >
-            <div 
-              onClick={() => {
-                handleMenuClick();
-                window.location.href = "/api/anb-broadcaster/videos";
+            <div
+              style={{
+                cursor: "pointer",
+                display: "flex",
+                alignItems: "center",
+                gap: "10px",
               }}
-              style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '10px' }}
             >
               <VideoLibraryIcon />
               <span>Videos</span>
@@ -81,15 +81,16 @@ const Sidebar: React.FC<{
           <li
             onClick={() => {
               handleMenuClick();
-              // navigation(`/api/anb-broadcaster/profile`);
+              navigation(`/api/anb-broadcaster/station`);
             }}
           >
-            <div 
-              onClick={() => {
-                handleMenuClick();
-                window.location.href = "/api/anb-broadcaster/broadcaststation";
+            <div
+              style={{
+                cursor: "pointer",
+                display: "flex",
+                alignItems: "center",
+                gap: "10px",
               }}
-              style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '10px' }}
             >
               <RadioIcon />
               <span>Station</span>
@@ -97,7 +98,7 @@ const Sidebar: React.FC<{
           </li>
           <li
             onClick={() => {
-              logout()
+              logout();
             }}
           >
             <LogoutIcon />

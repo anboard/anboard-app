@@ -4,22 +4,25 @@ import IProfile from "../interface/IProfile";
 import config from "../config";
 import styles from "../styles/dashboard.module.css";
 
+interface LayoutContext {
+  pfpLink: string;
+  setPfpLink: React.Dispatch<React.SetStateAction<string>>;
+  profileData: IProfile;
+}
 
 const ProfilePageEdit: React.FC<{
-  profileData: IProfile;
   updateProfileData: any;
   handleCancel: () => void;
   setIsEditing: any;
-    pfpLink: string;
-  setPfpLink: any
 }> = ({
-  profileData,
   updateProfileData,
   handleCancel,
   setIsEditing,
-    pfpLink,
-  setPfpLink
 }) => {
+
+  const { pfpLink, setPfpLink, profileData }: LayoutContext = useOutletContext();
+
+
   const [name, setName] = useState(profileData.name || "");
   const navigate = useNavigate();
   const [dateOfBirth, setDateOfBirth] = useState(
@@ -53,19 +56,27 @@ const ProfilePageEdit: React.FC<{
     updateProfileData({ ...profileData, [key]: value });
   };
 
-
   const handlePhotoFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
       const file = e.target.files[0];
       console.log("Selected file:", file);
 
-      const validTypes = ["image/jpeg", "image/png", "image/gif"];
+      const validTypes = [
+        "image/jpeg",
+        "image/png",
+        "image/gif",
+        "image/webp",
+        "image/svg+xml",
+        "image/x-icon",
+        "image/avif",
+        "image/apng",
+      ];
       if (!validTypes.includes(file.type) || !file.type.startsWith("image/")) {
         alert("Invalid file type. Please select an image.");
         return;
       }
 
-      const maxSize = 5 * 1024 * 1024; 
+      const maxSize = 5 * 1024 * 1024;
       if (file.size > maxSize) {
         alert("File is too large. Please select a file under 5MB.");
         return;
@@ -74,40 +85,41 @@ const ProfilePageEdit: React.FC<{
       setPfpSave(true);
     }
   };
-    
-    const handlePfpSave = async () => {
-      if (!photoFile) {
-        return; 
-      }
 
-      const formData = new FormData();
-      formData.append("pfp", photoFile);
-
-      try {
-        const response = await fetch(`${config.API_BASE_URL}/profile/photo`, {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-          body: formData, 
-        });
-
-        if (response.ok) {
-          const { pfpUrl } = await response.json();
-            console.log("Profile picture saved:", pfpUrl);
-            setPfpLink(pfpUrl);
-            setPfpSave(false);
-            setIsPfpEdit(false)
-        } else {
-          const errorMessage = await response.text();
-          console.error(`Error: ${response.status} - ${errorMessage}`);
-          throw new Error("Failed to save profile picture.");
-        }
-      } catch (error) {
-        console.error("Error saving profile picture:", error);
-        alert("Failed to save profile picture.");
-      }
+  const handlePfpSave = async () => {
+    if (!photoFile) {
+      return;
     }
+
+    const formData = new FormData();
+    formData.append("pfp", photoFile);
+
+    try {
+      const response = await fetch(`${config.API_BASE_URL}/profile/photo`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+        body: formData,
+      });
+
+      if (response.ok) {
+        const { pfpUrl } = await response.json();
+        console.log("Profile picture saved:", pfpUrl);
+        setPfpLink(pfpUrl);
+        localStorage.setItem('pfpLink', pfpUrl)
+        setPfpSave(false);
+        setIsPfpEdit(false);
+      } else {
+        const errorMessage = await response.text();
+        console.error(`Error: ${response.status} - ${errorMessage}`);
+        throw new Error("Failed to save profile picture.");
+      }
+    } catch (error) {
+      console.error("Error saving profile picture:", error);
+      alert("Failed to save profile picture.");
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -156,7 +168,7 @@ const ProfilePageEdit: React.FC<{
         <div>
           <input
             type="file"
-            accept="images/*"
+            accept="image/*"
             onChange={handlePhotoFileChange}
             style={{ display: isPfpEdit ? "block" : "none" }}
             name="pfp"
@@ -264,9 +276,9 @@ const ProfilePageEdit: React.FC<{
         </fieldset>
 
         <button onClick={() => navigate("/api/anb-broadcaster/broadcastedit")}>
-        Edit Broadcast Station
-      </button>
-      
+          Edit Broadcast Station
+        </button>
+
         <button type="submit" disabled={isSaved}>
           {isSaving ? "Saving profile" : "Save profile"}
         </button>
@@ -281,8 +293,6 @@ const ProfilePageEdit: React.FC<{
   );
 };
 
-import { useNavigate } from "react-router-dom";
-
-
+import { useNavigate, useOutletContext } from "react-router-dom";
 
 export default ProfilePageEdit;

@@ -5,20 +5,14 @@ import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
 import header from "../styles/header.module.css";
 
-
-
-const Header: React.FC<
-  { handleMenuClick: () => void, broadcaster: { upn: string; email: string }, pfpLink: string }> = ({
-    handleMenuClick,
-    broadcaster,
-    pfpLink
-}) => {
-  
-
-    const navigate = useNavigate();
+const Header: React.FC<{
+  handleMenuClick: () => void;
+  broadcaster: { upn: string; email: string };
+  pfpLink: string;
+}> = ({ handleMenuClick, broadcaster, pfpLink }) => {
+  const navigate = useNavigate();
   const location = useLocation();
   let title = "";
-  
 
   if (location.pathname === "/api/anb-broadcaster/dashboard") {
     title = "dashboard";
@@ -30,11 +24,10 @@ const Header: React.FC<
     title = "video_upload";
   } else if (location.pathname === "/api/anb-broadcaster/audios") {
     title = "audio";
-  }else if (location.pathname === "/api/anb-broadcaster/broadcaststation") {
-    title = "Station";
+  } else if (location.pathname === "/api/anb-broadcaster/station") {
+    title = "station";
   }
-  
-  
+
   return (
     <header className={header.container}>
       <div className={header.left}>
@@ -61,7 +54,12 @@ const Header: React.FC<
           className={header.notification}
         />
         {/* profile icon */}
-        <img src={pfpLink} alt="Profile" className={header.profile} onClick={() => navigate('/api/anb-broadcaster/profile')} />
+        <img
+          src={pfpLink}
+          alt="Profile"
+          className={header.profile}
+          onClick={() => navigate("/api/anb-broadcaster/profile")}
+        />
       </div>
     </header>
   );

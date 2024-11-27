@@ -18,7 +18,6 @@ const LoginPage: React.FC = () => {
     const { setAccessToken, setAuthError } = useAuth()
     const [error, setError] = useState("")
     const navigate = useNavigate()
-    console.log(config.API_BASE_URL)
 
     const handleLoginSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
