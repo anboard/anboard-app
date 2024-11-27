@@ -12,6 +12,7 @@ import Dash from "./components/Dash";
 import NewVideoList from "./components/NewVideoList";
 import NProfilePage from "./components/ProfilePage";
 import NBroadcastStation from "./components/BroadcastStation";
+import AudioPage from "./components/AudioPage";
 
 
 
@@ -76,6 +77,14 @@ const App: React.FC = () => {
               element={
                 <ProtectedRoute>
                   <NBroadcastStation/>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/api/anb-broadcaster/audios"
+              element={
+                <ProtectedRoute>
+                  <AudioPage />
                 </ProtectedRoute>
               }
             />

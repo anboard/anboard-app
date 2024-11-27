@@ -7,6 +7,7 @@ import config from "../config";
 import "../styles/layout.css";
 import Ivideo from "../interface/IVideo";
 import IBroadcast from "../interface/IBroadcast";
+import {IAudio, AudioContext} from '../interface/IAudio';
 
 
 
@@ -23,6 +24,7 @@ const Layout: React.FC = () => {
   const [videos, setVideos] = useState<Ivideo[]>([]);
   const [stationData, setBroadcastData] = useState<IBroadcast>({base_location: "", association_chapter: "", year_started: "", radio_shows: [], station_name: ""});
   error
+  const [audioList, setAudioList] = useState<IAudio[]>([]);
   const { accessToken } = useAuth();
 
   useEffect(() => {
@@ -111,7 +113,7 @@ const Layout: React.FC = () => {
           console.log("error fetching broadcast data ",error);
           setError(error.error);
           throw new Error(`HTTP error! status: ${response.status}`);
-          return;
+          
         }
 
         const {data} = await response.json();
@@ -126,10 +128,34 @@ const Layout: React.FC = () => {
       }
     };
 
-    if (!broadcaster.upn) fetchData();
-    if (!pfpLink) fetchPfp();
-    if (videos.length === 0) fetchVideos();
-     fetchBroadcastData();
+      const fetchAudioList = async () => {
+        try {
+          const response = await fetch(`${config.API_BASE_URL}/audios`, {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          });
+    
+          if (!response.ok) {
+            const error = await response.json();
+            setError(error.message || "Failed to fetch audio list");
+            return;
+          }
+    
+          const { audios } = await response.json();
+          setAudioList(audios);
+        } catch (err: any) {
+          setError(err.message || "Failed to fetch audios");
+        }
+      };
+    
+      
+      if (!broadcaster.upn) fetchData();
+      if (!pfpLink) fetchPfp();
+      if (videos.length === 0) fetchVideos();
+      fetchBroadcastData();
+      fetchAudioList();
   }, [accessToken]);
 
   const handleMenuClick = () => {
@@ -156,8 +182,10 @@ console.log(stationData)
             pfpLink,
             setPfpLink,
             broadcaster,
-            stationData, // Pass broadcast data to Outlet context
-            setBroadcastData
+            stationData,
+            setBroadcastData,
+            audioList,
+            setAudioList
           }}
         />
       </main>

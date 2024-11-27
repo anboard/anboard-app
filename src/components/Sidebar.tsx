@@ -67,8 +67,16 @@ const Sidebar: React.FC<{
             </div>
           </li>
           <li>
+          <div 
+              onClick={() => {
+                handleMenuClick();
+                window.location.href = "/api/anb-broadcaster/audios";
+              }}
+              style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '10px' }}
+            >
             <AlbumIcon />
             <span>Audio</span>
+            </div>
           </li>
           <li
             onClick={() => {

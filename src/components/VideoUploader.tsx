@@ -15,25 +15,24 @@ const VideoUploader: React.FC = () => {
   const { accessToken } = useAuth()
   const navigate = useNavigate()
   const [error, setError] = useState<string | null>(null)
-setVideoFile(videoFile) // error
   const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(event.target.value)
   }
   const handleDescriptionChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setDescription(event.target.value)
   }
-
+  
   // const handleVideoFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   if (event.target.files && event.target.files.length > 0) {
-  //       setVideoFile(event.target.files[0])
-  //     }
-  // }
-
-  const handleUpload = async () => {
-    if (!videoFile) {
-      setError('Please select a video file')
-      return
-    }
+    //   if (event.target.files && event.target.files.length > 0) {
+      //       setVideoFile(event.target.files[0])
+      //     }
+      // }
+      
+      const handleUpload = async () => {
+        if (!videoFile) {
+          setError('Please select a video file')
+          return
+        }
 
     setUploading(true)
 
@@ -56,7 +55,10 @@ setVideoFile(videoFile) // error
       if (data.status === 'success') {
         setError(null)
         setUploading(false)
-        setUploaded(true)
+        setUploaded(true);
+
+        setVideoFile(null)
+
         setTimeout(() => {
             navigate('/api/anb-broadcaster/videos')
         }, 2000)
@@ -71,30 +73,33 @@ setVideoFile(videoFile) // error
   }
 
   const handleFilesSelected = (files: FileList | null) => {
-    if (files) {
-      Array.from(files).forEach((file) => {
-        console.log("Selected file:", file.name);
-      });
+    if (files && files.length > 0) {
+      const file = files[0];
+      console.log("Selected file:", file);
+      setVideoFile(file);
+      setError(null);
     } else {
       console.log("No files selected");
     }
   };
 
-console.log("here");
+console.log("Video file in state:", videoFile);
 
   return (
     <div className={`${videoUploader.container}`}>
       <h1>Upload Video</h1>
 
-      <div className={`${videoUploader.video_preview}`}>
-        <video className={videoUploader.thumbnail} controls>
-          <source
-            src={`${config.API_BASE_URL}/videos/stream?filename=${videoFile?.name}`}
-            type="video/mp4"
-          />
-          Your browser does not support the video tag.
-        </video>
-      </div>
+      {/* <div className={`${videoUploader.video_preview}`}>
+  {videoFile ? (
+    <video className={videoUploader.thumbnail} controls>
+      <source src={URL.createObjectURL(videoFile)} type={videoFile.type} />
+      Your browser does not support the video tag.
+    </video>
+  ) : (
+    <p>No video selected</p> // This is your default state when no file is uploaded
+  )}
+</div> */}
+
 
       <form className={`${videoUploader.form}`}>
         <div className={`${videoUploader.form_group}`}>
