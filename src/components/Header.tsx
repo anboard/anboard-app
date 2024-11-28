@@ -21,9 +21,9 @@ const Header: React.FC<{
   } else if (location.pathname === "/api/anb-broadcaster/videos") {
     title = "videos";
   } else if (location.pathname === "/api/anb-broadcaster/videos/upload") {
-    title = "video_upload";
+    title = "video/upload";
   } else if (location.pathname === "/api/anb-broadcaster/audios") {
-    title = "audio";
+    title = "audios";
   } else if (location.pathname === "/api/anb-broadcaster/station") {
     title = "station";
   }

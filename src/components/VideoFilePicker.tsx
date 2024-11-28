@@ -39,7 +39,7 @@ const FilePicker: React.FC<FilePickerProps> = ({ onFilesSelected }) => {
         ref={fileInputRef}
         style={{ display: "none" }}
         onChange={handleFileChange}
-        accept="video/*"
+        accept="video/mp4"
       />
     </div>
   );

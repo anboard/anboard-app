@@ -70,7 +70,8 @@ const Sidebar: React.FC<{
           <div 
               onClick={() => {
                 handleMenuClick();
-                window.location.href = "/api/anb-broadcaster/audios";
+                // window.location.href = "/api/anb-broadcaster/audios";
+                navigation(`/api/anb-broadcaster/audios`);
               }}
               style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '10px' }}
             >

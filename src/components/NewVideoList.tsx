@@ -1,22 +1,13 @@
 import React from "react";
 import VideoGrid from "./VideoGrid";
 import videoList from "../styles/videoList.module.css";
-// import VideoFilePicker from "./VideoFilePicker";
 import UploadFileIcon from "@mui/icons-material/UploadFile";
-import { NavLink } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 
 const NewVideoList: React.FC = () => {
 
-  // const handleFilesSelected = (files: FileList | null) => {
-  //   if (files) {
-  //     Array.from(files).forEach((file) => {
-  //       console.log("Selected file:", file.name);>
-  //     });
-  //   } else {
-  //     console.log("No files selected");
-  //   }
-  // };
+  const navigate = useNavigate()
 
   return (
     <div className={`${videoList.container}`}>
@@ -28,8 +19,7 @@ const NewVideoList: React.FC = () => {
       </div>
 
       <div className={`${videoList.file_comp_bottom}`}>
-        <div className={`${videoList.upload_card}`}>
-          <NavLink to="/api/anb-broadcaster/videos/upload">
+        <div className={`${videoList.upload_card}`} onClick={() => { navigate('/api/anb-broadcaster/videos/upload') }}>
           <div className={`${videoList.upload_card_icon_wrapper}`}>
             <UploadFileIcon sx={{ fontSize: 16 }} />
           </div>
@@ -37,7 +27,6 @@ const NewVideoList: React.FC = () => {
             <span className={`${videoList.highlight}`}>Upload</span> from device
           </p>
             
-          </NavLink>
         </div>
       </div>
 
