@@ -1,6 +1,5 @@
 import React from "react";
 import AudioList from "./AudioList";
-import AudioPlayer from "./AudioPlayer";
 import AudioUpload from "./AudioUpload";
 import "../styles/audioPage.css";
 
