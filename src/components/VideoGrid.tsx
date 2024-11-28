@@ -20,6 +20,7 @@ const VideoGrid: React.FC = () => {
         <VideoCard
           key={video.filename}
           title={video.title}
+          description={video.description ? video.description : ''}
           timestamp={video.upload_date?.toString() as string}
               filename={video.filename}
         />

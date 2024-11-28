@@ -18,7 +18,7 @@ const VideoPlayer: React.FC<{ video: Ivideo }> = ({ video }) => {
             <h2>{video.title}</h2>
             <p>{video.description}</p>
             <video ref={videoRef} controls width='320' height='240'>
-                <source src={`${config.API_BASE_URL}/videos/stream?filename=${video.filename}`} type='video/mp4' />
+                <source src={`${config.API_BASE_URL}/videos/url?filename=${video.filename}`} type='video/mp4' />
                 Your browser does not support the video tag.
             </video>
         </div>
