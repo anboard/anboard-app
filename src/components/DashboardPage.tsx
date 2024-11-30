@@ -94,7 +94,6 @@ const DashboardPage: React.FC = () => {
     };
 
       const fetchPfp = async () => {
-        console.log('dash pfp fetch')
       try {
         const response = await fetch(`${config.API_BASE_URL}/profile/photo`, {
           method: "GET",
@@ -105,7 +104,6 @@ const DashboardPage: React.FC = () => {
           },
         });
         const { pfpUrl } = await response.json();
-        console.log(pfpUrl);
         setPfp(pfpUrl);
       } catch (error: any) {
         setError(error.message || "Something went wrong");

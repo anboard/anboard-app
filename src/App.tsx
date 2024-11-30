@@ -9,13 +9,11 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import VideoUploader from "./components/VideoUploader";
 import Layout from "./components/Layout";
 import Dash from "./components/Dash";
-import NewVideoList from "./components/NewVideoList";
-import NProfilePage from "./components/ProfilePage";
-import NBroadcastStation from "./components/BroadcastStation";
-import AudioPage from "./components/AudioPage";
-
-
-
+import VideoList from "./components/VideoList";
+import ProfilePage from "./components/ProfilePage";
+import BroadcastStation from "./components/BroadcastStation";
+import AudioList from "./components/AudioList";
+import AudioUploader from "./components/AudioUploader";
 
 const App: React.FC = () => {
   return (
@@ -47,19 +45,19 @@ const App: React.FC = () => {
                 </ProtectedRoute>
               }
             />
-              <Route
-                path="/api/anb-broadcaster/videos/upload"
-                element={
-                  <ProtectedRoute>
-                    <VideoUploader />
-                  </ProtectedRoute>
-                }
-                />
+            <Route
+              path="/api/anb-broadcaster/videos/upload"
+              element={
+                <ProtectedRoute>
+                  <VideoUploader />
+                </ProtectedRoute>
+              }
+            />
             <Route
               path="/api/anb-broadcaster/videos"
               element={
                 <ProtectedRoute>
-                  <NewVideoList />
+                  <VideoList />
                 </ProtectedRoute>
               }
             />
@@ -67,16 +65,16 @@ const App: React.FC = () => {
               path="/api/anb-broadcaster/profile"
               element={
                 <ProtectedRoute>
-                  <NProfilePage />
+                  <ProfilePage />
                 </ProtectedRoute>
               }
             />
-      
+
             <Route
               path="/api/anb-broadcaster/station"
               element={
                 <ProtectedRoute>
-                  <NBroadcastStation/>
+                  <BroadcastStation />
                 </ProtectedRoute>
               }
             />
@@ -84,12 +82,18 @@ const App: React.FC = () => {
               path="/api/anb-broadcaster/audios"
               element={
                 <ProtectedRoute>
-                  <AudioPage />
+                  <AudioList />
                 </ProtectedRoute>
               }
             />
-            
-
+             <Route
+                path="/api/anb-broadcaster/audios/upload"
+                element={
+                  <ProtectedRoute>
+                    <AudioUploader />
+                  </ProtectedRoute>
+                }
+                />
           </Route>
         </Routes>
         {/* </Layout> */}

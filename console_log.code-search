@@ -1,0 +1,57 @@
+# Query: console.log
+# ContextLines: 1
+
+15 results - 8 files
+
+src/AuthContext.tsx:
+  77              if (accessToken && isTokenExpired(accessToken)) {
+  79                  await refreshAccessToken()
+
+src/components/AdminMail.tsx:
+  35                  setError("An error occurred while sending the mail.");
+  37                  return;
+
+src/components/AudioCard.tsx:
+  25  
+  27    useEffect(() => {
+
+src/components/AudioGrid.tsx:
+  15  
+  17    return (
+
+src/components/DashboardPage.tsx:
+   96        const fetchPfp = async () => {
+   98        try {
+
+  107          const { pfpUrl } = await response.json();
+  109          setPfp(pfpUrl);
+
+src/components/Layout.tsx:
+  123                const error = await response.json();
+  125                setError(error.error);
+
+  190        } catch (error) {
+  192        } finally {
+
+  206    }
+  208    return (
+
+src/components/ProfilePageEdit.tsx:
+   61        const file = e.target.files[0];
+   63  
+
+  107          const { pfpUrl } = await response.json();
+  109          setPfpLink(pfpUrl);
+
+  164              setIsPfpEdit(!isPfpEdit);
+  166            }}
+
+src/components/VideoUploader.tsx:
+  72        const file = files[0];
+  74        setVideoFile(file);
+
+  76      } else {
+  78      }
+
+  80  
+  82  

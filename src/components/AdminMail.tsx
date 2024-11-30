@@ -33,7 +33,6 @@ const AdminMail: React.FC = () => {
 
             if (!response.ok) {
                 setError("An error occurred while sending the mail.");
-                console.log(response);
                 return;
             }
 

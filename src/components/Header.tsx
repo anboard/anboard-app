@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -10,6 +10,7 @@ const Header: React.FC<{
   broadcaster: { upn: string; email: string };
   pfpLink: string;
 }> = ({ handleMenuClick, broadcaster, pfpLink }) => {
+  const [isLoaded, setIsLoaded] = useState<boolean>(false)
   const navigate = useNavigate();
   const location = useLocation();
   let title = "";
@@ -21,11 +22,17 @@ const Header: React.FC<{
   } else if (location.pathname === "/api/anb-broadcaster/videos") {
     title = "videos";
   } else if (location.pathname === "/api/anb-broadcaster/videos/upload") {
-    title = "video/upload";
+    title = "videos/upload";
   } else if (location.pathname === "/api/anb-broadcaster/audios") {
     title = "audios";
+  }  else if (location.pathname === "/api/anb-broadcaster/audios/upload") {
+    title = "audios/upload";
   } else if (location.pathname === "/api/anb-broadcaster/station") {
     title = "station";
+  }
+
+  const handleImageLoad = () => {
+    setIsLoaded(true)
   }
 
   return (
@@ -54,11 +61,20 @@ const Header: React.FC<{
           className={header.notification}
         />
         {/* profile icon */}
-        <img
-          src={pfpLink}
+       { !isLoaded && <img
+          // src={pfpLink}
+          src={`https://api.dicebear.com/9.x/initials/svg?seed=${broadcaster.email}&radius=50&backgroundType=gradientLinear`}
           alt="Profile"
           className={header.profile}
           onClick={() => navigate("/api/anb-broadcaster/profile")}
+        />}
+         <img
+          src={pfpLink}
+          onLoad={handleImageLoad}
+          alt="Profile"
+          className={header.profile}
+          onClick={() => navigate("/api/anb-broadcaster/profile")}
+          style={{ display: isLoaded ? "block" : "none" }}
         />
       </div>
     </header>

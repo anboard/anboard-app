@@ -75,7 +75,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
               }
             
             if (accessToken && isTokenExpired(accessToken)) {
-                console.log('we are refreshing the token')
                 await refreshAccessToken()
             }
         }

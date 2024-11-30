@@ -1,11 +1,15 @@
 export interface AudioContext {
-    audioList: IAudio[];
-    setAudioList: React.Dispatch<React.SetStateAction<IAudio[]>>;
-  }
-  
+  audioList: IAudio[];
+  setAudioList: React.Dispatch<React.SetStateAction<IAudio[]>>;
+}
+
 export interface IAudio {
-    id: string;
-    title: string;
-    description: string;
-    url: string;
-  }
+  title: string;
+  description?: string;
+  audio_name: string;
+  file_name: string;
+  file_path: string;
+  mime_type: string;
+  size: number;
+  upload_date?: Date;
+}

@@ -5,7 +5,7 @@ import UploadFileIcon from "@mui/icons-material/UploadFile";
 import { useNavigate } from "react-router-dom";
 
 
-const NewVideoList: React.FC = () => {
+const VideoList: React.FC = () => {
 
   const navigate = useNavigate()
 
@@ -39,4 +39,4 @@ const NewVideoList: React.FC = () => {
   );
 };
 
-export default NewVideoList;
+export default VideoList;

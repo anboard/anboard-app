@@ -59,7 +59,6 @@ const ProfilePageEdit: React.FC<{
   const handlePhotoFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
       const file = e.target.files[0];
-      console.log("Selected file:", file);
 
       const validTypes = [
         "image/jpeg",
@@ -105,7 +104,6 @@ const ProfilePageEdit: React.FC<{
 
       if (response.ok) {
         const { pfpUrl } = await response.json();
-        console.log("Profile picture saved:", pfpUrl);
         setPfpLink(pfpUrl);
         localStorage.setItem('pfpLink', pfpUrl)
         setPfpSave(false);
@@ -162,7 +160,6 @@ const ProfilePageEdit: React.FC<{
           className={styles.profileimage}
           onClick={() => {
             setIsPfpEdit(!isPfpEdit);
-            console.log("clicked");
           }}
         />
         <div>

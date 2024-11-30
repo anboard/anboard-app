@@ -5,9 +5,10 @@ import UploadFileIcon from "@mui/icons-material/UploadFile";
 
 interface FilePickerProps {
   onFilesSelected: (files: FileList | null) => void;
+  type: string;
 }
 
-const FilePicker: React.FC<FilePickerProps> = ({ onFilesSelected }) => {
+const FilePicker: React.FC<FilePickerProps> = ({ onFilesSelected, type }) => {
   // Use a ref to reference the hidden file input element
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   // const navigate = useNavigate();
@@ -31,7 +32,7 @@ const FilePicker: React.FC<FilePickerProps> = ({ onFilesSelected }) => {
         <UploadFileIcon sx={{ fontSize: 16 }} />
       </div>
       <p>
-        <span className={`${videoList.highlight}`}>Upload</span> from device
+        <span className={`${videoList.highlight}`}>Select</span> from device
       </p>
 
       <input
@@ -39,7 +40,7 @@ const FilePicker: React.FC<FilePickerProps> = ({ onFilesSelected }) => {
         ref={fileInputRef}
         style={{ display: "none" }}
         onChange={handleFileChange}
-        accept="video/mp4"
+        accept={ type === 'video' ? "video/mp4" : 'audio/*'}
       />
     </div>
   );

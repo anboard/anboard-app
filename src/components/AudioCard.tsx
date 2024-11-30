@@ -3,38 +3,39 @@ import styles from "../styles/videcard.module.css";
 import config from "../config";
 import { useAuth } from "../AuthContext";
 
-interface VideoCardProps {
+interface AudioCardProps {
   title: string;
 
   description: string;
   timestamp: string;
-  isPlaceholder?: boolean; // If true, render the "New Video" card
+  isPlaceholder?: boolean; 
   filename: string;
+mimetype: string
 }
 
-const VideoCard: React.FC<VideoCardProps> = ({
+const AudioCard: React.FC<AudioCardProps> = ({
   title,
   description,
   timestamp,
   isPlaceholder,
   filename,
+  mimetype
 }) => {
-  const [videoUrl, setVideoUrl] = useState<string>("");
+  const [audioUrl, setVideoUrl] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(true);
   const { accessToken } = useAuth();
 
-  // Fetch video URL on mount
   useEffect(() => {
     const fetchUrl = async () => {
       try {
         const response = await fetch(
-          `${config.API_BASE_URL}/video/url?filename=${filename}`,
+          `${config.API_BASE_URL}/audio/url?filename=${filename}`,
           {
             method: "GET",
             headers: {
               Authorization: `Bearer ${accessToken}`,
-              "Content-Type": "application/json",
-            },
+              "Content-Type": "application/json"
+            }
           }
         );
 
@@ -43,6 +44,7 @@ const VideoCard: React.FC<VideoCardProps> = ({
         }
 
         const { url } = await response.json();
+        console.log(url)
         setVideoUrl(url);
       } catch (error) {
         console.error("Error fetching video URL:", error);
@@ -89,10 +91,10 @@ const VideoCard: React.FC<VideoCardProps> = ({
       {loading ? (
         <div>Loading video...</div>
       ) : (
-        <video className={styles.thumbnail} controls>
-          <source src={videoUrl} type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
+        <audio className={styles.thumbnail} controls>
+          <source src={audioUrl} type={mimetype} />
+          Your browser does not support the audio tag.
+        </audio>
       )}
       <div className={styles.content}>
         <h3>{title}</h3>
@@ -108,4 +110,4 @@ const VideoCard: React.FC<VideoCardProps> = ({
   );
 };
 
-export default VideoCard;
+export default AudioCard;
