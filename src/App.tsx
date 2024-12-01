@@ -5,6 +5,9 @@ import Index from "./components/Index";
 import RegistrationPage from "./components/RegistrationPage";
 import LoginPage from "./components/LoginPage";
 import AdminMail from "./components/AdminMail";
+import AdminAccount from "./components/AdminAccount";
+import AdminAnnouncement from "./components/AdminAnnouncement";
+import AdminNews from "./components/AdminNews";
 import ProtectedRoute from "./components/ProtectedRoute";
 import VideoUploader from "./components/VideoUploader";
 import Layout from "./components/Layout";
@@ -27,6 +30,9 @@ const App: React.FC = () => {
           <Route path="/auth/login" element={<LoginPage />} />
 
           <Route path="/api/admin/mail" element={<AdminMail />} />
+          <Route path="/api/admin/account" element={<AdminAccount />} />
+          <Route path="/api/admin/announcement" element={<AdminAnnouncement />} />
+          <Route path="/api/admin/news" element={<AdminNews />} />
 
           <Route
             path="/api/anb-broadcaster/"
