@@ -1,5 +1,4 @@
 import React, { useRef, useState } from "react";
-import { useAuth } from "../AuthContext";
 import ProfilePageView from "./ProfilePageView";
 import IProfile from "../interface/IProfile";
 import EditProfileForm from "./ProfilePageEdit";
@@ -11,7 +10,6 @@ interface LayoutContext {
 }
 
 const NProfilePage: React.FC = () => {
-  const { logout } = useAuth();
   const [isEditing, setIsEditing] = useState(false);
   const originalProfileDataRef = useRef<IProfile>({} as IProfile);
 
@@ -38,13 +36,8 @@ const NProfilePage: React.FC = () => {
     <div>
       {!isEditing ? (
         <div>
-          <ProfilePageView />
-          <button type="button" onClick={handleEditClick}>
-            Edit
-          </button>
-          <button type="button" onClick={() => logout()}>
-            Logout
-          </button>
+          <ProfilePageView handleEditClick={handleEditClick} />
+          
         </div>
       ) : (
         <EditProfileForm
