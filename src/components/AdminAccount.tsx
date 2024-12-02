@@ -1,6 +1,6 @@
-import { useState } from "react";
-import config from "../config";
-import styles from "../styles/adminaccount.module.css";
+// import { useState } from "react";
+// import config from "../config";
+// import styles from "../styles/adminaccount.module.css";
 
 
 const AdminAccount: React.FC = () => {
