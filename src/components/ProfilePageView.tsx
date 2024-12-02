@@ -10,7 +10,7 @@ interface LayoutContext {
 }
 
 const ProfilePageView: React.FC<{ handleEditClick: () => void }> = ({
-  handleEditClick,
+  // handleEditClick,
 }) => {
   const { pfpLink, broadcaster, profileData }: LayoutContext =
     useOutletContext();
@@ -98,17 +98,17 @@ const ProfilePageView: React.FC<{ handleEditClick: () => void }> = ({
           <legend>Broadcaster Information</legend>
           <div className={`${profileView.form_group_wrapper}`}>
             <div className={`${profileView.form_group}`}>
-              <input type="text" id="fullName" placeholder="" required value={broadcaster.upn} disabled />
+              <input type="text" id="fullName" placeholder="" required value={broadcaster.upn}  readOnly />
               <label>UPN</label>
             </div>
 
             <div className={`${profileView.form_group}`}>
-              <input type="text" id="fullName" placeholder="" required value={profileData.post_held} />
+              <input type="text" id="fullName" placeholder="" required defaultValue={profileData.post_held} />
               <label>Post Held</label>
             </div>
 
             <div className={`${profileView.form_group}`}>
-              <input type="text" id="fullName" placeholder="" required value={"Cool FM"} />
+              <input type="text" id="fullName" placeholder="" required defaultValue={"Cool FM"} />
               <label>Station</label>
             </div>
           </div>
@@ -123,33 +123,33 @@ const ProfilePageView: React.FC<{ handleEditClick: () => void }> = ({
 
           <div className={`${profileView.form_group_wrapper}`}>
             <div className={`${profileView.form_group}`}>
-              <input type="text" id="fullName" placeholder="" required value={profileData.name} />
+              <input type="text" id="fullName" placeholder="" required defaultValue={profileData.name} />
               <label>Full Name</label>
             </div>
 
             <div className={`${profileView.form_group}`}>
-              <input type="text" id="fullName" placeholder="" required value={broadcaster.email} />
+              <input type="text" id="fullName" placeholder="" required defaultValue={broadcaster.email} />
               <label>Email Address</label>
             </div>
 
             <div className={`${profileView.form_group}`}>
-              <input type="text" id="fullName" placeholder="" required value={profileData.state_of_origin} />
+              <input type="text" id="fullName" placeholder="" required defaultValue={profileData.state_of_origin} />
               <label>State of Origin</label>
             </div>
 
             <div className={`${profileView.form_group}`}>
-              <input type="text" id="fullName" placeholder="" required value={profileData.local_government} />
+              <input type="text" id="fullName" placeholder="" required defaultValue={profileData.local_government} />
               <label>Local Government</label>
             </div>
 
             <div className={`${profileView.form_group}`}>
-              <input type="text" id="fullName" placeholder="" required value={profileData.date_of_birth &&
+              <input type="text" id="fullName" placeholder="" required defaultValue={profileData.date_of_birth &&
                 profileData.date_of_birth.split("T")[0]} />
               <label>Date of Birth</label>
             </div>
 
             <div className={`${profileView.form_group}`}>
-              <input type="text" id="fullName" placeholder="" required value={profileData.educational_background} />
+              <textarea  id="fullName" placeholder="" required defaultValue={profileData.educational_background} rows={5} cols={30} maxLength={150} />
               <label>Educational Background</label>
             </div>
           </div>

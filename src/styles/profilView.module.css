@@ -1,25 +1,3 @@
-/* .container {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-
-} */
-
-/* .head_wrapper {
-    display: flex;
-    padding: 1.2rem;
-    background-color: #f6f6f7;
-    border-radius: 40px;
-    border: 1px solid;
-} */
-
-/* .image_wrapper {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-
-} */
-
 .profile_pic {
     width: 230px;
     height: 230px;
@@ -29,97 +7,11 @@
     
 }
 
-/* .id_wrapper {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    justify-content: space-evenly;
-    flex-grow: 1;
-} */
-
-/* .id_wrapper div {
-    border-bottom: 1px solid #1f375d;
-    margin-left: 3%;
-    padding: 0px 0 5px 0;
-} */
-
-/* .id_wrapper div:last-of-type {
-    border-bottom: none;
-} */
-/* 
-.id_wrapper div p:nth-child(1) {
-    font-size: 16px;
-    font-style: italic;
-} */
-
-/* .id_wrapper div p:nth-child(2) {
-    font-size: 19px;
-    margin-left: 3%;
-    font-weight: bolder;
-} */
-
-/* .id_wrapper h1 {
-    font-size: 3rem;
-} */
-
-/* .id_wrapper h2 {
-    margin-left: 1rem;
-    font-size: 1.9rem;
-} */
-/* 
-.id_wrapper h3 {
-    margin-left: 2rem;
-    font-size: .9rem;
-} */
-
-/* .section_body {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    border-radius: 10px;
-    border-right: 1px solid #b1a997; 
-} */
-
-/* .section_body > .group {
-    padding: 0 1.5rem;
-    gap: 10px;
-    border-radius: 10px;
-    padding: 10px;
-    box-shadow: 1px 1px 1px var(--textBlue);
-} */
-
-/* .section h2 {
-    padding: 10px;
-    color: var(--textBlue);
-    margin-top: 2rem;
-    border-radius: 10px;
-    border-bottom: none;
-    border-left: none;
-    border-right: none;
-} */
-
-/* .group h3 {
-    
-    font-size: 1rem;
-
-} */
-
-/* .group p {
-    padding: 0 5px;
-    font-size: 1.5rem;
-} */
-
-/* .container button {
-    align-self: flex-end;
-    padding: 1rem;
-    margin-right: 2rem;
-} */
-
-
 .profile_container {
     display: grid;
     grid-template-columns: 1fr 2fr;
     gap: 2rem;
+    padding-top: 2rem;
 }
 
 
@@ -130,9 +22,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    border-radius: 10px;
 }
-
-
 
 .section_one_head {
     display: flex;
@@ -160,14 +51,16 @@
 
 
 .profile_card {
-    border: 1px solid #e8eaee;
+    border: 1px solid var(--border-fade);
     border-radius: 10px;
     background-color: #fff;
+    padding-bottom: 1.7rem;
+    padding-top: 1rem;
 }
 
 .profile_card legend {
      /* background-color: red; */
-     border-bottom: 1px solid #e8eaee;
+     border-bottom: 1px solid var(--border-fade);
      padding: 1.5rem 2rem;
      font-weight: 700;
 }
@@ -187,10 +80,11 @@
   }
   
   /* Styling for the input field */
-  .form_group input {
+  .form_group input,
+  .form_group textarea {
     width: 100%;
     padding: 15px 5px;
-    font-size: 16px;
+    font-size: 1rem;
     border: 1px solid #ccc;
     border-radius: 4px;
     outline: none;
@@ -210,17 +104,20 @@
     background-color: white;
     padding: 0 5px;
     color: #999;
-    font-size: 16px;
+    font-size: 1rem;
     transition: 0.3s ease;
     pointer-events: none;
   }
   
   /* When the input is focused or has content, move the label */
   .form_group input:focus + label,
-  .form_group input:not(:placeholder-shown) + label {
+  .form_group textarea:focus + label,
+  .form_group input:not(:placeholder-shown) + label,
+  .form_group textarea:not(:placeholder-shown) + label 
+  {
     top: -1px;
     left: 10px;
-    font-size: 14px;
+    font-size: .8rem;
     color: var(--textBlue);
     /* transform: translateY(10%); */
 
@@ -237,4 +134,30 @@
         flex-direction: column;
         align-items: center;
     }
+
+    .profile_section_one {
+        background-color: #fff;
+    }
+  }
+
+  @media (max-width: 693px) { /* Breakpoint for smaller screens */
+    .profile_section_one {
+        padding: 2rem 0;
+    }
+
+    .form_group_wrapper {
+        margin: 0 .2rem;
+        padding: 0 1rem;
+    }
+
+    .profile_card legend {
+        /* background-color: red; */
+        border-bottom: 1px solid var(--border-fade);
+        padding: 1rem 1.5rem;
+   }
+
+   .profile_pic {
+    width: 150px;
+    height: 150px;
+}
   }

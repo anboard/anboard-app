@@ -4,7 +4,7 @@ import Header from "./Header";
 import Sidebar from "./Sidebar";
 import { useAuth } from "../AuthContext";
 import config from "../config";
-import "../styles/layout.css";
+import layout from "../styles/layout.module.css";
 import Ivideo from "../interface/IVideo";
 import IBroadcast from "../interface/IBroadcast";
 import {IAudio} from '../interface/IAudio';
@@ -224,7 +224,7 @@ const Layout: React.FC = () => {
     return <p>Loading...</p>;
   }
   return (
-    <div className="layout">
+    <div className={layout.layout}>
       <Header
         handleMenuClick={handleMenuClick}
         broadcaster={broadcaster}
@@ -232,7 +232,7 @@ const Layout: React.FC = () => {
       />
       {menuOpen && <Sidebar handleMenuClick={handleMenuClick} />}
 
-      <main className="main-content">
+      <main className={layout.main_content}>
         <Outlet
           context={{
             videos,
