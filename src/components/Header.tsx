@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useOutletContext } from "react-router-dom";
 import header from "../styles/header.module.css";
 import layout from "../styles/layout.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -14,21 +14,24 @@ import {
   faHouse,
   faRadio,
   faDoorOpen,
+  faBars,
 } from "@fortawesome/free-solid-svg-icons";
 import { useAuth } from "../AuthContext";
+
 
 const Header: React.FC<{
   handleMenuClick: () => void;
   broadcaster: { upn: string; email: string };
   pfpLink: string;
-}> = ({  broadcaster, pfpLink }) => {
+  setTitle: React.Dispatch<React.SetStateAction<string>>;
+  isMenuOpen: boolean;
+}> = ({ handleMenuClick, broadcaster, pfpLink, setTitle, isMenuOpen }) => {
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
   const navigate = useNavigate();
   const location = useLocation();
 
   const { logout } = useAuth();
 
-  
   let title = "";
 
   const [menuOpen, setMenuOpen] = useState(false);
@@ -70,39 +73,37 @@ const Header: React.FC<{
   }, [menuOpen]);
 
   if (location.pathname === "/api/anb-broadcaster/dashboard") {
-    title = "dashboard";
+    setTitle("Dashboard");
   } else if (location.pathname === "/api/anb-broadcaster/profile") {
-    title = "profile";
+    setTitle("Profile");
   } else if (location.pathname === "/api/anb-broadcaster/videos") {
-    title = "videos";
+    setTitle("Videos");
   } else if (location.pathname === "/api/anb-broadcaster/videos/upload") {
-    title = "videos/upload";
+    setTitle("Videos/upload");
   } else if (location.pathname === "/api/anb-broadcaster/audios") {
-    title = "audios";
+    setTitle("Audios");
   } else if (location.pathname === "/api/anb-broadcaster/audios/upload") {
-    title = "audios/upload";
+    setTitle("Audios/upload");
   } else if (location.pathname === "/api/anb-broadcaster/station") {
-    title = "station";
+    setTitle("Station");
   }
 
   const handleImageLoad = () => {
     setIsLoaded(true);
   };
 
+  // console.log(menuOpen)
   return (
-    <header className={header.container}>
+    <header className={`${header.container}  ${isMenuOpen ? header.shifted : ''}`}>
       <div className={header.left}>
         {/* <div className={header.icon_wrapper} onClick={handleMenuClick}></div> */}
-        <img src="/images/logo.png" className={header.logo} alt="Logo" />
-        <h1
-          className={`${header.directory} ${layout.unselectable}`}
-          onClick={toggleMenu}
-        >
-          <span className="directory-code">{broadcaster.upn}</span>
-          <span className={header.directory_separator}>/</span>
-          <span className={header.directory_location}>{title}</span>
-          {/* Dropdown Menu */}
-          {menuOpen && (
+        <div>
+        <FontAwesomeIcon icon={faBars} className={`${header.icon_wrapper} ${layout.header} ${header.icon_big} ${isMenuOpen ? header.menu_hide : ''}`} onClick={handleMenuClick} />
+        <div className={`${header.icon_small}`} onClick={toggleMenu}>
+        <FontAwesomeIcon icon={faBars} className={`${header.icon_wrapper} ${layout.header}  ${isMenuOpen ? header.menu_hide : ''}`} />
+        </div>
+        {/* Dropdown Menu */}
+        {menuOpen && (
             <div className={header.dropdown} ref={dropdownRef}>
               <ul>
                 <li onClick={() => navigate("/api/anb-broadcaster/dashboard")}>
@@ -140,6 +141,16 @@ const Header: React.FC<{
               </ul>
             </div>
           )}
+        </div>
+        <img src="/images/logo.png" className={header.logo} alt="Logo" />
+        <h1
+          className={`${header.directory} ${layout.unselectable}`}
+          onClick={toggleMenu}
+        >
+          <span className="directory-code">{broadcaster.upn}</span>
+          <span className={header.directory_separator}>/</span>
+          <span className={header.directory_location}>{title}</span>
+          
         </h1>
       </div>
 
@@ -147,7 +158,7 @@ const Header: React.FC<{
         <input type="search" name="header-search" />
       </div> */}
 
-      <div className={header.right}>
+      <div className={`${header.right}  ${isMenuOpen ? header.right_shifted : ''}`}>
         <FontAwesomeIcon
           icon={faMagnifyingGlass}
           className={header.notification}

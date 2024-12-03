@@ -7,77 +7,17 @@ interface LayoutContext {
   pfpLink: string;
   broadcaster: { upn: string; email: string };
   profileData: IProfile;
+  menuOpen: boolean;
 }
 
 const ProfilePageView: React.FC<{ handleEditClick: () => void }> = ({
   // handleEditClick,
 }) => {
-  const { pfpLink, broadcaster, profileData }: LayoutContext =
+  const { pfpLink, broadcaster, profileData, menuOpen }: LayoutContext =
     useOutletContext();
 
-  // return (
-  //   <div className={profileView.container}>
-  //     <div className={`${profileView.head_wrapper}`}>
-  //       <div className={`${profileView.image_wrapper}`}>
-  //         <div>
-  //           <p>UPN: {broadcaster.upn}</p>
-  //         <p>Email: {broadcaster.email}</p>
-  //         </div>
-  //         <img
-  //           src={pfpLink}
-  //           alt="Profile"
-  //           className={`${profileView.profile_pic}`}
-  //         />
-  //       </div>
-  //       {/* <div className={`${profileView.id_wrapper}`}>
-  //         <h1>{profileData.name}</h1>
-  //         <h2>{broadcaster.upn}</h2>
-  //         <h3> - {profileData.post_held}</h3>
-  //       </div> */}
-  //       <div className={`${profileView.id_wrapper}`}>
-  //         <div>
-  //           <p>Name</p>
-  //           <p>{profileData.name}</p>
-  //         </div>
-
-  //         <div>
-  //           <p>Position held</p>
-  //           <p>{profileData.post_held}</p>
-  //         </div>
-
-  //         <div>
-  //           <p>State of Origin</p>
-  //           <p>{profileData.state_of_origin}</p>
-  //         </div>
-
-  //         <div>
-  //           <p>L.G.A</p>
-  //           <p>{profileData.local_government}</p>
-  //         </div>
-
-  //         <div>
-  //           <p>Date of birth</p>
-  //           <p>
-  //             {profileData.date_of_birth &&
-  //               profileData.date_of_birth.split("T")[0]}
-  //           </p>
-  //         </div>
-
-  //         <div>
-  //           <p>Educational Background</p>
-  //           <p>{profileData.educational_background}</p>
-  //         </div>
-  //       </div>
-  //     </div>
-
-  //     <button type="button" onClick={handleEditClick}>
-  //       Edit
-  //     </button>
-  //   </div>
-  // );
-
   return (
-    <div className={`${profileView.profile_container}`}>
+    <div className={`${profileView.profile_container} ${menuOpen ? profileView.single_grid : ""}`}>
       <div className={`${profileView.profile_section_one}`}>
         <div className={`${profileView.section_one_head}`}>
           <img

@@ -5,32 +5,58 @@ import {
   faFileVideo,
   faNewspaper,
 } from "@fortawesome/free-regular-svg-icons";
-// import { faBullhorn, faChevronDown } from "@fortawesome/free-solid-svg-icons";
+import {
+  faBullhorn,
+  faChevronLeft,
+  faChevronRight,
+} from "@fortawesome/free-solid-svg-icons";
 import dash from "../styles/dash.module.css";
 // import DashNotifCard from "./DashNotifCard";
 import { useSwipeable, SwipeableHandlers } from "react-swipeable";
+import { useOutletContext } from "react-router-dom";
+// import { faBullhorn } from "@fortawesome/free-solid-svg-icons";
 
+interface LayoutContext {
+  menuOpen: boolean;
+}
 const sections = [
   {
     title: "Admin Notifications",
     items: [
-      { title: "A titular title", body: "Corresponding body for the titular title", date: "Just now" },
-      { title: "Another title", body: "Another corresponding body", date: "Yesterday" },
+      {
+        title: "A titular title",
+        body: "Corresponding body for the titular title",
+        date: "Just now",
+      },
+      {
+        title: "Another title",
+        body: "Another corresponding body",
+        date: "Yesterday",
+      },
     ],
   },
   {
     title: "ANBOARD News",
     items: [
-      { title: "Breaking News", body: "Latest updates about ANBOARD activities", date: "Today" },
-      { title: "Event Recap", body: "Details about yesterday's ANBOARD event", date: "Yesterday" },
+      {
+        title: "Breaking News",
+        body: "Latest updates about ANBOARD activities",
+        date: "Today",
+      },
+      {
+        title: "Event Recap",
+        body: "Details about yesterday's ANBOARD event",
+        date: "Yesterday",
+      },
     ],
   },
 ];
 
-
 const Dash: React.FC = () => {
-
   // const [isAdmin, setIsAdmin] = useState(true)
+  
+  const { menuOpen }: LayoutContext =
+    useOutletContext();
 
   const [currentSectionIndex, setCurrentSectionIndex] = useState(0);
 
@@ -54,15 +80,18 @@ const Dash: React.FC = () => {
   });
 
   const currentSection = sections[currentSectionIndex];
-  
+
   return (
-    <div className={`${dash.container} ${dash.small_grid}`}>
+    <div className={`${dash.container} ${dash.small_grid}  ${menuOpen ? dash.single_grid : ""}`}>
       <div className={`${dash.audio_video_wrapper} ${dash.small_flex}`}>
         <div className={`${dash.pill}`}>
           <p className={`${dash.pill_title}`}>Vidoes</p>
           <div className={`${dash.pill_body}`}>
             <div className={`${dash.pill_icon_wrapper}`}>
-              <FontAwesomeIcon className={`${dash.pill_icon}`} icon={faFileVideo} />
+              <FontAwesomeIcon
+                className={`${dash.pill_icon}`}
+                icon={faFileVideo}
+              />
             </div>
             <div className={`${dash.pill_info}`}>
               <p>15</p>
@@ -75,7 +104,10 @@ const Dash: React.FC = () => {
           <p className={`${dash.pill_title}`}>Audios</p>
           <div className={`${dash.pill_body}`}>
             <div className={`${dash.pill_icon_wrapper}`}>
-              <FontAwesomeIcon className={`${dash.pill_icon}`} icon={faFileAudio} />
+              <FontAwesomeIcon
+                className={`${dash.pill_icon}`}
+                icon={faFileAudio}
+              />
             </div>
             <div className={`${dash.pill_info}`}>
               <p>15</p>
@@ -87,7 +119,7 @@ const Dash: React.FC = () => {
 
       <div>
         {/* ADMIN NOTIFICATIONS */}
-      {/* <div className={`${dash.admin_notif_card} ${dash.notif_card}`}>
+        {/* <div className={`${dash.admin_notif_card} ${dash.notif_card}`}>
         <div className={`${dash.notif_title}`}>
           <FontAwesomeIcon icon={faBullhorn} />
           Admin Notifications
@@ -96,29 +128,39 @@ const Dash: React.FC = () => {
         {isAdmin ? <DashNotifCard /> : 'ANBOARD news'}
       </div> */}
 
-      {/* ANBROAD NEWS */}
-      <div className={`${dash.admin_notif_card} ${dash.notif_card}`} {...swipeHandlers} >
-        <div className={`${dash.notif_title}`}>
-          <FontAwesomeIcon icon={faNewspaper} />
-          {/* ANBOARD News */}
-          {currentSection.title}
-        </div>
-        <div className={`${dash.notif_body}`}>
-          {currentSection.items.map((item, index) => (
-            <div className={`${dash.notif_item}`} key={index}>
-            <img src="/images/logo.png" alt="" className={`${dash.notif_image}`} />
-            <div className="item_text_wrapper">
-              <div className={`${dash.item_title}`}>{item.title}</div>
-              <div className="item_desc">
-                {item.body}
-              </div>
-              <small className="item_date">
-                {item.date}
-              </small>
+        {/* ANBROAD NEWS */}
+        <div
+          className={`${dash.admin_notif_card} ${dash.notif_card}`}
+          {...swipeHandlers}
+        >
+          <div className={`${dash.notif_title_wrapper}`}>
+            <div className={`${dash.notif_title}`}>
+              <FontAwesomeIcon
+                icon={currentSectionIndex === 0 ? faBullhorn : faNewspaper}
+              />
+              {currentSection.title}
+            </div>
+            <div className={dash.notif_title_control}>
+              <FontAwesomeIcon icon={faChevronLeft} onClick={() => handleSwipe('left')} />
+              <FontAwesomeIcon icon={faChevronRight} onClick={() => handleSwipe('right')} />
             </div>
           </div>
-          ))}
-          {/* <div className={`${dash.notif_item}`}>
+          <div className={`${dash.notif_body}`}>
+            {currentSection.items.map((item, index) => (
+              <div className={`${dash.notif_item}`} key={index}>
+                <img
+                  src="/images/logo.png"
+                  alt=""
+                  className={`${dash.notif_image}`}
+                />
+                <div className="item_text_wrapper">
+                  <div className={`${dash.item_title}`}>{item.title}</div>
+                  <div className="item_desc">{item.body}</div>
+                  <small className="item_date">{item.date}</small>
+                </div>
+              </div>
+            ))}
+            {/* <div className={`${dash.notif_item}`}>
             <img src="/images/logo.png" alt="" className={`${dash.notif_image}`} />
             <div className="item_text_wrapper">
               <div className={`${dash.item_title}`}>A titular title</div>
@@ -152,8 +194,8 @@ const Dash: React.FC = () => {
               </small>
             </div>
           </div> */}
+          </div>
         </div>
-      </div>
       </div>
     </div>
   );

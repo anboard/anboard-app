@@ -59,14 +59,12 @@
 }
 
 .profile_card legend {
-     /* background-color: red; */
      border-bottom: 1px solid var(--border-fade);
      padding: 1.5rem 2rem;
      font-weight: 700;
 }
 
 .form_group_wrapper {
-    /* background-color: red; */
     margin: 0 2rem;
     padding: 0 1rem;
     display: flex;
@@ -123,6 +121,22 @@
 
   }
   
+  @media (max-width: 1239px) {
+    .single_grid {
+      grid-template-columns: 1fr 2fr;
+    }
+
+
+
+    .profile_container {
+    }
+  }
+  
+  @media (max-width: 975px) {
+    .single_grid {
+      grid-template-columns: 1fr 2fr;
+    }
+  }
 
   @media (max-width: 768px) { /* Breakpoint for smaller screens */
     .profile_container {
@@ -151,7 +165,6 @@
     }
 
     .profile_card legend {
-        /* background-color: red; */
         border-bottom: 1px solid var(--border-fade);
         padding: 1rem 1.5rem;
    }
