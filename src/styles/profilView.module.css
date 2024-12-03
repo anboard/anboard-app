@@ -62,6 +62,9 @@
      border-bottom: 1px solid var(--border-fade);
      padding: 1.5rem 2rem;
      font-weight: 700;
+     display: flex;
+     align-items: center;
+     justify-content: space-between;
 }
 
 .form_group_wrapper {
@@ -119,6 +122,33 @@
     color: var(--textBlue);
     /* transform: translateY(10%); */
 
+  }
+
+  .personal_info .form_controls {
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-end;
+    margin: 0 2rem;
+    padding: 0 1rem;
+  }
+
+  .form_controls button {
+    padding: .5rem;
+    border-radius: .4rem;
+    border: none;
+  }
+
+  .form_controls button:first-of-type:hover {
+    background-color: green;
+    background-color: var(--textBlue);
+    color: white;
+    padding: .55rem;
+  }
+
+  .form_controls button:last-of-type:hover {
+    background-color: rgb(212, 2, 2);
+    color: white;
+    padding: .55rem;
   }
   
   @media (max-width: 1239px) {
