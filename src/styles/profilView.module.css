@@ -125,11 +125,6 @@
     .single_grid {
       grid-template-columns: 1fr 2fr;
     }
-
-
-
-    .profile_container {
-    }
   }
   
   @media (max-width: 975px) {

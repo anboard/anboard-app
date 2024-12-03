@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useLocation, useNavigate, useOutletContext } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import header from "../styles/header.module.css";
 import layout from "../styles/layout.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
