@@ -45,6 +45,7 @@
     display: flex;
     flex-direction: column;
     /* align-items: center; */
+    justify-content: center;
     /* padding: 1rem; */
     text-align: center;
     overflow-y: scroll;
@@ -54,6 +55,7 @@
 .registrationcontainer img {
     margin-inline: auto;
     max-width: 100px;
+    margin-top: 1rem;
     margin-bottom: 0.5rem;
 }
 
@@ -69,9 +71,11 @@ h2 {
     margin-top: -1rem;
     /* background-color: black; */
     display: flex;
+    /* align-self: center; */
     margin-inline: auto;
     flex-direction: column;
     width: 50%;
+    min-width: 200px;
     height: fit-content;
     margin-bottom: 1rem;
 }
@@ -123,45 +127,9 @@ h2 {
     background-color: #085374;
 }
 
-/* PASSWORD RULES */
-.passwordrules {
-    background: #fff;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 10px;
-    /* position: absolute; */
-    top: 100%;
-    left: 0; 
-    width: 100%;
-    width: 350px;
-    z-index: 10;
-    margin: auto;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.passwordrules p {
-    font-weight: bold;
-    margin: 0 0 5px 0;
-}
-
-.passwordrules ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-}
-
-.passwordrules li {
-    margin-bottom: 5px;
-    color: #ff0000;
-}
-
-.passwordrules li.valid {
-    color: #28a745;
-}
-
 
 /* Media Queries for Responsiveness */
-@media (min-width: 768px) {
+@media (min-width: 769px) {
     .registrationpage {
         flex-direction: row; /* Row layout for medium and large screens */
     }
@@ -176,10 +144,40 @@ h2 {
         width: 70%;
         padding: 2rem;
     }
-
+    
     h2 {
         font-size: 1.75rem;
     }
+    
+}
+@media (max-width: 768px) {
+    .registrationpage {
+        flex-direction: column; /* Row layout for medium and large screens */
+        height: fit-content;
+
+    }
+    .formgroup{
+        /* background-color: yellowgreen; */
+        display: flex;
+        justify-self: center;
+        align-self: center;
+        width: 80%;
+        min-width: 200px;
+        /* margin-left: 10%; */
+        float: right;
+        margin-inline: auto;
+    }
+    .submitbutton{
+        margin: auto;
+        margin-left: 20%;
+    }
+    .registrationcontainer {
+        /* background-color: #ff0000; */
+        display: flex;
+        justify-content: center;
+        padding-right: -2rem;
+    }
+
 }
 
 @media (max-width: 480px) {
@@ -200,5 +198,63 @@ h2 {
         font-size: 0.9rem;
         padding: 0.5rem 1.5rem;
         border-radius: 20px;
+    }
+}
+/* PASSWORD DIV STYLING */
+/* PASSWORD RULES */
+.passwordrules {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px;
+    width: 100%; /* Match parent container's width */
+    max-width: 350px; /* Limit maximum width */
+    margin: 10px auto; /* Center and provide spacing */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease-in-out; /* Smooth resizing */
+}
+
+.passwordrules p {
+    font-weight: bold;
+    margin: 0 0 10px 0;
+    font-size: 1rem;
+}
+
+.passwordrules ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.passwordrules li {
+    margin-bottom: 5px;
+    color: #ff0000;
+    font-size: 0.9rem;
+}
+
+.passwordrules li.valid {
+    color: #28a745;
+}
+
+/* Responsive Adjustments */
+@media (min-width: 768px) {
+    .passwordrules {
+        padding: 15px;
+        font-size: 1rem;
+    }
+
+    .passwordrules li {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .passwordrules {
+        font-size: 0.8rem;
+        padding: 8px;
+    }
+
+    .passwordrules li {
+        font-size: 0.8rem;
     }
 }
