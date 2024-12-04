@@ -2,12 +2,13 @@ import React, { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 import Adminheader from "./Adminheader";
 import Adminsidebar from "./Adminsidebar";
-import "../styles/layout.css";
-
+import layout from "../styles/layout.module.css";
+// import AdminMail from './AdminMail';
 const AdminLayout: React.FC = () => {
   const [broadcaster, setBroadcaster] = useState<{ upn: string; email: string }>({ upn: "", email: "" });
   const [menuOpen, setMenuOpen] = useState(false);
   const [pfpLink, setPfpLink] = useState<string>(localStorage.getItem("pfpUrl") ?? "");
+  setPfpLink
 
   const handleMenuClick = () => setMenuOpen(!menuOpen);
 
@@ -17,10 +18,11 @@ const AdminLayout: React.FC = () => {
   }, []);
 
   return (
-    <div className="layout">
+    <div className={layout.layout}>
       <Adminheader handleMenuClick={handleMenuClick} broadcaster={broadcaster} pfpLink={pfpLink} />
       {menuOpen && <Adminsidebar handleMenuClick={handleMenuClick} />}
-      <main className="main-content">
+      <main className={`${layout.main_content} ${menuOpen ? layout.shifted : ''}`}>
+      <h1 style={{ color: "black" }}>AdminMail</h1>
         <Outlet context={{ broadcaster }} />
       </main>
     </div>

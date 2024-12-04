@@ -47,6 +47,7 @@
     /* align-items: center; */
     /* padding: 1rem; */
     text-align: center;
+    overflow-y: scroll;
     color: #203760;
 }
 
@@ -70,9 +71,9 @@ h2 {
     display: flex;
     margin-inline: auto;
     flex-direction: column;
-    width: 80%;
+    width: 50%;
     height: fit-content;
-    margin-bottom: 0rem;
+    margin-bottom: 1rem;
 }
 
 .formgroup label {
@@ -103,7 +104,7 @@ h2 {
     background-color: #f8d7da;
     padding: 0.5rem;
     border-radius: 5px;
-    margin-top: 1rem;
+    margin-top: 0.5rem;
 }
 
 /* Button Styling */
@@ -134,6 +135,7 @@ h2 {
     width: 100%;
     width: 350px;
     z-index: 10;
+    margin: auto;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
