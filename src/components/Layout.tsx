@@ -4,11 +4,10 @@ import Header from "./Header";
 import Sidebar from "./Sidebar";
 import { useAuth } from "../AuthContext";
 import config from "../config";
-import "../styles/layout.css";
+import layout from "../styles/layout.module.css";
 import Ivideo from "../interface/IVideo";
 import IBroadcast from "../interface/IBroadcast";
-import {IAudio} from '../interface/IAudio';
-
+import { IAudio } from "../interface/IAudio";
 
 import IProfile from "../interface/IProfile";
 
@@ -21,7 +20,6 @@ const Layout: React.FC = () => {
   const [pfpLink, setPfpLink] = useState<string>(
     localStorage.getItem("pfpUrl") ?? ""
   );
-  // const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [videos, setVideos] = useState<Ivideo[]>([]);
   const [audios, setAudios] = useState<IAudio[]>([]);
@@ -36,13 +34,15 @@ const Layout: React.FC = () => {
     {} as IProfile as any
   );
 
+  const [title, setTitle] = useState('Dashboard')
+
   // loadStates
-  const [broadcasterLoading, setBroadcasterLoading] = useState<boolean>(true)
-  const [pfpLoading, setPfpLoading] = useState<boolean>(true)
-  const [videosLoading, setVidesoLoading] = useState<boolean>(true)
-  const [audiosLoading, setAudiosLoading] = useState<boolean>(true)
-  const [stationDataLoading, setStationDataLoading] = useState<boolean>(true)
-  const [profileDataLoading, setProfileDataLoading] = useState<boolean>(true)
+  const [broadcasterLoading, setBroadcasterLoading] = useState<boolean>(true);
+  const [pfpLoading, setPfpLoading] = useState<boolean>(true);
+  const [videosLoading, setVidesoLoading] = useState<boolean>(true);
+  const [audiosLoading, setAudiosLoading] = useState<boolean>(true);
+  const [stationDataLoading, setStationDataLoading] = useState<boolean>(true);
+  const [profileDataLoading, setProfileDataLoading] = useState<boolean>(true);
 
   error;
   const { accessToken } = useAuth();
@@ -66,38 +66,38 @@ const Layout: React.FC = () => {
         }
 
         const { broadcaster } = await response.json();
-        console.log(broadcaster)
+        console.log(broadcaster);
         setBroadcaster(broadcaster);
-        setBroadcasterLoading(false)
+        setBroadcasterLoading(false);
       } catch (error: any) {
         setError(error.message || "Something went wrong");
       }
     };
 
     if (!broadcaster.upn) fetchData();
-  }, [accessToken])
+  }, [accessToken]);
 
   useEffect(() => {
     const fetchPfp = async () => {
       try {
         const response = await fetch(`${config.API_BASE_URL}/profile/photo`, {
-            method: "GET",
-            credentials: "include",
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-              "Content-Type": "application/json",
-            },
-          });
+          method: "GET",
+          credentials: "include",
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            "Content-Type": "application/json",
+          },
+        });
         const { pfpUrl } = await response.json();
         setPfpLink(pfpUrl);
-        setPfpLoading(false)
+        setPfpLoading(false);
       } catch (error: any) {
         setError(error.message || "Something went wrong");
       }
     };
 
     if (!pfpLink) fetchPfp();
-  }, [pfpLink, accessToken])
+  }, [pfpLink, accessToken]);
 
   useEffect(() => {
     const fetchVideos = async () => {
@@ -118,14 +118,14 @@ const Layout: React.FC = () => {
 
         const { videos } = await response.json();
         setVideos(videos);
-        setVidesoLoading(false)
+        setVidesoLoading(false);
       } catch (err: any) {
         setError(err.message);
       }
     };
 
     if (videos.length === 0) fetchVideos();
-  }, [accessToken])
+  }, [accessToken]);
 
   useEffect(() => {
     const fetchStationData = async () => {
@@ -147,14 +147,14 @@ const Layout: React.FC = () => {
 
         const { data } = await response.json();
         setStationData(data);
-        setStationDataLoading(false)
+        setStationDataLoading(false);
       } catch (err: any) {
         setError(err.message);
       }
     };
 
     fetchStationData();
-  }, [accessToken])
+  }, [accessToken]);
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -176,14 +176,14 @@ const Layout: React.FC = () => {
         const data = await response.json();
         const broadcasterProfile = data.data;
         setProfileData(broadcasterProfile);
-        setProfileDataLoading(false)
+        setProfileDataLoading(false);
       } catch (error: any) {
         setError(error.message);
       }
     };
 
-    fetchProfile()
-  }, [accessToken])
+    fetchProfile();
+  }, [accessToken]);
 
   useEffect(() => {
     const fetchAudios = async () => {
@@ -195,44 +195,54 @@ const Layout: React.FC = () => {
             "Content-Type": "application/json",
           },
         });
-  
+
         if (!response.ok) {
           const error = await response.json();
           setError(error.message || "Failed to fetch audio list");
           return;
         }
-  
+
         const { audios } = await response.json();
         setAudios(audios);
-        setAudiosLoading(false)
+        setAudiosLoading(false);
       } catch (err: any) {
         setError(err.message || "Failed to fetch audios");
       }
     };
 
-    fetchAudios()
-  }, [accessToken])
-
-
-
+    fetchAudios();
+  }, [accessToken]);
 
   const handleMenuClick = () => {
     setMenuOpen(!menuOpen);
   };
 
-  if (broadcasterLoading && pfpLoading && videosLoading && audiosLoading && stationDataLoading && profileDataLoading) {
+  if (
+    broadcasterLoading &&
+    pfpLoading &&
+    videosLoading &&
+    audiosLoading &&
+    stationDataLoading &&
+    profileDataLoading
+  ) {
     return <p>Loading...</p>;
   }
+
+  // console.log(menuOpen)
   return (
-    <div className="layout">
+    <div className={layout.layout}>
+      {<Sidebar handleMenuClick={handleMenuClick} menuOpen={menuOpen} />}
+      
       <Header
         handleMenuClick={handleMenuClick}
         broadcaster={broadcaster}
         pfpLink={pfpLink}
+        setTitle={setTitle}
+        isMenuOpen={menuOpen}
       />
-      {menuOpen && <Sidebar handleMenuClick={handleMenuClick} />}
 
-      <main className="main-content">
+      <main className={`${layout.main_content} ${menuOpen ? layout.shifted : ''}`}>
+        <h1 style={{ color: "black" }}>{title}</h1>
         <Outlet
           context={{
             videos,
@@ -245,7 +255,8 @@ const Layout: React.FC = () => {
             profileData,
             setProfileData,
             audios,
-            setAudios
+            setAudios,
+            menuOpen
           }}
         />
       </main>

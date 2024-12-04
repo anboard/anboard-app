@@ -1,6 +1,7 @@
 import React from "react";
 import sidebar from "../styles/sidebar.module.css";
 import header from "../styles/header.module.css";
+import layout from "../styles/layout.module.css";
 import CloseIcon from "@mui/icons-material/Close";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import VideoLibraryIcon from "@mui/icons-material/VideoLibrary";
@@ -12,12 +13,13 @@ import { useNavigate } from "react-router-dom";
 
 const Sidebar: React.FC<{
   handleMenuClick: () => void;
-}> = ({ handleMenuClick }) => {
+  menuOpen: boolean;
+}> = ({ handleMenuClick, menuOpen }) => {
   const navigation = useNavigate();
   const { logout } = useAuth();
 
   return (
-    <div className={sidebar.container}>
+    <div className={`${sidebar.container} ${layout.sidebar} ${menuOpen ? sidebar.open : ""}`}>
       <div className={sidebar.flex_wrapper}>
         <div className={`${header.left} ${sidebar.top}`}>
           <img src="/images/logo.png" className={header.logo} alt="Logo" />

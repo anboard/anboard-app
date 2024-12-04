@@ -7,64 +7,96 @@ interface LayoutContext {
   pfpLink: string;
   broadcaster: { upn: string; email: string };
   profileData: IProfile;
+  menuOpen: boolean;
 }
 
-const ProfilePageView: React.FC = () => {
-  const { pfpLink, broadcaster, profileData }: LayoutContext = useOutletContext();
-  const navigate = useNavigate();
+const ProfilePageView: React.FC<{ handleEditClick: () => void }> = ({
+  // handleEditClick,
+}) => {
+  const { pfpLink, broadcaster, profileData, menuOpen }: LayoutContext =
+    useOutletContext();
 
   return (
-    <div className={profileView.container}>
-      <div className={`${profileView.head_wrapper}`}>
-        <div className={`${profileView.id_wrapper}`}>
-          <h1>{profileData.name}</h1>
-          <h2>{broadcaster.upn}</h2>
-          <h3> - {profileData.post_held}</h3>
+    <div className={`${profileView.profile_container} ${menuOpen ? profileView.single_grid : ""}`}>
+      <div className={`${profileView.profile_section_one}`}>
+        <div className={`${profileView.section_one_head}`}>
+          <img
+            src={pfpLink}
+            alt="Profile"
+            className={`${profileView.profile_pic}`}
+          />
+          <div className={`${profileView.section_one_head_text}`}>
+            <p>{profileData.name}</p>
+
+            <p>{profileData.post_held}</p>
+          </div>
         </div>
-        <img
-          src={pfpLink}
-          alt="Profile"
-          className={`${profileView.profile_pic}`}
-        />
+
+        <form
+          className={`${profileView.broadcaster_info} ${profileView.profile_card}`}
+        >
+          <legend>Broadcaster Information</legend>
+          <div className={`${profileView.form_group_wrapper}`}>
+            <div className={`${profileView.form_group}`}>
+              <input type="text" id="fullName" placeholder="" required value={broadcaster.upn}  readOnly />
+              <label>UPN</label>
+            </div>
+
+            <div className={`${profileView.form_group}`}>
+              <input type="text" id="fullName" placeholder="" required defaultValue={profileData.post_held} />
+              <label>Post Held</label>
+            </div>
+
+            <div className={`${profileView.form_group}`}>
+              <input type="text" id="fullName" placeholder="" required defaultValue={"Cool FM"} />
+              <label>Station</label>
+            </div>
+          </div>
+        </form>
       </div>
 
-      <section className={`${profileView.section}`}>
-        <h2>Personal</h2>
-        <div className={`${profileView.section_body}`}>
-          <div className={`${profileView.group}`}>
-            <h3 className="profile-data-label">Name</h3>
-            <p className="profile-data-value">{profileData.name}</p>
+      <div className={`${profileView.profile_section_two}`}>
+        <form
+          className={`${profileView.personal_info} ${profileView.profile_card}`}
+        >
+          <legend>Personal Information</legend>
+
+          <div className={`${profileView.form_group_wrapper}`}>
+            <div className={`${profileView.form_group}`}>
+              <input type="text" id="fullName" placeholder="" required defaultValue={profileData.name} />
+              <label>Full Name</label>
+            </div>
+
+            <div className={`${profileView.form_group}`}>
+              <input type="text" id="fullName" placeholder="" required defaultValue={broadcaster.email} />
+              <label>Email Address</label>
+            </div>
+
+            <div className={`${profileView.form_group}`}>
+              <input type="text" id="fullName" placeholder="" required defaultValue={profileData.state_of_origin} />
+              <label>State of Origin</label>
+            </div>
+
+            <div className={`${profileView.form_group}`}>
+              <input type="text" id="fullName" placeholder="" required defaultValue={profileData.local_government} />
+              <label>Local Government</label>
+            </div>
+
+            <div className={`${profileView.form_group}`}>
+              <input type="text" id="fullName" placeholder="" required defaultValue={profileData.date_of_birth &&
+                profileData.date_of_birth.split("T")[0]} />
+              <label>Date of Birth</label>
+            </div>
+
+            <div className={`${profileView.form_group}`}>
+              <textarea  id="fullName" placeholder="" required defaultValue={profileData.educational_background} rows={5} cols={30} maxLength={150} />
+              <label>Educational Background</label>
+            </div>
           </div>
-          <div className={`${profileView.group}`}>
-            <h3 className="profile-data-label">Postion held</h3>
-            <p className="profile-data-value">{profileData.post_held}</p>
-          </div>
-          <div className={`${profileView.group}`}>
-            <h3 className="profile-data-label">State of Origin</h3>
-            <p className="profile-data-value">{profileData.state_of_origin}</p>
-          </div>
-          <div className={`${profileView.group}`}>
-            <h3 className="profile-data-label">Local Government</h3>
-            <p className="profile-data-value">{profileData.local_government}</p>
-          </div>
-          <div className={`${profileView.group}`}>
-            <h3 className="profile-data-label">Date of Birth</h3>
-            <p className="profile-data-value">
-              {profileData.date_of_birth && profileData.date_of_birth.split("T")[0]}
-            </p>
-          </div>
-          <div className={`${profileView.group}`}>
-            <h3 className="profile-data-label">Educational Background</h3>
-            <p className="profile-data-value">{profileData.educational_background}</p>
-          </div>
-        </div>
-      </section>
-      <button onClick={() => navigate("/api/anb-broadcaster/broadcastview")}>
-        View Broadcast Station
-      </button>
+        </form>
+      </div>
     </div>
   );
 };
-import { useNavigate } from "react-router-dom";
 
 export default ProfilePageView;
