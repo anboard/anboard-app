@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { useOutletContext } from "react-router-dom";
+// import { useOutletContext } from "react-router-dom";
 import config from "../config";
 import styles from "../styles/adminmail.module.css";
 
-type BroadcasterContext = { upn: string; email: string };
+// type BroadcasterContext = { upn: string; email: string };
 
 const AdminMail: React.FC = () => {
   const [upn, setUpn] = useState<string>("");
@@ -11,7 +11,7 @@ const AdminMail: React.FC = () => {
   const [error, setError] = useState<string>("");
   const [success, setSuccess] = useState<string>("");
 
-  const broadcaster = useOutletContext<BroadcasterContext>();
+  // const broadcaster = useOutletContext<BroadcasterContext>();
 
   const handleAdminMailSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
