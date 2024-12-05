@@ -1,9 +1,20 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useAuth } from "../AuthContext";
 import IProfile from "../interface/IProfile";
 import config from "../config";
 import profileView from "../styles/profilView.module.css";
 import { useOutletContext } from "react-router-dom";
+import { faPencil, faXmark } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import ReactCrop, {
+  centerCrop,
+  makeAspectCrop,
+  type Crop,
+} from "react-image-crop";
+import "react-image-crop/dist/ReactCrop.css";
+
+const MIN_DIMENSION = 200;
+const ASPECT_RATIO = 1;
 
 interface LayoutContext {
   pfpLink: string;
@@ -11,6 +22,7 @@ interface LayoutContext {
   profileData: IProfile;
   broadcaster: { upn: string; email: string };
   menuOpen: boolean;
+  setOverlay: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const ProfilePageEdit: React.FC<{
@@ -24,8 +36,10 @@ const ProfilePageEdit: React.FC<{
     broadcaster,
     profileData,
     menuOpen,
+    setOverlay,
   }: LayoutContext = useOutletContext();
 
+  // PROFILE DATA STATES
   const [name, setName] = useState(profileData.name || "");
   const [dateOfBirth, setDateOfBirth] = useState(
     profileData.date_of_birth || ""
@@ -40,14 +54,25 @@ const ProfilePageEdit: React.FC<{
   const [educationalBackground, setEducationalBackground] = useState(
     profileData.educational_background || ""
   );
-  const [photoFile, setPhotoFile] = useState<File | null>(null);
-  photoFile;
 
+  // PROFILE PHOT STATES
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [photoFile, setPhotoFile] = useState<File | null>(null);
+  const [croppedImageUrl, setCroppedImageUrl] = useState<string | null>(null);
+  const [imageSrc, setImageSrc] = useState<string | null>(null);
+  const [maxWidth, setMaxWidth] = useState(0);
+  const [crop, setCrop] = useState<Crop>({
+    unit: "px", // Can be 'px' or 'px'
+    x: 25,
+    y: 25,
+    width: 50,
+    height: 50,
+  });
+
+  // STATES FOR MANAGING SAVE STATES
   const { accessToken } = useAuth();
   const [isSaved, setIsSaved] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
-  const [isPfpEdit, setIsPfpEdit] = useState(false);
-  const [pfpSave, setPfpSave] = useState(false);
 
   const handleInputChange = (
     setter: (value: string) => void,
@@ -58,34 +83,9 @@ const ProfilePageEdit: React.FC<{
     updateProfileData({ ...profileData, [key]: value });
   };
 
-  const handlePhotoFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files.length > 0) {
-      const file = e.target.files[0];
-
-      const validTypes = [
-        "image/jpeg",
-        "image/png",
-        "image/gif",
-        "image/webp",
-        "image/svg+xml",
-        "image/x-icon",
-        "image/avif",
-        "image/apng",
-      ];
-      if (!validTypes.includes(file.type) || !file.type.startsWith("image/")) {
-        alert("Invalid file type. Please select an image.");
-        return;
-      }
-
-      const maxSize = 5 * 1024 * 1024;
-      if (file.size > maxSize) {
-        alert("File is too large. Please select a file under 5MB.");
-        return;
-      }
-      setPhotoFile(e.target.files[0]);
-      setPfpSave(true);
-    }
-  };
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
+  const dropdownRef = useRef<HTMLDivElement | null>(null);
+  const imageRef = useRef<any>(null);
 
   const handlePfpSave = async () => {
     if (!photoFile) {
@@ -108,8 +108,6 @@ const ProfilePageEdit: React.FC<{
         const { pfpUrl } = await response.json();
         setPfpLink(pfpUrl);
         localStorage.setItem("pfpLink", pfpUrl);
-        setPfpSave(false);
-        setIsPfpEdit(false);
       } else {
         const errorMessage = await response.text();
         console.error(`Error: ${response.status} - ${errorMessage}`);
@@ -118,6 +116,10 @@ const ProfilePageEdit: React.FC<{
     } catch (error) {
       console.error("Error saving profile picture:", error);
       alert("Failed to save profile picture.");
+    } finally {
+      setImageSrc("");
+      setCroppedImageUrl(null);
+      setOverlay(false);
     }
   };
 
@@ -151,145 +153,142 @@ const ProfilePageEdit: React.FC<{
     }
   };
 
-  // return (
-  //   <div>
-  //     <div className="edit-pfp-wrapper">
-  //       <img
-  //         width={"100px"}
-  //         height={"100px"}
-  //         src={pfpLink}
-  //         alt="Profile Picture"
-  //         className={styles.profileimage}
-  //         onClick={() => {
-  //           setIsPfpEdit(!isPfpEdit);
-  //         }}
-  //       />
-  //       <div>
-  //         <input
-  //           type="file"
-  //           accept="image/*"
-  //           onChange={handlePhotoFileChange}
-  //           style={{ display: isPfpEdit ? "block" : "none" }}
-  //           name="pfp"
-  //         />
+  // EFFECT TO SET CROP MAX WIDTH
+  useEffect(() => {
+    const updateMaxWidth = () => {
+      const containerWidth =
+        document.querySelector(".crop_buddy")?.clientWidth || 0;
+      setMaxWidth(containerWidth * 0.8); // 80% of the container width in pixels
+    };
 
-  //         <div>
-  //           {pfpSave && (
-  //             <div style={{ marginTop: "10px" }}>
-  //               <button
-  //                 onClick={() => setPfpSave(false)}
-  //                 title="Cancel Changes"
-  //               >
-  //                 Cancel
-  //               </button>
-  //               <button onClick={handlePfpSave} title="Save Changes">
-  //                 Save
-  //               </button>
-  //             </div>
-  //           )}
-  //         </div>
-  //       </div>
-  //     </div>
+    updateMaxWidth();
+    window.addEventListener("resize", updateMaxWidth);
 
-  //     <form onSubmit={handleSubmit}>
-  //       {/* PERSONAL INFORMATION FIELDSET */}
-  //       <fieldset>
-  //         <legend>
-  //           <h2>Personal</h2>
-  //         </legend>
-  //         <div>
-  //           <label>Name:</label>
-  //           <input
-  //             type="text"
-  //             value={name}
-  //             onChange={(e) =>
-  //               handleInputChange(setName, "name", e.target.value)
-  //             }
-  //           />
-  //         </div>
-  //         <div>
-  //           <label>Post Held:</label>
-  //           <input
-  //             type="text"
-  //             value={postHeld}
-  //             onChange={(e) =>
-  //               handleInputChange(setPostHeld, "post_held", e.target.value)
-  //             }
-  //           />
-  //         </div>
-  //         <div>
-  //           <label>State of Origin:</label>
-  //           <input
-  //             type="text"
-  //             value={stateOfOrigin}
-  //             onChange={(e) =>
-  //               handleInputChange(
-  //                 setStateOfOrigin,
-  //                 "state_of_origin",
-  //                 e.target.value
-  //               )
-  //             }
-  //           />
-  //         </div>
-  //         <div>
-  //           <label>Local Government:</label>
-  //           <input
-  //             type="text"
-  //             value={localGovernment}
-  //             onChange={(e) =>
-  //               handleInputChange(
-  //                 setLocalGovernment,
-  //                 "local_government",
-  //                 e.target.value
-  //               )
-  //             }
-  //           />
-  //         </div>
-  //         <div>
-  //           <label>Date of Birth:</label>
-  //           <input
-  //             type="date"
-  //             value={dateOfBirth.split("T")[0]}
-  //             onChange={(e) =>
-  //               handleInputChange(
-  //                 setDateOfBirth,
-  //                 "date_of_birth",
-  //                 e.target.value
-  //               )
-  //             }
-  //           />
-  //         </div>
-  //         <div>
-  //           <label>Educational Background:</label>
-  //           <textarea
-  //             value={educationalBackground}
-  //             onChange={(e) =>
-  //               handleInputChange(
-  //                 setEducationalBackground,
-  //                 "educational_background",
-  //                 e.target.value
-  //               )
-  //             }
-  //           />
-  //         </div>
-  //       </fieldset>
+    return () => {
+      window.removeEventListener("resize", updateMaxWidth);
+    };
+  }, [imageSrc]);
 
-  //       <button onClick={() => navigate("/api/anb-broadcaster/broadcastedit")}>
-  //         Edit Broadcast Station
-  //       </button>
+  const toggleDropdown = (
+    event: React.MouseEvent<HTMLHeadingElement, MouseEvent>
+  ) => {
+    event.stopPropagation();
+    setDropdownOpen((prev) => !prev);
+  };
 
-  //       <button type="submit" disabled={isSaved}>
-  //         {isSaving ? "Saving profile" : "Save profile"}
-  //       </button>
-  //       <button type="button" onClick={handleCancel}>
-  //         Cancel
-  //       </button>
-  //       {isSaved && (
-  //         <p style={{ color: "green" }}>Saved Profile successfully</p>
-  //       )}
-  //     </form>
-  //   </div>
-  // );
+  const handleOutsideClick = (event: MouseEvent) => {
+    event.stopPropagation();
+
+    if (
+      dropdownRef.current &&
+      !dropdownRef.current.contains(event.target as Node)
+    ) {
+      setDropdownOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    if (dropdownOpen) {
+      document.addEventListener("click", handleOutsideClick);
+    } else {
+      document.removeEventListener("click", handleOutsideClick);
+    }
+
+    return () => {
+      document.removeEventListener("click", handleOutsideClick);
+    };
+  }, [dropdownOpen]);
+
+  const handleFilesSelected = (files: FileList | null) => {
+    if (files && files.length > 0) {
+      const file = files[0];
+      setPhotoFile(file);
+
+      const reader = new FileReader();
+      reader.addEventListener("load", () => {
+        const imageUrl = reader.result?.toString() || "";
+        setImageSrc(imageUrl);
+      });
+
+      reader.readAsDataURL(file);
+      setOverlay(true);
+    } else {
+    }
+  };
+
+  const handleUploadPicClick = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  };
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const files = event.target.files;
+    handleFilesSelected(files);
+  };
+
+  const onImageLoad = (e: any) => {
+    const { width, height } = e.currentTarget;
+    const naturalWidth = e.currentTarget.naturalWidth;
+    const naturalHeight = e.currentTarget.naturalHeight;
+
+    const crop = makeAspectCrop(
+      {
+        unit: "%",
+        width: MIN_DIMENSION,
+      },
+      ASPECT_RATIO,
+      naturalWidth,
+      naturalHeight
+    );
+
+    const centeredCrop = centerCrop(crop, width, height);
+    setCrop(centeredCrop);
+  };
+
+  const getCroppedImage = () => {
+    const canvas = document.createElement("canvas");
+    const scaleX = imageRef.current.naturalWidth / imageRef.current.width;
+    const scaleY = imageRef.current.naturalHeight / imageRef.current.height;
+    const ctx: CanvasRenderingContext2D = canvas.getContext(
+      "2d"
+    ) as CanvasRenderingContext2D;
+
+    canvas.width = crop.width * scaleX;
+    canvas.height = crop.height * scaleY;
+
+    ctx.drawImage(
+      imageRef.current,
+      crop.x * scaleX,
+      crop.y * scaleY,
+      crop.width * scaleX,
+      crop.height * scaleY,
+      0,
+      0,
+      crop.width * scaleX,
+      crop.height * scaleY
+    );
+
+    return new Promise((resolve) => {
+      canvas.toBlob((blob) => {
+        resolve(blob);
+      }, "image/png");
+    });
+  };
+
+  const handleCropComplete = async () => {
+    if (crop.width && crop.height) {
+      const croppedImage = await getCroppedImage();
+      if (croppedImage) {
+        const file = new File([croppedImage as string], "pfp.png", {
+          type: "image/png",
+        });
+        const url = URL.createObjectURL(file);
+        setCroppedImageUrl(url as string);
+        setPhotoFile(file);
+      }
+    }
+  };
 
   return (
     <div
@@ -297,45 +296,94 @@ const ProfilePageEdit: React.FC<{
         menuOpen ? profileView.single_grid : ""
       }`}
     >
+      {imageSrc && (
+        <div className={`${profileView.crop_container}`}>
+          <div className={`${profileView.crop_top}`}>
+            Crop your new profile picture
+            <div
+              className={`${profileView.crop_close}`}
+              onClick={() => {
+                setImageSrc("");
+                setCroppedImageUrl(null);
+                setOverlay(false);
+              }}
+            >
+              <FontAwesomeIcon icon={faXmark} />
+            </div>
+          </div>
+
+          <div className={`${profileView.crop_body} crop_buddy`}>
+            <ReactCrop
+              crop={crop}
+              circularCrop
+              keepSelection
+              aspect={1}
+              minWidth={50}
+              maxWidth={maxWidth}
+              onChange={(pixelCrop, _percentCrop) => {
+                setCrop(pixelCrop);
+              }}
+              onComplete={handleCropComplete}
+              className={`${profileView.crop}`}
+            >
+              <img
+                src={imageSrc}
+                ref={imageRef}
+                style={{ maxHeight: "70vh" }}
+                onLoad={onImageLoad}
+              />
+            </ReactCrop>
+          </div>
+
+          <div className={`${profileView.crop_bottom}`}>
+            <div onClick={handlePfpSave}>Set new profile picture </div>
+          </div>
+        </div>
+      )}
+
       <div className={`${profileView.profile_section_one}`}>
         <div className={`${profileView.section_one_head}`}>
-          <img
-            src={pfpLink}
-            alt="Profile"
-            className={`${profileView.profile_pic}`}
-            onClick={() => {
-              setIsPfpEdit(!isPfpEdit);
-            }}
-          />
-          <div>
-            <input
-              type="file"
-              accept="image/*"
-              onChange={handlePhotoFileChange}
-              style={{ display: isPfpEdit ? "block" : "none" }}
-              name="pfp"
+          <div className={`${profileView.profile_picture_wrapper}`}>
+            <img
+              src={croppedImageUrl ?? pfpLink}
+              alt="Profile"
+              className={`${profileView.profile_pic}`}
             />
-
-            <div>
-              {pfpSave && (
-                <div style={{ marginTop: "10px" }}>
-                  <button
-                    onClick={() => setPfpSave(false)}
-                    title="Cancel Changes"
-                  >
-                    Cancel
-                  </button>
-                  <button onClick={handlePfpSave} title="Save Changes">
-                    Save
-                  </button>
+            <div className={`${profileView.profile_pic_edit_wrapper}`}>
+              <div
+                className={`${profileView.profile_pic_edit}`}
+                onClick={toggleDropdown}
+              >
+                <FontAwesomeIcon icon={faPencil} />
+              </div>
+              <div>
+                <div className={`${profileView.dropdown}`} ref={dropdownRef}>
+                  {dropdownOpen && (
+                    <div>
+                      <div className={`${profileView.dropdown_point}`}></div>
+                      <ul>
+                        <li onClick={handleUploadPicClick}>
+                          Upload a photo...
+                          <input
+                            type="file"
+                            ref={fileInputRef}
+                            style={{ display: "none" }}
+                            onChange={handleFileChange}
+                            accept="image/*"
+                          />
+                        </li>
+                        <li>Remove photo</li>
+                      </ul>
+                    </div>
+                  )}
                 </div>
-              )}
+              </div>
             </div>
-            <div className={`${profileView.section_one_head_text}`}>
-              <p>{profileData.name}</p>
+          </div>
+          <div className={`${profileView.section_one_head_text}`}>
+            <p>{profileData.name}</p>
 
-              <p>{profileData.post_held}</p>
-            </div>
+            <p>{profileData.post_held}</p>
           </div>
         </div>
 
@@ -388,7 +436,7 @@ const ProfilePageEdit: React.FC<{
       <div className={`${profileView.profile_section_two}`}>
         <form
           className={`${profileView.personal_info} ${profileView.profile_card}`}
-          onSubmit={handleSubmit} 
+          onSubmit={handleSubmit}
         >
           <legend>Personal Information</legend>
 
@@ -495,15 +543,15 @@ const ProfilePageEdit: React.FC<{
           </div>
 
           <div className={profileView.form_controls}>
-          <button type="submit" disabled={isSaved}>
-            {isSaving ? "Saving profile" : "Save profile"}
-          </button>
-          <button type="button" onClick={handleCancel}>
-            Cancel
-          </button>
-          {isSaved && (
-            <p style={{ color: "green" }}>Saved Profile successfully</p>
-          )}
+            <button type="submit" disabled={isSaved}>
+              {isSaving ? "Saving profile" : "Save profile"}
+            </button>
+            <button type="button" onClick={handleCancel}>
+              Cancel
+            </button>
+            {isSaved && (
+              <p style={{ color: "green" }}>Saved Profile successfully</p>
+            )}
           </div>
         </form>
       </div>

@@ -20,6 +20,7 @@ const Layout: React.FC = () => {
   const [pfpLink, setPfpLink] = useState<string>(
     localStorage.getItem("pfpUrl") ?? ""
   );
+  const [overlay, setOverlay] = useState(false)
   const [error, setError] = useState("");
   const [videos, setVideos] = useState<Ivideo[]>([]);
   const [audios, setAudios] = useState<IAudio[]>([]);
@@ -233,6 +234,11 @@ const Layout: React.FC = () => {
     <div className={layout.layout}>
       {<Sidebar handleMenuClick={handleMenuClick} menuOpen={menuOpen} />}
       
+{overlay && (
+  <div className={`${layout.overlay}`}>
+
+  </div>
+)}
       <Header
         handleMenuClick={handleMenuClick}
         broadcaster={broadcaster}
@@ -240,7 +246,6 @@ const Layout: React.FC = () => {
         setTitle={setTitle}
         isMenuOpen={menuOpen}
       />
-
       <main className={`${layout.main_content} ${menuOpen ? layout.shifted : ''}`}>
         <h1 style={{ color: "black" }}>{title}</h1>
         <Outlet
@@ -256,7 +261,8 @@ const Layout: React.FC = () => {
             setProfileData,
             audios,
             setAudios,
-            menuOpen
+            menuOpen,
+            setOverlay
           }}
         />
       </main>
