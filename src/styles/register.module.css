@@ -38,9 +38,9 @@
 }
 
 .registrationcontainer {
-    border: 2px solid rgb(77, 255, 0);
+    /* border: 2px solid rgb(77, 255, 0); */
     width: 100%;
-    height: 100vh;
+    height: 100%;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
@@ -52,25 +52,27 @@
 
 .registrationcontainer img {
     margin-inline: auto;
-    margin-top: -1rem;
     max-width: 100px;
     margin-bottom: 0.5rem;
 }
 
 h2 {
     font-size: 1.5rem;
-    margin-bottom: -1rem;
+    /* background-color: #005076; */
+    /* margin-bottom: -3rem; */
+    
 }
 
 /* Form Group Styling */
 .formgroup {
+    margin-top: -1rem;
     /* background-color: black; */
-    /* margin: 0.3rem 0; */
     display: flex;
     margin-inline: auto;
     flex-direction: column;
     width: 80%;
     height: fit-content;
+    margin-bottom: 0rem;
 }
 
 .formgroup label {
@@ -119,6 +121,42 @@ h2 {
 .submitbutton:hover {
     background-color: #085374;
 }
+
+/* PASSWORD RULES */
+.passwordrules {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px;
+    /* position: absolute; */
+    top: 100%;
+    left: 0; 
+    width: 100%;
+    width: 350px;
+    z-index: 10;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.passwordrules p {
+    font-weight: bold;
+    margin: 0 0 5px 0;
+}
+
+.passwordrules ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.passwordrules li {
+    margin-bottom: 5px;
+    color: #ff0000;
+}
+
+.passwordrules li.valid {
+    color: #28a745;
+}
+
 
 /* Media Queries for Responsiveness */
 @media (min-width: 768px) {

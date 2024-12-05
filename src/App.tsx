@@ -8,6 +8,8 @@ import AdminMail from "./components/AdminMail";
 import AdminAccount from "./components/AdminAccount";
 import AdminAnnouncement from "./components/AdminAnnouncement";
 import AdminNews from "./components/AdminNews";
+import AdminDashboard from "./components/AdminDashboard";
+import AdminLayout from "./components/AdminLayout";
 import ProtectedRoute from "./components/ProtectedRoute";
 import VideoUploader from "./components/VideoUploader";
 import Layout from "./components/Layout";
@@ -29,10 +31,13 @@ const App: React.FC = () => {
           <Route path="/auth/register" element={<RegistrationPage />} />
           <Route path="/auth/login" element={<LoginPage />} />
 
-          <Route path="/api/admin/mail" element={<AdminMail />} />
-          <Route path="/api/admin/account" element={<AdminAccount />} />
-          <Route path="/api/admin/announcement" element={<AdminAnnouncement />} />
-          <Route path="/api/admin/news" element={<AdminNews />} />
+        <Route path="/api/admin" element={<AdminLayout />}>
+          <Route path="mail" element={<AdminMail />} />
+          <Route path="account" element={<AdminAccount />} />
+          <Route path="announcement" element={<AdminAnnouncement />} />
+          <Route path="dashboard" element={<AdminDashboard />} />
+          <Route path="news" element={<AdminNews />} />
+        </Route>
 
           <Route
             path="/api/anb-broadcaster/"
