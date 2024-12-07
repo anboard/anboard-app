@@ -9,6 +9,7 @@ import Ivideo from "../interface/IVideo";
 
 interface LayoutContext {
   setVideos:  React.Dispatch<React.SetStateAction<Ivideo[]>>
+  setVideoCount: React.Dispatch<React.SetStateAction<string>>
 }
 
 const VideoUploader: React.FC = () => {
@@ -24,7 +25,7 @@ const VideoUploader: React.FC = () => {
     setTitle(event.target.value);
   };
 
-  const { setVideos }: LayoutContext = useOutletContext()
+  const { setVideos, setVideoCount }: LayoutContext = useOutletContext()
 
   const handleDescriptionChange = (
     event: React.ChangeEvent<HTMLTextAreaElement>
@@ -63,8 +64,8 @@ const VideoUploader: React.FC = () => {
 
         setVideoFile(null);
 
-        console.log(data.videos)
         setVideos(data.videos)
+        setVideoCount(data.videos.length)
         setTimeout(() => {
           navigate("/api/anb-broadcaster/videos");
         }, 2000);

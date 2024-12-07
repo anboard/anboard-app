@@ -18,6 +18,10 @@ import { useOutletContext } from "react-router-dom";
 
 interface LayoutContext {
   menuOpen: boolean;
+  videoCount: string;
+  audioCount: string;
+  lastVideoUpdateDate: string
+  lastAudioUpdateDate: string
 }
 const sections = [
   {
@@ -55,7 +59,7 @@ const sections = [
 const Dash: React.FC = () => {
   // const [isAdmin, setIsAdmin] = useState(true)
   
-  const { menuOpen }: LayoutContext =
+  const { menuOpen, audioCount, videoCount, lastVideoUpdateDate, lastAudioUpdateDate }: LayoutContext =
     useOutletContext();
 
   const [currentSectionIndex, setCurrentSectionIndex] = useState(0);
@@ -94,8 +98,8 @@ const Dash: React.FC = () => {
               />
             </div>
             <div className={`${dash.pill_info}`}>
-              <p>15</p>
-              <small>As of Dec 1, 2024</small>
+              <p>{videoCount}</p>
+              <small>As of {lastVideoUpdateDate.split(' ')[1]} {lastVideoUpdateDate.split(' ')[2]}, {lastVideoUpdateDate.split(' ')[3]} </small>
             </div>
           </div>
         </div>
@@ -110,8 +114,14 @@ const Dash: React.FC = () => {
               />
             </div>
             <div className={`${dash.pill_info}`}>
-              <p>15</p>
-              <small>As of Dec 1, 2024</small>
+              <p>{audioCount}</p>
+              <small>{
+                  lastAudioUpdateDate ? (
+                    `As of ${lastAudioUpdateDate.split(' ')[1]} ${lastAudioUpdateDate.split(' ')[2]}, ${lastAudioUpdateDate.split(' ')[3]}`
+                  )
+                  :
+                  '-'
+                }</small>
             </div>
           </div>
         </div>
@@ -123,7 +133,6 @@ const Dash: React.FC = () => {
         <div className={`${dash.notif_title}`}>
           <FontAwesomeIcon icon={faBullhorn} />
           Admin Notifications
-          <FontAwesomeIcon icon={faChevronDown} onClick={() => console.log('clicker')} />
         </div>
         {isAdmin ? <DashNotifCard /> : 'ANBOARD news'}
       </div> */}

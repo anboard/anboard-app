@@ -11,5 +11,5 @@ export interface IAudio {
   file_path: string;
   mime_type: string;
   size: number;
-  upload_date?: Date;
+  upload_date: Date;
 }

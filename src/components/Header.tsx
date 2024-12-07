@@ -45,7 +45,6 @@ const Header: React.FC<{
   };
 
   useEffect(() => {
-    console.log("menuOpen state changed:", menuOpen);
   }, [menuOpen]);
 
   const handleOutsideClick = (event: MouseEvent) => {
@@ -163,7 +162,7 @@ const Header: React.FC<{
           onClick={toggleMenu}
         >
           <span className="directory-code">{broadcaster.upn}</span>
-          <span className={header.directory_separator}>/</span>
+          <span className={header.directory_separator}></span>
           <span className={header.directory_location}>{title}</span>
           
         </h1>

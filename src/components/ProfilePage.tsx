@@ -16,7 +16,6 @@ const NProfilePage: React.FC = () => {
   const { profileData, setProfileData }: LayoutContext = useOutletContext();
 
   const updateProfileData = (updatedFields: any) => {
-    console.log(updatedFields)
     setProfileData((prevData) => ({
       ...prevData,
       ...updatedFields,

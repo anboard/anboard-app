@@ -10,6 +10,10 @@ import IBroadcast from "../interface/IBroadcast";
 import { IAudio } from "../interface/IAudio";
 
 import IProfile from "../interface/IProfile";
+import {
+  getMostRecentAudioUploadDate,
+  getMostRecentVidUploadDate,
+} from "../utils/dashUtils";
 
 const Layout: React.FC = () => {
   const [broadcaster, setBroadcaster] = useState<{
@@ -20,7 +24,7 @@ const Layout: React.FC = () => {
   const [pfpLink, setPfpLink] = useState<string>(
     localStorage.getItem("pfpUrl") ?? ""
   );
-  const [overlay, setOverlay] = useState(false)
+  const [overlay, setOverlay] = useState(false);
   const [error, setError] = useState("");
   const [videos, setVideos] = useState<Ivideo[]>([]);
   const [audios, setAudios] = useState<IAudio[]>([]);
@@ -35,48 +39,23 @@ const Layout: React.FC = () => {
     {} as IProfile as any
   );
 
-  const [title, setTitle] = useState('Dashboard')
+  const [audioCount, setAudioCount] = useState<string>("0");
+  const [lastVideoUpdateDate, setLastVideoUpdateDate] = useState<string>(new Date(2000/10/10).toDateString());
+  const [videoCount, setVideoCount] = useState<string>("0");
+  const [lastAudioUpdateDate, setLastAudioUpdateDate] = useState<string>(new Date(2000/10/10).toDateString());
+
+  const [title, setTitle] = useState("Dashboard");
 
   // loadStates
-  const [broadcasterLoading, setBroadcasterLoading] = useState<boolean>(true);
   const [pfpLoading, setPfpLoading] = useState<boolean>(true);
   const [videosLoading, setVidesoLoading] = useState<boolean>(true);
+  const [videoCountLoading, setVideoCountLoading] = useState<boolean>(true);
   const [audiosLoading, setAudiosLoading] = useState<boolean>(true);
   const [stationDataLoading, setStationDataLoading] = useState<boolean>(true);
   const [profileDataLoading, setProfileDataLoading] = useState<boolean>(true);
 
   error;
   const { accessToken } = useAuth();
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(`${config.API_BASE_URL}`, {
-          method: "GET",
-          credentials: "include",
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-            "Content-Type": "application/json",
-          },
-        });
-
-        if (!response.ok) {
-          const error = await response.json();
-          setError(error.error);
-          return;
-        }
-
-        const { broadcaster } = await response.json();
-        console.log(broadcaster);
-        setBroadcaster(broadcaster);
-        setBroadcasterLoading(false);
-      } catch (error: any) {
-        setError(error.message || "Something went wrong");
-      }
-    };
-
-    if (!broadcaster.upn) fetchData();
-  }, [accessToken]);
 
   useEffect(() => {
     const fetchPfp = async () => {
@@ -118,14 +97,24 @@ const Layout: React.FC = () => {
         }
 
         const { videos } = await response.json();
-        setVideos(videos);
+        if (videos) {
+          const lastVidUpload = getMostRecentVidUploadDate(videos);
+
+        const uploadDate = lastVidUpload?.upload_date as Date;
+        const fVideoDate = new Date(uploadDate);
+
+        fVideoDate.setHours(fVideoDate.getHours() + 1);
+
+        setLastVideoUpdateDate(fVideoDate.toDateString());
+        setVideos(videos.message ? null : videos);
+        }
         setVidesoLoading(false);
       } catch (err: any) {
         setError(err.message);
       }
     };
 
-    if (videos.length === 0) fetchVideos();
+    fetchVideos();
   }, [accessToken]);
 
   useEffect(() => {
@@ -204,7 +193,17 @@ const Layout: React.FC = () => {
         }
 
         const { audios } = await response.json();
-        setAudios(audios);
+        if (audios) {
+          const lastAudioUpload = getMostRecentAudioUploadDate(audios);
+
+          const uploadDate = lastAudioUpload?.upload_date as Date;
+          const fAudioDate = new Date(uploadDate);
+
+          fAudioDate.setHours(fAudioDate.getHours() + 1);
+
+          setLastAudioUpdateDate(fAudioDate.toDateString());
+          setAudios(audios);
+        }
         setAudiosLoading(false);
       } catch (err: any) {
         setError(err.message || "Failed to fetch audios");
@@ -218,27 +217,54 @@ const Layout: React.FC = () => {
     setMenuOpen(!menuOpen);
   };
 
+  useEffect(() => {
+    const fetchDashboardData = async () => {
+      try {
+        const response = await fetch(`${config.API_BASE_URL}/dashboard`, {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            "Content-Type": "application/json",
+          },
+        });
+
+        if (!response.ok) {
+          const error = await response.json();
+          setError(error.message || "Failed to dashboard data");
+          return;
+        }
+
+        const data = await response.json();
+
+        const { broadcaster, audioCount, videoCount } = data.data;
+        setBroadcaster(broadcaster);
+        setAudioCount(audioCount[0].audio_count);
+        setVideoCount(videoCount[0].video_count);
+        setVideoCountLoading(false);
+      } catch (error: any) {
+        setError(error.message || "Failed to fetch dashboard data");
+      }
+    };
+
+    fetchDashboardData();
+  }, [accessToken]);
+
   if (
-    broadcasterLoading &&
-    pfpLoading &&
-    videosLoading &&
-    audiosLoading &&
-    stationDataLoading &&
-    profileDataLoading
+    pfpLoading ||
+    videosLoading ||
+    audiosLoading ||
+    stationDataLoading ||
+    profileDataLoading ||
+    videoCountLoading
   ) {
-    return <p>Loading...</p>;
+    return <p>{pfpLoading} Loading...</p>;
   }
 
-  // console.log(menuOpen)
   return (
     <div className={layout.layout}>
       {<Sidebar handleMenuClick={handleMenuClick} menuOpen={menuOpen} />}
-      
-{overlay && (
-  <div className={`${layout.overlay}`}>
 
-  </div>
-)}
+      {overlay && <div className={`${layout.overlay}`}></div>}
       <Header
         handleMenuClick={handleMenuClick}
         broadcaster={broadcaster}
@@ -246,10 +272,14 @@ const Layout: React.FC = () => {
         setTitle={setTitle}
         isMenuOpen={menuOpen}
       />
-      <main className={`${layout.main_content} ${menuOpen ? layout.shifted : ''}`}>
+      <main
+        className={`${layout.main_content} ${menuOpen ? layout.shifted : ""}`}
+      >
         <h1 style={{ color: "black" }}>{title}</h1>
         <Outlet
           context={{
+            menuOpen,
+            setOverlay,
             videos,
             setVideos,
             pfpLink,
@@ -261,8 +291,12 @@ const Layout: React.FC = () => {
             setProfileData,
             audios,
             setAudios,
-            menuOpen,
-            setOverlay
+            audioCount,
+            setAudioCount,
+            lastAudioUpdateDate,
+            videoCount,
+            setVideoCount,
+            lastVideoUpdateDate,
           }}
         />
       </main>
