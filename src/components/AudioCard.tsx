@@ -44,7 +44,6 @@ const AudioCard: React.FC<AudioCardProps> = ({
         }
 
         const { url } = await response.json();
-        console.log(url)
         setVideoUrl(url);
       } catch (error) {
         console.error("Error fetching video URL:", error);

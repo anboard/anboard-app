@@ -45,7 +45,6 @@ const Header: React.FC<{
   };
 
   useEffect(() => {
-    console.log("menuOpen state changed:", menuOpen);
   }, [menuOpen]);
 
   const handleOutsideClick = (event: MouseEvent) => {
@@ -92,7 +91,7 @@ const Header: React.FC<{
     setIsLoaded(true);
   };
 
-  // console.log(menuOpen)
+  
   return (
     <header className={`${header.container}  ${isMenuOpen ? header.shifted : ''}`}>
       <div className={header.left}>
@@ -106,29 +105,44 @@ const Header: React.FC<{
         {menuOpen && (
             <div className={header.dropdown} ref={dropdownRef}>
               <ul>
-                <li onClick={() => navigate("/api/anb-broadcaster/dashboard")}>
+                <li onClick={() => {
+                  navigate("/api/anb-broadcaster/dashboard")
+                  setMenuOpen(false)
+                }}>
                   <FontAwesomeIcon
                     icon={faHouse}
                     className={header.notification}
                   />
                   Dashboard
                 </li>
-                <li onClick={() => navigate("/api/anb-broadcaster/videos")}>
+                <li onClick={() => {
+                  navigate("/api/anb-broadcaster/videos")
+                  setMenuOpen(false)
+                }}>
             <FontAwesomeIcon icon={faFileVideo} className={header.notification} />
 
                   Videos
                 </li>
-                <li onClick={() => navigate("/api/anb-broadcaster/audios")}>
+                <li onClick={() => {
+                  navigate("/api/anb-broadcaster/audios")
+                  setMenuOpen(false)
+                }}>
         <FontAwesomeIcon icon={faFileAudio} className={header.notification} />
 
                   Audios
                 </li>
-                <li onClick={() => navigate("/api/anb-broadcaster/station")}>
+                <li onClick={() => {
+                  navigate("/api/anb-broadcaster/station")
+                  setMenuOpen(false)
+                }}>
         <FontAwesomeIcon icon={faRadio} className={header.notification} />
                   
                   Station
                 </li>
-                <li onClick={() => navigate("/api/anb-broadcaster/profile")}>
+                <li onClick={() => {
+                  navigate("/api/anb-broadcaster/profile")
+                  setMenuOpen(false)
+                }}>
         <FontAwesomeIcon icon={faUser} className={header.notification} />
 
                   Profile
@@ -148,7 +162,7 @@ const Header: React.FC<{
           onClick={toggleMenu}
         >
           <span className="directory-code">{broadcaster.upn}</span>
-          <span className={header.directory_separator}>/</span>
+          <span className={header.directory_separator}></span>
           <span className={header.directory_location}>{title}</span>
           
         </h1>

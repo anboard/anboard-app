@@ -15,6 +15,8 @@ const AdminLayout: React.FC = () => {
   );
   const [error, setError] = useState<string>("");
   const [title, setTitle] = useState<string>("Dashboard");
+  title
+
   const [loading, setLoading] = useState(true);
 
   // Use React Router's `useLocation` to track the current route

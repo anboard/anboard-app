@@ -9,6 +9,7 @@ import { IAudio } from "../interface/IAudio";
 
 interface LayoutContext {
   setAudios:  React.Dispatch<React.SetStateAction<IAudio[]>>
+  setAudioCount:  React.Dispatch<React.SetStateAction<string>>
 }
 
 const AudioUploader: React.FC = () => {
@@ -21,7 +22,7 @@ const AudioUploader: React.FC = () => {
   const navigate = useNavigate();
   const [error, setError] = useState<string | null>(null);
   
-  const { setAudios }: LayoutContext = useOutletContext()
+  const { setAudios, setAudioCount }: LayoutContext = useOutletContext()
 
 
 
@@ -65,8 +66,9 @@ const AudioUploader: React.FC = () => {
 
         setAudioFile(null);
 
-        console.log(data.audios)
         setAudios(data.audios)
+        console.log('in handleUpload: ', data.audios.length)
+        setAudioCount(data.audios.length)        
         setTimeout(() => {
           navigate("/api/anb-broadcaster/audios");
         }, 2000);

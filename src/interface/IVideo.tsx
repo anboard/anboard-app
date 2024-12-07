@@ -7,5 +7,5 @@ export default interface Ivideo {
     mime_type: string
     url: string
     size: number
-    upload_date?: Date
+    upload_date: Date
 }

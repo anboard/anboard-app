@@ -105,14 +105,14 @@
 .dropdown {
   display: none;
   position: absolute;
-  top: 70px; /* Adjust based on your header height */
+  top: 65px; /* Adjust based on your header height */
   /* right: 60px;  */
   /* left: 100px; */
   background: white;
   border: 1px solid #ccc;
   border-radius: 5px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  z-index: 1000;
+  z-index: 101;
   width: 200px; /* Adjust width as needed */
   opacity: 1;
   transform: scale(0.95);

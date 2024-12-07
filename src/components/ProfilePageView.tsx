@@ -1,23 +1,30 @@
 import React from "react";
 import IProfile from "../interface/IProfile";
 import profileView from "../styles/profilView.module.css";
+import header from "../styles/header.module.css";
 import { useOutletContext } from "react-router-dom";
+import { faPenToSquare } from "@fortawesome/free-regular-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 interface LayoutContext {
   pfpLink: string;
   broadcaster: { upn: string; email: string };
-  profileData: IProfile;
   menuOpen: boolean;
+  profileData: IProfile;
 }
 
 const ProfilePageView: React.FC<{ handleEditClick: () => void }> = ({
-  // handleEditClick,
+  handleEditClick,
 }) => {
   const { pfpLink, broadcaster, profileData, menuOpen }: LayoutContext =
     useOutletContext();
 
   return (
-    <div className={`${profileView.profile_container} ${menuOpen ? profileView.single_grid : ""}`}>
+    <div
+      className={`${profileView.profile_container} ${
+        menuOpen ? profileView.single_grid : ""
+      }`}
+    >
       <div className={`${profileView.profile_section_one}`}>
         <div className={`${profileView.section_one_head}`}>
           <img
@@ -35,20 +42,49 @@ const ProfilePageView: React.FC<{ handleEditClick: () => void }> = ({
         <form
           className={`${profileView.broadcaster_info} ${profileView.profile_card}`}
         >
-          <legend>Broadcaster Information</legend>
+          <legend>
+            Broadcaster Information
+            <div onClick={handleEditClick}>
+              <FontAwesomeIcon
+                icon={faPenToSquare}
+                className={header.notification}
+              />
+            </div>
+          </legend>
           <div className={`${profileView.form_group_wrapper}`}>
             <div className={`${profileView.form_group}`}>
-              <input type="text" id="fullName" placeholder="" required value={broadcaster.upn}  readOnly />
+              <input
+                type="text"
+                id="fullName"
+                placeholder=""
+                required
+                value={broadcaster.upn}
+                readOnly
+              />
               <label>UPN</label>
             </div>
 
             <div className={`${profileView.form_group}`}>
-              <input type="text" id="fullName" placeholder="" required defaultValue={profileData.post_held} />
+              <input
+                type="text"
+                id="fullName"
+                placeholder=""
+                required
+                defaultValue={profileData.post_held}
+                readOnly
+              />
               <label>Post Held</label>
             </div>
 
             <div className={`${profileView.form_group}`}>
-              <input type="text" id="fullName" placeholder="" required defaultValue={"Cool FM"} />
+              <input
+                type="text"
+                id="fullName"
+                placeholder=""
+                required
+                defaultValue={"Cool FM"}
+                readOnly
+              />
               <label>Station</label>
             </div>
           </div>
@@ -59,37 +95,91 @@ const ProfilePageView: React.FC<{ handleEditClick: () => void }> = ({
         <form
           className={`${profileView.personal_info} ${profileView.profile_card}`}
         >
-          <legend>Personal Information</legend>
+          <legend>
+            Personal Information
+            <div onClick={handleEditClick}>
+              <FontAwesomeIcon
+                icon={faPenToSquare}
+                className={header.notification}
+              />
+            </div>
+          </legend>
 
           <div className={`${profileView.form_group_wrapper}`}>
             <div className={`${profileView.form_group}`}>
-              <input type="text" id="fullName" placeholder="" required defaultValue={profileData.name} />
+              <input
+                type="text"
+                id="fullName"
+                placeholder=""
+                required
+                defaultValue={profileData.name}
+                readOnly
+              />
               <label>Full Name</label>
             </div>
 
             <div className={`${profileView.form_group}`}>
-              <input type="text" id="fullName" placeholder="" required defaultValue={broadcaster.email} />
+              <input
+                type="text"
+                id="fullName"
+                placeholder=""
+                required
+                defaultValue={broadcaster.email}
+                readOnly
+              />
               <label>Email Address</label>
             </div>
 
             <div className={`${profileView.form_group}`}>
-              <input type="text" id="fullName" placeholder="" required defaultValue={profileData.state_of_origin} />
+              <input
+                type="text"
+                id="fullName"
+                placeholder=""
+                required
+                defaultValue={profileData.state_of_origin}
+                readOnly
+              />
               <label>State of Origin</label>
             </div>
 
             <div className={`${profileView.form_group}`}>
-              <input type="text" id="fullName" placeholder="" required defaultValue={profileData.local_government} />
+              <input
+                type="text"
+                id="fullName"
+                placeholder=""
+                required
+                defaultValue={profileData.local_government}
+                readOnly
+              />
               <label>Local Government</label>
             </div>
 
             <div className={`${profileView.form_group}`}>
-              <input type="text" id="fullName" placeholder="" required defaultValue={profileData.date_of_birth &&
-                profileData.date_of_birth.split("T")[0]} />
+              <input
+                type="text"
+                id="fullName"
+                placeholder=""
+                required
+                defaultValue={
+                  profileData.date_of_birth &&
+                  profileData.date_of_birth.split("T")[0]
+                }
+                readOnly
+              />
               <label>Date of Birth</label>
             </div>
 
             <div className={`${profileView.form_group}`}>
-              <textarea  id="fullName" placeholder="" required defaultValue={profileData.educational_background} rows={5} cols={30} maxLength={150} />
+              <textarea
+                id="fullName"
+                placeholder=""
+                required
+                defaultValue={profileData.educational_background}
+                rows={5}
+                cols={30}
+                maxLength={150}
+                readOnly
+              />
               <label>Educational Background</label>
             </div>
           </div>
