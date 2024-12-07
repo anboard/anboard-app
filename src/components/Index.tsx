@@ -14,7 +14,7 @@ const Index: React.FC = () => {
     
     return (
         <div>
-            hello
+            Loading.............
         </div>
     )
 }
