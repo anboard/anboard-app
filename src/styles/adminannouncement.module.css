@@ -1,0 +1,179 @@
+/* Overall container */
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  font-family: Arial, sans-serif;
+}
+
+/* Title styling */
+.title {
+  font-size: 2rem;
+  color: #00274d;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+/* Rich Text Editor container */
+.editorContainer {
+  text-align: center;
+  width: 90%; /* Default width for smaller screens */
+  max-width: 800px; /* Set max width for larger screens */
+  margin: 0 auto;
+  padding: 1rem;
+  box-sizing: border-box; /* Include padding in width/height calculation */
+}
+
+/* Editor styling */
+.editor {
+  height: 250px; /* Default height */
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 0.5rem;
+  overflow-y: auto; /* Enable scrolling for long content */
+}
+
+/* Send button container */
+.buttonContainer {
+  margin-top: 1rem;
+  text-align: center; /* Center the button */
+}
+
+/* Send button styling */
+.sendButton {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 0.8rem 2rem;
+  font-size: 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.sendButton:hover {
+  background-color: #0056b3;
+}
+
+/* Media Queries for responsiveness */
+
+/* Small screens (phones, less than 600px) */
+@media (max-width: 600px) {
+  .title {
+    font-size: 1.5rem; /* Reduce title size */
+  }
+
+  .editorContainer {
+    width: 95%; /* Expand editor width to use more screen space */
+    padding: 0.5rem; /* Reduce padding for smaller screens */
+  }
+
+  .editor {
+    height: 200px; /* Reduce height for smaller screens */
+  }
+
+  .sendButton {
+    padding: 0.7rem 1.5rem; /* Adjust button padding */
+    font-size: 0.9rem; /* Adjust font size */
+  }
+
+  /* Responsive Quill Toolbar */
+  .ql-toolbar {
+    font-size: 18px; /* Increase the font size for toolbar icons */
+  }
+
+  .ql-toolbar .ql-formats {
+    display: flex;
+    gap: 8px;
+  }
+
+  .ql-toolbar .ql-picker-label, .ql-toolbar .ql-picker-item, .ql-toolbar button {
+    font-size: 18px;
+    padding: 8px;
+  }
+
+  .ql-toolbar button.ql-active {
+    background-color: #007bff;
+    color: #fff;
+  }
+
+  /* Toolbar icon size for small screens */
+  .ql-toolbar button {
+    font-size: 18px; /* Increase icon size */
+    padding: 8px; /* Add more space around icons */
+  }
+}
+
+/* Medium screens (tablets, 600px - 900px) */
+@media (min-width: 600px) and (max-width: 900px) {
+  .title {
+    font-size: 1.8rem;
+  }
+
+  .editorContainer {
+    width: 90%; /* Slightly wider for tablets */
+    padding: 1rem;
+  }
+
+  .editor {
+    height: 220px;
+  }
+
+  .sendButton {
+    padding: 0.8rem 2rem;
+    font-size: 1rem;
+  }
+
+  /* Medium screen Quill toolbar responsiveness */
+  .ql-toolbar {
+    font-size: 16px;
+  }
+
+  .ql-toolbar .ql-picker-label, .ql-toolbar .ql-picker-item, .ql-toolbar button {
+    font-size: 16px;
+    padding: 8px;
+  }
+
+  /* Toolbar icon size for medium screens */
+  .ql-toolbar button {
+    font-size: 22px; /* Increase icon size */
+    padding: 10px; /* Add more space around icons */
+  }
+}
+
+/* Large screens (desktop, more than 900px) */
+@media (min-width: 900px) {
+  .editorContainer {
+    width: 800px; /* Fixed width for large screens */
+    padding: 1rem;
+  }
+
+  .editor {
+    height: 300px;
+  }
+
+  .sendButton {
+    padding: 1rem 2.5rem;
+    font-size: 1.1rem;
+  }
+
+  /* Large screen Quill toolbar responsiveness */
+  .ql-toolbar {
+    font-size: 16px;
+  }
+
+  .ql-toolbar .ql-picker-label, .ql-toolbar .ql-picker-item, .ql-toolbar button {
+    font-size: 16px;
+    padding: 10px;
+  }
+
+  /* Toolbar icon size for large screens */
+  .ql-toolbar button {
+    font-size: 24px; /* Larger icon size */
+    padding: 12px; /* Add more space around icons */
+  }
+}

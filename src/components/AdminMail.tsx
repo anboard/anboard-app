@@ -45,7 +45,7 @@ const AdminMail: React.FC = () => {
   return (
     // <div className={styles.container}>
       <div className={styles.formWrapper}>
-        <h2>Email Link Generator</h2>
+        <h2>Link Generator</h2>
         <form onSubmit={handleAdminMailSubmit} className={styles.form}>
           <label htmlFor="upn">Enter Member UPN</label>
           <input

@@ -13,7 +13,7 @@ const AdminAccount: React.FC = () => {
 
     return (
         <div>
-            <h1>Admin Account</h1>            
+            <center><h1>Admin Account</h1></center>            
         </div>
     );
 
