@@ -2,6 +2,8 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 4rem;
+  width: fit-content;
+  /* background-color: aqua; */
 }
 
 .pill_info p {
@@ -41,6 +43,7 @@
   padding: 1rem 22px 22px;
   border-radius: 8px !important;
   color: #fff;
+  width: 100%;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 1.1);
 }
 
@@ -195,5 +198,32 @@
 
   .container {
     padding: 0 3rem;
+  }
+}
+ /* Medium screens: Adjust to 2 columns */
+ @media (max-width: 1024px) {
+  .audio_video_wrapper {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Small screens: Stack items vertically */
+@media (max-width: 470px) {
+  .pill {
+    width: clamp(300px, 40%, 600px);
+  }
+  .container {
+      /* background-color: yellowgreen; */
+      width: fit-content;
+  }
+  .audio_video_wrapper {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Optional padding for smaller screens */
+@media (max-width: 693px) {
+  .container {
+    padding: 0 1rem;
   }
 }

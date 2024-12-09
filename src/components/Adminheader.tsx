@@ -10,6 +10,7 @@ import MailIcon from "@mui/icons-material/Mail";
 import LogoutIcon from "@mui/icons-material/Logout";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import SearchIcon from "@mui/icons-material/Search";
+import BroadcastIcon from "@mui/icons-material/BroadcastOnHome";
 import { useAuth } from "../AuthContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -81,6 +82,8 @@ admin
       setTitle("Account");
     } else if (location.pathname.includes("/api/admin/mail")) {
       setTitle("Mail");
+    } else if (location.pathname.includes("/api/admin/broadcasters")) {
+      setTitle("Broadcasters");
     }
   }, [location, setTitle]);
 
@@ -131,6 +134,10 @@ admin
                 <li onClick={() => navigate("/api/admin/mail")}>
                   <MailIcon className={header.notification} />
                   Mail
+                </li>
+                <li onClick={() => navigate("/api/admin/broadcasters")}>
+                  <BroadcastIcon className={header.notification} />
+                  Broadcasters
                 </li>
                 <li onClick={logout}>
                   <LogoutIcon className={header.notification} />

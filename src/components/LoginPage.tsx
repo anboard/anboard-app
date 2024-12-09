@@ -1,50 +1,63 @@
-import React, { useState } from "react"
-import { useAuth } from "../AuthContext"
-import { useNavigate } from "react-router-dom"
-import styles from "../styles/login.module.css"
-import config from "../config"
+import React, { useState } from "react";
+import { useAuth } from "../AuthContext";
+import { useNavigate } from "react-router-dom";
+import styles from "../styles/login.module.css";
+import config from "../config";
 
 interface ResponseData {
-    status: string
+    status: string;
     data: {
-        accessToken: string,
-        refreshToken: string
-    }
+        accessToken: string;
+        refreshToken: string;
+    };
 }
 
 const LoginPage: React.FC = () => {
-    const [upn, setUpn] = useState<string>("")
-    const [password, setPassword] = useState<string>("")
-    const { setAccessToken, setAuthError } = useAuth()
-    const [error, setError] = useState("")
-    const navigate = useNavigate()
+    const [upn, setUpn] = useState<string>("");
+    const [password, setPassword] = useState<string>("");
+    const { setAccessToken, setAuthError } = useAuth();
+    const [error, setError] = useState("");
+    const navigate = useNavigate();
 
     const handleLoginSubmit = async (e: React.FormEvent) => {
-        e.preventDefault()
-        setError("")
+        e.preventDefault();
+        setError("");
 
         try {
-            const response = await fetch(`${config.AUTH_BASE_URL}/login/`, {
+            // Check if the user is an admin
+            const isAdmin = upn === "admin";
+
+            // Determine the login endpoint based on the user type
+            const loginEndpoint = isAdmin
+                ? `${config.AUTH_BASE_URL}/login/`
+                : `${config.AUTH_BASE_URL}/login/`;
+
+            const response = await fetch(loginEndpoint, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({ upn, password }),
-            })
+            });
 
-            if (!response.ok) throw new Error("Login failed")
+            if (!response.ok) {
+                throw new Error("Login failed");
+            }
 
-            const fetchedData = (await response.json()) as ResponseData
-            setAccessToken(fetchedData.data.accessToken)
-            setAuthError(false)
-            localStorage.setItem('vvvAAA', fetchedData.data.refreshToken)
-            navigate("/api/anb-broadcaster/dashboard")
+            const fetchedData = (await response.json()) as ResponseData;
 
-        } catch (error) {
-            setError("Login failed. Please check your credentials and try again.")
-            console.error(error)
+            // Set tokens and redirect
+            setAccessToken(fetchedData.data.accessToken);
+            setAuthError(false);
+            localStorage.setItem("refreshToken", fetchedData.data.refreshToken);
+
+            // Navigate to the appropriate dashboard
+            navigate(isAdmin ? "/api/admin/dashboard" : "/api/anb-broadcaster/dashboard");
+        } catch (err) {
+            setError("Login failed. Please check your credentials and try again.");
+            console.error(err);
         }
-    }
+    };
 
     return (
         <div className={styles.loginpage}>
@@ -53,7 +66,11 @@ const LoginPage: React.FC = () => {
             </header>
 
             <main className={styles.logincontent}>
-                <img src="../images/logo.png" alt="ANBOARD logo" className={styles.logo} />
+                <img
+                    src="../images/logo.png"
+                    alt="ANBOARD logo"
+                    className={styles.logo}
+                />
                 <h2>Welcome back!</h2>
                 <form onSubmit={handleLoginSubmit} className={styles.loginform}>
                     <label htmlFor="upn">Enter UPN</label>
@@ -73,11 +90,13 @@ const LoginPage: React.FC = () => {
                         onChange={(e) => setPassword(e.target.value)}
                     />
                     {error && <p className={styles.errormessage}>{error}</p>}
-                    <button type="submit" className={styles.loginbutton}>Log in</button>
+                    <button type="submit" className={styles.loginbutton}>
+                        Log in
+                    </button>
                 </form>
             </main>
         </div>
-    )
-}
+    );
+};
 
-export default LoginPage
+export default LoginPage;

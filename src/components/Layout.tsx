@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import Header from "./Header";
 import Sidebar from "./Sidebar";
 import { useAuth } from "../AuthContext";
@@ -57,6 +57,39 @@ const Layout: React.FC = () => {
   error;
   const { accessToken } = useAuth();
 
+
+  
+  // Use React Router's `useLocation` to track the current route
+  const location = useLocation();
+
+  // Dynamically update the page and tab title based on the current route
+  useEffect(() => {
+    const getPageTitle = (): string => {
+      switch (location.pathname) {
+        case "/api/anb-broadcaster/profile":
+          return "Profile";
+        case "/api/anb-broadcaster/dashboard":
+          return "Dashboard";
+        case "/api/anb-broadcaster/videos":
+          return "Videos";
+        case "/api/anb-broadcaster/videos/upload":
+          return "Upload Video";
+        case "/api/anb-broadcaster/audios":
+          return "Audios";
+        case "/api/anb-broadcaster/audios/upload":
+          return "Upload Audio";
+        case "/api/anb-broadcaster/station":
+          return "Station";
+        default:
+          return " Anboard"; // Default fallback title
+      }
+    };
+
+    const newTitle = getPageTitle();
+    setTitle(newTitle); // Set the internal state (optional)
+    document.title = newTitle; // Dynamically update the browser tab title
+  }, [location.pathname]); // Run when the route changes
+
   useEffect(() => {
     const fetchPfp = async () => {
       try {
@@ -80,6 +113,7 @@ const Layout: React.FC = () => {
   }, [pfpLink, accessToken]);
 
   useEffect(() => {
+
     const fetchVideos = async () => {
       try {
         const response = await fetch(`${config.API_BASE_URL}/videos`, {
@@ -275,7 +309,6 @@ const Layout: React.FC = () => {
       <main
         className={`${layout.main_content} ${menuOpen ? layout.shifted : ""}`}
       >
-        <h1 style={{ color: "black" }}>{title}</h1>
         <Outlet
           context={{
             menuOpen,

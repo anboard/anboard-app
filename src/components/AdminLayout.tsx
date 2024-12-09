@@ -38,6 +38,8 @@ const AdminLayout: React.FC = () => {
           return "News";
         case "/api/admin/mail":
           return "Mail";
+        case "/api/admin/broadcasters":
+          return "Broadcasters";
         default:
           return "Admin Panel | Anboard"; // Default fallback title
       }

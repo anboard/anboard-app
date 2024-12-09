@@ -10,6 +10,7 @@ import AdminAnnouncement from "./components/AdminAnnouncement";
 import AdminNews from "./components/AdminNews";
 import AdminDashboard from "./components/AdminDashboard";
 import AdminLayout from "./components/AdminLayout";
+import AdminBroadcasters from "./components/AdminBroadcasters";
 import ProtectedRoute from "./components/ProtectedRoute";
 import VideoUploader from "./components/VideoUploader";
 import Layout from "./components/Layout";
@@ -37,7 +38,11 @@ const App: React.FC = () => {
           <Route path="announcement" element={<AdminAnnouncement />} />
           <Route path="dashboard" element={<AdminDashboard />} />
           <Route path="news" element={<AdminNews />} />
+          <Route path="Broadcasters" element={<AdminBroadcasters />} />
         </Route>
+
+
+        
 
           <Route
             path="/api/anb-broadcaster/"

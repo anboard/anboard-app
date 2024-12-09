@@ -9,6 +9,7 @@ import AnnouncementIcon from "@mui/icons-material/Announcement";
 import NewsIcon from "@mui/icons-material/Newspaper";
 import AccountIcon from "@mui/icons-material/AccountCircle";
 import MailIcon from "@mui/icons-material/Mail";
+import BroadcastIcon from "@mui/icons-material/BroadcastOnHome";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { useAuth } from "../AuthContext";
 
@@ -28,6 +29,7 @@ const AdminSidebar: React.FC<{
     { path: "/api/admin/news", label: "News", icon: <NewsIcon /> },
     { path: "/api/admin/account", label: "Account", icon: <AccountIcon /> },
     { path: "/api/admin/mail", label: "Mail", icon: <MailIcon /> },
+    { path: "/api/admin/broadcasters", label: "Broadcasters", icon: <BroadcastIcon /> },
   ];
 
   return (
