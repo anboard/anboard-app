@@ -45,6 +45,7 @@ const Layout: React.FC = () => {
   const [lastAudioUpdateDate, setLastAudioUpdateDate] = useState<string>(new Date(2000/10/10).toDateString());
 
   const [title, setTitle] = useState("Dashboard");
+  title
 
   // loadStates
   const [pfpLoading, setPfpLoading] = useState<boolean>(true);
