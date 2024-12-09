@@ -20,20 +20,19 @@ const LoginPage: React.FC = () => {
     const [error, setError] = useState("");
     const navigate = useNavigate();
 
-
     const handleLoginSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setError(""); // Clear previous error
-    
+
         try {
             // Check if the user is an admin
             const isAdmin = upn === "admin";
-    
+
             // Determine the login endpoint based on the user type
             const loginEndpoint = isAdmin
                 ? `${config.AUTH_BASE_URL}/login/`
                 : `${config.AUTH_BASE_URL}/login/`;
-    
+
             const response = await fetch(loginEndpoint, {
                 method: "POST",
                 headers: {
@@ -41,37 +40,31 @@ const LoginPage: React.FC = () => {
                 },
                 body: JSON.stringify({ upn, password }),
             });
-    
+
             if (!response.ok) {
                 throw new Error("Login failed");
             }
-    
+
             const fetchedData = (await response.json()) as ResponseData;
-    
-            // Set tokens and redirect
+
+            // Set tokens and role, then redirect
             setAccessToken(fetchedData.data.accessToken);
-            setRole(fetchedData.data.isAdmin ? "admin" : "broadcaster");
+            setRole(isAdmin ? "admin" : "broadcaster"); // Set role
             setAuthError(false);
             localStorage.setItem("refreshToken", fetchedData.data.refreshToken);
 
-            console.log("Role:", fetchedData.data.isAdmin ? "admin" : "broadcaster");
-
-    
             // Redirect based on user type
-            if (fetchedData.data.isAdmin) {
+            if (isAdmin) {
                 navigate("/api/admin/dashboard");
             } else {
                 navigate("/api/anb-broadcaster/dashboard");
             }
-    
+
         } catch (err) {
             setError("Login failed. Please check your credentials and try again.");
             console.error(err);
         }
-    
     };
-    
-    
 
     return (
         <div className={styles.loginpage}>

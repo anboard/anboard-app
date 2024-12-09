@@ -46,18 +46,19 @@ const AdminBroadcasters: React.FC = () => {
   };
 
   // Delete broadcaster
-  const deleteBroadcaster = async (id: number) => {
+  const deleteBroadcaster = async (upn: string) => {
     if (!window.confirm("Are you sure you want to delete this broadcaster?")) {
       return;
     }
 
     try {
-      const response = await fetch(`${config.API_ADMIN_URL}/broadcasters/${id}`, {
+      const response = await fetch(`${config.API_ADMIN_URL}/broadcaster`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${accessToken}`,
         },
+        body: JSON.stringify({ upn }),
       });
 
       if (!response.ok) {
@@ -65,7 +66,7 @@ const AdminBroadcasters: React.FC = () => {
       }
 
       // Update UI after successful deletion
-      setBroadcasters((prev) => prev.filter((broadcaster) => broadcaster.id !== id));
+      setBroadcasters((prev) => prev.filter((broadcaster) => broadcaster.upn !== upn));
       alert("Broadcaster deleted successfully.");
     } catch (err: any) {
       console.error("Error deleting broadcaster:", err);
@@ -116,7 +117,7 @@ const AdminBroadcasters: React.FC = () => {
                 <td>
                   <button
                     className={styles.deleteButton}
-                    onClick={() => deleteBroadcaster(broadcaster.id)}
+                    onClick={() => deleteBroadcaster(broadcaster.upn)}
                   >
                     Delete
                   </button>

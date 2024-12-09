@@ -129,6 +129,8 @@ const ProfilePageEdit: React.FC<{
     setIsSaving(true);
 
     try {
+      console.log(profileData);
+      delete profileData?.upn
       const response = await fetch(`${config.API_BASE_URL}/profile`, {
         method: "POST",
         headers: {
