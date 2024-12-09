@@ -1,3 +1,4 @@
+// App.tsx
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { AuthProvider } from "./AuthContext";
@@ -20,99 +21,135 @@ import ProfilePage from "./components/ProfilePage";
 import BroadcastStation from "./components/BroadcastStation";
 import AudioList from "./components/AudioList";
 import AudioUploader from "./components/AudioUploader";
+import Unauthorized from "./components/Unauthorized";
 
 const App: React.FC = () => {
   return (
     <AuthProvider>
       <Router>
-        {/* <Layout> */}
         <Routes>
+          <Route path="/unauthorized" element={<Unauthorized />} />
           <Route path="/" element={<Index />} />
-
           <Route path="/auth/register" element={<RegistrationPage />} />
           <Route path="/auth/login" element={<LoginPage />} />
 
-        <Route path="/api/admin" element={<AdminLayout />}>
-          <Route path="mail" element={<AdminMail />} />
-          <Route path="account" element={<AdminAccount />} />
-          <Route path="announcement" element={<AdminAnnouncement />} />
-          <Route path="dashboard" element={<AdminDashboard />} />
-          <Route path="news" element={<AdminNews />} />
-          <Route path="Broadcasters" element={<AdminBroadcasters />} />
-        </Route>
-
-
-        
+          <Route path="/api/admin" element={<AdminLayout />}>
+            <Route
+              path="mail"
+              element={
+                <ProtectedRoute allowedRoles={['admin']}>
+                  <AdminMail />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="account"
+              element={
+                <ProtectedRoute allowedRoles={['admin']}>
+                  <AdminAccount />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="announcement"
+              element={
+                <ProtectedRoute allowedRoles={['admin']}>
+                  <AdminAnnouncement />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="dashboard"
+              element={
+                <ProtectedRoute allowedRoles={['admin']}>
+                  <AdminDashboard />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="news"
+              element={
+                <ProtectedRoute allowedRoles={['admin']}>
+                  <AdminNews />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="Broadcasters"
+              element={
+                <ProtectedRoute allowedRoles={['admin']}>
+                  <AdminBroadcasters />
+                </ProtectedRoute>
+              }
+            />
+          </Route>
 
           <Route
             path="/api/anb-broadcaster/"
             element={
-              <ProtectedRoute>
-                {/* <DashboardPage /> */}
+              <ProtectedRoute allowedRoles={['broadcaster']}>
                 <Layout />
               </ProtectedRoute>
             }
           >
             <Route
-              path="/api/anb-broadcaster/dashboard"
+              path="dashboard"
               element={
-                <ProtectedRoute>
+                <ProtectedRoute allowedRoles={['broadcaster']}>
                   <Dash />
                 </ProtectedRoute>
               }
             />
             <Route
-              path="/api/anb-broadcaster/videos/upload"
+              path="videos/upload"
               element={
-                <ProtectedRoute>
+                <ProtectedRoute allowedRoles={['broadcaster']}>
                   <VideoUploader />
                 </ProtectedRoute>
               }
             />
             <Route
-              path="/api/anb-broadcaster/videos"
+              path="videos"
               element={
-                <ProtectedRoute>
+                <ProtectedRoute allowedRoles={['broadcaster']}>
                   <VideoList />
                 </ProtectedRoute>
               }
             />
             <Route
-              path="/api/anb-broadcaster/profile"
+              path="profile"
               element={
-                <ProtectedRoute>
+                <ProtectedRoute allowedRoles={['broadcaster']}>
                   <ProfilePage />
                 </ProtectedRoute>
               }
             />
-
             <Route
-              path="/api/anb-broadcaster/station"
+              path="station"
               element={
-                <ProtectedRoute>
+                <ProtectedRoute allowedRoles={['broadcaster']}>
                   <BroadcastStation />
                 </ProtectedRoute>
               }
             />
             <Route
-              path="/api/anb-broadcaster/audios"
+              path="audios"
               element={
-                <ProtectedRoute>
+                <ProtectedRoute allowedRoles={['broadcaster']}>
                   <AudioList />
                 </ProtectedRoute>
               }
             />
-             <Route
-                path="/api/anb-broadcaster/audios/upload"
-                element={
-                  <ProtectedRoute>
-                    <AudioUploader />
-                  </ProtectedRoute>
-                }
-                />
+            <Route
+              path="audios/upload"
+              element={
+                <ProtectedRoute allowedRoles={['broadcaster']}>
+                  <AudioUploader />
+                </ProtectedRoute>
+              }
+            />
           </Route>
         </Routes>
-        {/* </Layout> */}
       </Router>
     </AuthProvider>
   );

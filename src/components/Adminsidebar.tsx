@@ -19,7 +19,7 @@ const AdminSidebar: React.FC<{
 }> = ({ handleMenuClick, menuOpen }) => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { logout } = useAuth();
+  const { logout } = useAuth(); // Access the logout function from the AuthContext
 
   const isActive = (path: string) => location.pathname === path;
 
@@ -31,6 +31,14 @@ const AdminSidebar: React.FC<{
     { path: "/api/admin/mail", label: "Mail", icon: <MailIcon /> },
     { path: "/api/admin/broadcasters", label: "Broadcasters", icon: <BroadcastIcon /> },
   ];
+
+  // Function to handle logout
+  const handleLogout = () => {
+    if (window.confirm("Are you sure you want to log out?")) {
+      logout(); // Call the logout function from AuthContext
+      navigate("/auth/login"); // Redirect to the login page
+    }
+  };
 
   return (
     <div className={`${sidebar.container} ${layout.sidebar} ${menuOpen ? sidebar.open : ""}`}>
@@ -45,36 +53,36 @@ const AdminSidebar: React.FC<{
           </div>
         </div>
 
-      <ul className={sidebar.nav}>
-        {menuItems.map((item) => (
-          <li
-            key={item.path}
-            className={isActive(item.path) ? sidebar.active : ""}
-            onClick={() => {
-              handleMenuClick();
-              navigate(item.path);
-            }}
-          >
-            <div
-              style={{
-                cursor: "pointer",
-                display: "flex",
-                alignItems: "center",
-                gap: "10px",
+        <ul className={sidebar.nav}>
+          {menuItems.map((item) => (
+            <li
+              key={item.path}
+              className={isActive(item.path) ? sidebar.active : ""}
+              onClick={() => {
+                handleMenuClick();
+                navigate(item.path);
               }}
+            >
+              <div
+                style={{
+                  cursor: "pointer",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "10px",
+                }}
               >
-              {item.icon}
-              <span>{item.label}</span>
-            </div>  
+                {item.icon}
+                <span>{item.label}</span>
+              </div>
+            </li>
+          ))}
+          <li onClick={handleLogout}>
+            <LogoutIcon />
+            <span>Log Out</span>
           </li>
-        ))}
-        <li onClick={logout}>
-          <LogoutIcon />
-          <span>Log Out</span>
-        </li>
-      </ul>
+        </ul>
+      </div>
     </div>
-  </div>
   );
 };
 

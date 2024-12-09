@@ -71,6 +71,8 @@ const Header: React.FC<{
     };
   }, [menuOpen]);
 
+  useEffect(() => {
+    let newTitle = '';
   if (location.pathname === "/api/anb-broadcaster/dashboard") {
     setTitle("Dashboard");
   } else if (location.pathname === "/api/anb-broadcaster/profile") {
@@ -86,6 +88,8 @@ const Header: React.FC<{
   } else if (location.pathname === "/api/anb-broadcaster/station") {
     setTitle("Station");
   }
+  setTitle(newTitle);
+}, [location.pathname, setTitle]);
 
   const handleImageLoad = () => {
     setIsLoaded(true);

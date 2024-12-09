@@ -9,29 +9,31 @@ interface ResponseData {
     data: {
         accessToken: string;
         refreshToken: string;
+        isAdmin: boolean; // Add isAdmin to the data object
     };
 }
 
 const LoginPage: React.FC = () => {
     const [upn, setUpn] = useState<string>("");
     const [password, setPassword] = useState<string>("");
-    const { setAccessToken, setAuthError } = useAuth();
+    const { setAccessToken, setAuthError, setRole } = useAuth();
     const [error, setError] = useState("");
     const navigate = useNavigate();
 
+
     const handleLoginSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        setError("");
-
+        setError(""); // Clear previous error
+    
         try {
             // Check if the user is an admin
             const isAdmin = upn === "admin";
-
+    
             // Determine the login endpoint based on the user type
             const loginEndpoint = isAdmin
                 ? `${config.AUTH_BASE_URL}/login/`
                 : `${config.AUTH_BASE_URL}/login/`;
-
+    
             const response = await fetch(loginEndpoint, {
                 method: "POST",
                 headers: {
@@ -39,25 +41,37 @@ const LoginPage: React.FC = () => {
                 },
                 body: JSON.stringify({ upn, password }),
             });
-
+    
             if (!response.ok) {
                 throw new Error("Login failed");
             }
-
+    
             const fetchedData = (await response.json()) as ResponseData;
-
+    
             // Set tokens and redirect
             setAccessToken(fetchedData.data.accessToken);
+            setRole(fetchedData.data.isAdmin ? "admin" : "broadcaster");
             setAuthError(false);
             localStorage.setItem("refreshToken", fetchedData.data.refreshToken);
 
-            // Navigate to the appropriate dashboard
-            navigate(isAdmin ? "/api/admin/dashboard" : "/api/anb-broadcaster/dashboard");
+            console.log("Role:", fetchedData.data.isAdmin ? "admin" : "broadcaster");
+
+    
+            // Redirect based on user type
+            if (fetchedData.data.isAdmin) {
+                navigate("/api/admin/dashboard");
+            } else {
+                navigate("/api/anb-broadcaster/dashboard");
+            }
+    
         } catch (err) {
             setError("Login failed. Please check your credentials and try again.");
             console.error(err);
         }
+    
     };
+    
+    
 
     return (
         <div className={styles.loginpage}>
