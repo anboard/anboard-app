@@ -1,0 +1,154 @@
+/* Base Styling */
+
+.containeredit h1 {
+    text-align: center;
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin-bottom: 1.5rem;
+    color: #1f375d;
+    border-bottom: 2px solid #1f375d;
+    padding-bottom: 0.5rem;
+}
+
+.groupedit {
+    margin-bottom: 1.5rem;
+}
+
+.groupedit label {
+    display: block;
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #1f375d;
+}
+
+.groupedit input {
+    width: 100%;
+    padding: 0.8rem;
+    font-size: 1rem;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    box-sizing: border-box;
+    outline: none;
+    transition: border 0.3s ease, box-shadow 0.3s ease;
+}
+
+.groupedit input:focus {
+    border-color: #1f375d;
+    box-shadow: 0 0 5px rgba(31, 55, 93, 0.2);
+}
+
+.showrad {
+    margin-bottom: 0.5rem;
+}
+
+.containeredit button {
+    background-color: #1f375d;
+    color: white;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+    border-radius: 8px;
+    white-space: nowrap;
+    cursor: pointer;
+    margin-right: 1rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.containeredit button:hover {
+    background-color: #14314b;
+    transform: scale(1.05);
+}
+
+.containeredit button:active {
+    background-color: #10263a;
+}
+
+.containeredit button:disabled {
+    background-color: #b0b0b0;
+    cursor: not-allowed;
+}
+
+.sucessedit {
+    font-size: 1rem;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 1rem;
+}
+
+.editbtn {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+}
+
+/* Media Queries for Responsiveness */
+@media screen and (max-width: 768px) {
+
+    .containeredit h1 {
+        font-size: 1.5rem;
+    }
+
+    .groupedit label {
+        font-size: 0.9rem;
+    }
+
+    .groupedit input {
+        font-size: 0.9rem;
+        padding: 0.7rem;
+    }
+
+    .containeredit button {
+        font-size: 0.9rem;
+        padding: 0.7rem 1.2rem;
+    }
+
+    .editbtn {
+        justify-content: center;
+        gap: 0.5rem;
+    }
+}
+
+@media screen and (max-width: 480px) {
+
+    .containeredit h1 {
+        font-size: 1.2rem;
+    }
+
+    .groupedit label {
+        font-size: 0.85rem;
+    }
+
+    .groupedit input {
+        font-size: 0.85rem;
+        padding: 0.6rem;
+    }
+
+    .containeredit button {
+        font-size: 0.85rem;
+        padding: 0.6rem 1rem;
+    }
+}
+
+@media screen and (max-width: 320px) {
+
+    .containeredit h1 {
+        font-size: 1rem;
+    }
+
+    .groupedit label {
+        font-size: 0.8rem;
+    }
+
+    .groupedit input {
+        font-size: 0.8rem;
+        padding: 0.5rem;
+    }
+
+    .containeredit button {
+        font-size: 0.8rem;
+        padding: 0.5rem 0.8rem;
+    }
+}

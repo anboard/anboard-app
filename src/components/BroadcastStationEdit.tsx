@@ -88,9 +88,9 @@ const handleSubmit = async (e: React.FormEvent) => {
 
   return (
     <form onSubmit={handleSubmit}>
-    <div className={styles.container}>
-      <h1>Edit Broadcast Station</h1>
-      <div className={styles.group}>
+    <div className={styles.containeredit}>
+      {/* <h1>Edit Broadcast Station</h1> */}
+      <div className={styles.groupedit}>
         <label>Station Name:</label>
         <input
           type="text"
@@ -98,7 +98,7 @@ const handleSubmit = async (e: React.FormEvent) => {
           onChange={(e) => handleInputChange(setEditedStation, "station_name", e.target.value)}
         />
       </div>
-      <div className={styles.group}>
+      <div className={styles.groupedit}>
         <label>Base Location:</label>
         <input
           type="text"
@@ -106,7 +106,7 @@ const handleSubmit = async (e: React.FormEvent) => {
           onChange={(e) => handleInputChange(setEditedBaseLocation, "base_location", e.target.value)}
         />
       </div>
-      <div className={styles.group}>
+      <div className={styles.groupedit}>
         <label>Association Chapter:</label>
         <input
           type="text"
@@ -114,7 +114,7 @@ const handleSubmit = async (e: React.FormEvent) => {
           onChange={(e) => handleInputChange(setEditedAssociationChapter, "association_chapter", e.target.value)}
         />
       </div>
-      <div className={styles.group}>
+      <div className={styles.groupedit}>
         <label>Year Started:</label>
         <input
           type="text"
@@ -122,29 +122,31 @@ const handleSubmit = async (e: React.FormEvent) => {
           onChange={(e) => handleInputChange(setEditedYearStarted, "year_started", e.target.value)}
         />
       </div>
-      <div className={styles.group}>
+      <div className={styles.groupedit}>
         <label>Radio Shows:</label>
         {editedRadioShows.map((show, index) => (
           <div key={index}>
-            <input
+            <input className={styles.showrad}
               type="text"
               value={show}
               onChange={(e) => handleRadioShowChange(index, e.target.value)}
             />
           </div>
         ))}
-        <button type="button" onClick={addRadioShowField}>
+        <button className={styles.showrad} type="button" onClick={addRadioShowField}>
           Add Radio Show
         </button>
       </div>
-      <button type="submit" disabled={isSaved}>
-          {isSaving ? "Saving broadcast data..." : "Broadcast Data Saved"}
+      <div className={styles.editbtn}>
+      <button  type="submit" disabled={isSaved}>
+          {isSaving ? "Saving Station data..." : "Save"}
         </button>
-        <button type="button" onClick={handleCancel}>
+        <button className={styles.editbtn} type="button" onClick={handleCancel}>
           Cancel
         </button>
+      </div>
         {isSaved && (
-          <p style={{ color: "green" }}>Saved data successfully</p>
+          <p className={styles.sucessedit} style={{ color: "green" }}>Saved data successfully</p>
         )}
       
     </div>

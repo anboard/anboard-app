@@ -5,6 +5,7 @@ import styles from "../styles/adminaccount.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"; // Using FontAwesome for the icon
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 
+
 const AdminAccount: React.FC = () => {
   const [password, setPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");

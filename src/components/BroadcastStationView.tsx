@@ -1,7 +1,6 @@
 import React from "react";
 import IBroadcast from "../interface/IBroadcast";
 import styles from "../styles/broadcastview.module.css";
-// import Ivideo from "../interface/IVideo";
 import { useOutletContext } from "react-router-dom";
 
 interface LayoutContext {
@@ -16,7 +15,7 @@ const BroadcastStationView: React.FC<LayoutContext> = () => {
   //  const navigate = useNavigate();
 
   return (
-    <div className={styles.container}>
+    <div className={styles.containerview}>
       <h1>Broadcast Station</h1>
       <div className={styles.group}>
         <h3>Station Name:</h3>

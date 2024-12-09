@@ -15,6 +15,7 @@ import { useAuth } from "../AuthContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBars,
+  faTimes,
 } from "@fortawesome/free-solid-svg-icons";
 
 
@@ -97,14 +98,14 @@ admin
       <div className={header.left}>
         {/* Hamburger Menu */}
         <div>
-          <FontAwesomeIcon icon={faBars}
+          <FontAwesomeIcon icon={menuOpen? faTimes : faBars}
             className={`${header.icon_wrapper} ${layout.header} ${header.icon_big} ${
               isMenuOpen ? header.menu_hide : ""
             }`}
             onClick={handleMenuClick}
           />
           <div className={`${header.icon_small}`} onClick={toggleMenu}>
-            <FontAwesomeIcon icon={faBars}
+            <FontAwesomeIcon icon={menuOpen? faTimes : faBars}
               className={`${header.icon_wrapper} ${layout.header} ${
                 isMenuOpen ? header.menu_hide : ""
               }`}

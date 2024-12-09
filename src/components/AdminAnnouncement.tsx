@@ -1,46 +1,23 @@
-import React, { useState } from "react";
-import "react-quill/dist/quill.snow.css"; // Import Quill CSS
-import ReactQuill from "react-quill"; // Rich text editor
-import styles from "../styles/adminannouncement.module.css"; // Import custom styles
+import React from "react";
+import styles from "../styles/adminannouncement.module.css";
 
 const AdminAnnouncement: React.FC = () => {
-  const [announcement, setAnnouncement] = useState<string>("");
-
-  // Handle Send Button
-  const handleSend = () => {
-    if (!announcement.trim()) {
-      alert("Please type your announcement.");
-      return;
-    }
-
-    // Log announcement (or send to server)
-    console.log("Announcement Sent:", announcement);
-    alert("Announcement Sent!");
-    setAnnouncement(""); // Clear the text editor after sending
-  };
-
   return (
     <div className={styles.container}>
-      {/* Center Title */}
-      <center>
-        <h1 className={styles.title}>Announcement</h1>
-      </center>
-
-      {/* Rich Text Editor */}
-      <div className={styles.editorContainer}>
-        <ReactQuill
-          value={announcement}
-          onChange={setAnnouncement}
-          placeholder="Type your announcement here"
-          className={styles.editor}
-        />
-      </div>
-
-      {/* Send Button */}
-      <div className={styles.buttonContainer}>
-        <button className={styles.sendButton} onClick={handleSend}>
-          Send
-        </button>
+      <h1 className={styles.heading}>Admin Announcement</h1>
+      <p className={styles.description}>
+        Use the link below to access the Sanity dashboard where you can post new announcements for all broadcasters. 
+        These announcements will be displayed on their dashboard once published.
+      </p>
+      <div className={styles.linkContainer}>
+        <a 
+          href="https://your-sanity-dashboard-url.com" 
+          target="_blank" 
+          rel="noopener noreferrer" 
+          className={styles.link}
+        >
+          Go to Sanity Dashboard
+        </a>
       </div>
     </div>
   );

@@ -1,0 +1,106 @@
+.broadcaststation {
+    background-color: #ffffff;
+    color: #1f375d;
+    width: 70%;
+    height: fit-content;
+    padding: 2rem;
+    margin: auto;
+    box-shadow: 0 4px 15px rgba(31, 55, 93, 0.2);
+    border-radius: 16px;
+    font-family: 'Arial', sans-serif;
+}
+
+.containerview {
+    display: flex;
+    flex-direction: column;
+    row-gap: 1rem;
+}
+
+.containerview h1 {
+    text-align: center;
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #1f375d;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #1f375d;
+}
+
+.group {
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.5rem;
+    background-color: #f9f9f9;
+    padding: 1rem;
+    height: fit-content;
+    border-radius: 12px;
+    border: 1px solid #e0e0e0;
+}
+
+.group h3 {
+    font-size: 0.9rem;
+    color: #2e5188;
+    font-weight: 600;
+    margin: 0;
+}
+
+.group p,
+.group ol {
+    font-size: 1rem;
+    color: #4a4a4a;
+    margin: 0;
+    line-height: 1.5;
+}
+.group p {
+    font-size: 1.1rem;
+    color: #00122e;
+}
+
+.group ol {
+    list-style:disc;
+    padding-left: 1.1rem;
+    font-size: 1.1rem;
+    color: #00122e;
+
+}
+
+button {
+    background-color: #1f375d;
+    color: white;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-right: 1rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+button:hover {
+    background-color: #14314b;
+    transform: scale(1.05);
+}
+
+button:active {
+    background-color: #10263a;
+}
+
+button:last-child {
+    margin-right: 0;
+}
+.edit_icon{
+    cursor: pointer;
+    font-size: 1.5rem;
+}
+@media screen and (max-width: 404px) {
+    .containerview h1{
+        white-space: nowrap;
+        font-size: 1.4rem;
+    }
+    .edit_icon{
+        font-size: 1.2rem;
+    }
+    
+
+}

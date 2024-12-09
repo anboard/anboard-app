@@ -1,9 +1,12 @@
 import React, { useRef, useState } from "react";
-import { useAuth } from "../AuthContext";
 import BroadcastStationView from "./BroadcastStationView";
 import IBroadcast from "../interface/IBroadcast";
 import EditBroadcastStation from "./BroadcastStationEdit";
 import { useOutletContext } from "react-router-dom";
+import styles from "../styles/broadcastview.module.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPenToSquare } from "@fortawesome/free-regular-svg-icons";
+
 
 interface LayoutContext {
   stationData: IBroadcast;
@@ -11,7 +14,6 @@ interface LayoutContext {
 }
 
 const NBroadcastStation: React.FC = () => {
-  const { logout } = useAuth();
   const [isEditing, setIsEditing] = useState(false);
   const originalBroadcastStationRef = useRef<IBroadcast>({} as IBroadcast);
 
@@ -35,17 +37,15 @@ const NBroadcastStation: React.FC = () => {
   };
 
   return (
-    <div>
+    <div className={styles.broadcaststation}>
       {!isEditing ? (
-        <div>
-          <BroadcastStationView stationData={stationData} />
-          <button type="button" onClick={handleEditClick}>
-            Edit
-          </button>
-          <button type="button" onClick={() => logout()}>
-            Logout
-          </button>
-        </div>
+      <div onClick={handleEditClick}>
+        <FontAwesomeIcon
+          icon={faPenToSquare}
+          className={styles.edit_icon}
+        />
+        <BroadcastStationView stationData={stationData} />
+      </div>
       ) : (
         <EditBroadcastStation
           updateStationData={updateStationData}
