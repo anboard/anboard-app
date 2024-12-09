@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"; // Using FontA
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 
 const AdminAccount: React.FC = () => {
-  const [currentPassword, setCurrentPassword] = useState("");
+  const [password, setPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
@@ -18,7 +18,7 @@ const AdminAccount: React.FC = () => {
     e.preventDefault();
     setLoading(true);
 
-    if (!currentPassword || !newPassword) {
+    if (!password || !newPassword) {
       setMessage("Please fill in all fields.");
       setLoading(false);
       return;
@@ -31,12 +31,12 @@ const AdminAccount: React.FC = () => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${accessToken}`,
         },
-        body: JSON.stringify({ currentPassword, newPassword }),
+        body: JSON.stringify({ password, newPassword }),
       });
 
       if (response.ok) {
         setMessage("Password changed successfully!");
-        setCurrentPassword("");
+        setPassword("");
         setNewPassword("");
       }else{
         const error = await response.json();
@@ -55,16 +55,16 @@ const AdminAccount: React.FC = () => {
       <form className={styles.form} onSubmit={handlePasswordChange}>
         {/* Current Password Field */}
         <div className={styles.inputGroup}>
-          <label htmlFor="currentPassword" className={styles.label}>
+          <label htmlFor="password" className={styles.label}>
             Current Password
           </label>
           <div className={styles.inputWrapper}>
             <input
               type={showCurrentPassword ? "text" : "password"}
-              id="currentPassword"
+              id="password"
               className={styles.input}
-              value={currentPassword}
-              onChange={(e) => setCurrentPassword(e.target.value)}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               placeholder="Enter current password"
             />
             <span
