@@ -1,7 +1,15 @@
 import React from "react";
 import styles from "../styles/adminannouncement.module.css";
+import config from "../config";
+import { useAuth } from "../AuthContext";
 
 const AdminAnnouncement: React.FC = () => {
+  const { accessToken } = useAuth();
+  // Use the accessToken
+  accessToken;
+  const sanityLink = `${config.API_ADMIN_SANITY}`;
+
+
   return (
     <div className={styles.container}>
       <h1 className={styles.heading}>Admin Announcement</h1>
@@ -11,7 +19,7 @@ const AdminAnnouncement: React.FC = () => {
       </p>
       <div className={styles.linkContainer}>
         <a 
-          href="https://your-sanity-dashboard-url.com" 
+          href={sanityLink} 
           target="_blank" 
           rel="noopener noreferrer" 
           className={styles.link}

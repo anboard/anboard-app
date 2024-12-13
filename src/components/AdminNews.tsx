@@ -1,8 +1,13 @@
 import React from "react";
 import styles from "../styles/adminnews.module.css";
+import config from "../config";
+import { useAuth } from "../AuthContext";
 
 const AdminNews: React.FC = () => {
-  const sanityLink = "https://your-sanity-dashboard-url"; // Replace with your actual Sanity link
+  const { accessToken } = useAuth();
+  // Use the accessToken
+  accessToken;
+  const sanityLink = `${config.API_ADMIN_SANITY}`;
 
   return (
     <div className={styles.container}>
