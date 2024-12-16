@@ -42,7 +42,9 @@ const Dash: React.FC = () => {
 
   const [currentSectionIndex, setCurrentSectionIndex] = useState(0);
   const [adminAnnouncements, setAdminAnnouncements] = useState<any[]>([]);
+  adminAnnouncements
   const [anboardNews, setAnboardNews] = useState<any[]>([]);
+  anboardNews
   const [popupData, setPopupData] = useState<any | null>(null);
 
   const handleSwipe = (direction: any) => {
