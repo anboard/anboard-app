@@ -10,7 +10,7 @@ import {
   faUser,
 } from "@fortawesome/free-regular-svg-icons";
 import {
-  faMagnifyingGlass,
+  // faMagnifyingGlass,
   faHouse,
   faRadio,
   faDoorOpen,
@@ -208,10 +208,10 @@ const Header: React.FC<{
       <div
         className={`${header.right}  ${isMenuOpen ? header.right_shifted : ""}`}
       >
-        <FontAwesomeIcon
+        {/* <FontAwesomeIcon
           icon={faMagnifyingGlass}
           className={header.notification}
-        />
+        /> */}
         <FontAwesomeIcon icon={faBell} className={header.notification} />
 
         {!isLoaded && (
