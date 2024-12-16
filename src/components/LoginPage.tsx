@@ -75,7 +75,7 @@ const LoginPage: React.FC = () => {
             setAccessToken(fetchedData.data.accessToken);
             setRole(isAdmin ? "admin" : "broadcaster"); // Set role
             setAuthError(false);
-            localStorage.setItem("refreshToken", fetchedData.data.refreshToken);
+            localStorage.setItem("vvvAAA", fetchedData.data.refreshToken);
 
             // Redirect based on user type
             if (isAdmin) {
