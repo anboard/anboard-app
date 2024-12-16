@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useAuth } from "../AuthContext";
 import { useNavigate } from "react-router-dom";
 import styles from "../styles/login.module.css";
 import config from "../config";
+import {useLocation } from "react-router-dom";
 
 interface ResponseData {
     status: string;
@@ -19,6 +20,29 @@ const LoginPage: React.FC = () => {
     const { setAccessToken, setAuthError, setRole } = useAuth();
     const [error, setError] = useState("");
     const navigate = useNavigate();
+    const [title, setTitle] = useState("Dashboard");
+    title
+
+
+     // Use React Router's `useLocation` to track the current route
+  const location = useLocation();
+
+  // Dynamically update the page and tab title based on the current route
+  useEffect(() => {
+    const getPageTitle = (): string => {
+      switch (location.pathname) {
+        case "/auth/login":
+          return "Login";
+        default:
+          return " Anboard"; // Default fallback title
+      }
+    };
+
+    const newTitle = getPageTitle();
+    setTitle(newTitle); // Set the internal state (optional)
+    document.title = newTitle; // Dynamically update the browser tab title
+  }, [location.pathname]); // Run when the route changes
+
 
     const handleLoginSubmit = async (e: React.FormEvent) => {
         e.preventDefault();

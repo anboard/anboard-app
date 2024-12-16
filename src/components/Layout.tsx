@@ -60,7 +60,7 @@ const Layout: React.FC = () => {
 
 
   
-  // Use React Router's `useLocation` to track the current route
+ // Use React Router's `useLocation` to track the current route
   const location = useLocation();
 
   // Dynamically update the page and tab title based on the current route
