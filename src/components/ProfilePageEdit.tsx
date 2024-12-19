@@ -12,6 +12,7 @@ import ReactCrop, {
   type Crop,
 } from "react-image-crop";
 import "react-image-crop/dist/ReactCrop.css";
+import IBroadcast from "../interface/IBroadcast";
 
 const MIN_DIMENSION = 200;
 const ASPECT_RATIO = 1;
@@ -20,6 +21,7 @@ interface LayoutContext {
   pfpLink: string;
   setPfpLink: React.Dispatch<React.SetStateAction<string>>;
   profileData: IProfile;
+  stationData: IBroadcast;
   broadcaster: { upn: string; email: string };
   menuOpen: boolean;
   setOverlay: React.Dispatch<React.SetStateAction<boolean>>;
@@ -37,6 +39,7 @@ const ProfilePageEdit: React.FC<{
     profileData,
     menuOpen,
     setOverlay,
+    stationData
   }: LayoutContext = useOutletContext();
 
   // PROFILE DATA STATES
@@ -426,7 +429,7 @@ const ProfilePageEdit: React.FC<{
                 id="fullName"
                 placeholder=""
                 required
-                defaultValue={"Cool FM"}
+                defaultValue={stationData.station_name}
                 readOnly
               />
               <label>Station</label>

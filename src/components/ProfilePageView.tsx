@@ -5,18 +5,20 @@ import header from "../styles/header.module.css";
 import { useOutletContext } from "react-router-dom";
 import { faPenToSquare } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import IBroadcast from "../interface/IBroadcast";
 
 interface LayoutContext {
   pfpLink: string;
   broadcaster: { upn: string; email: string };
   menuOpen: boolean;
   profileData: IProfile;
+  stationData: IBroadcast;
 }
 
 const ProfilePageView: React.FC<{ handleEditClick: () => void }> = ({
   handleEditClick,
 }) => {
-  const { pfpLink, broadcaster, profileData, menuOpen }: LayoutContext =
+  const { pfpLink, broadcaster, profileData, menuOpen, stationData }: LayoutContext =
     useOutletContext();
 
   return (
@@ -82,7 +84,8 @@ const ProfilePageView: React.FC<{ handleEditClick: () => void }> = ({
                 id="fullName"
                 placeholder=""
                 required
-                defaultValue={"Cool FM"}
+                // defaultValue={"Cool FM"}
+                defaultValue={stationData.station_name}
                 readOnly
               />
               <label>Station</label>
