@@ -206,7 +206,7 @@ const Header: React.FC<{
       </div> */}
 
       <div
-        className={`${header.right}  ${isMenuOpen ? header.right_shifted : ""}`}
+        className={`${header.right}  ${isMenuOpen ? header.right_shifted : ""} ${layout.clickable}`}
       >
         {/* <FontAwesomeIcon
           icon={faMagnifyingGlass}

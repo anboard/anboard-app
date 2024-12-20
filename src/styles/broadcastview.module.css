@@ -65,8 +65,8 @@
 }
 
 button {
-    background-color: #1f375d;
-    color: white;
+    /* background-color: #1f375d;
+    color: white; */
     border: none;
     padding: 0.8rem 1.5rem;
     font-size: 1rem;
@@ -74,13 +74,13 @@ button {
     cursor: pointer;
     margin-right: 1rem;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    transition: background-color 0.3s ease, transform 0.2s ease;
+    /* transition: background-color 0.3s ease, transform 0.2s ease; */
 }
 
-button:hover {
+/* button:hover {
     background-color: #14314b;
     transform: scale(1.05);
-}
+} */
 
 button:active {
     background-color: #10263a;

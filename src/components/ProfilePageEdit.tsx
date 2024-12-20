@@ -126,6 +126,30 @@ const ProfilePageEdit: React.FC<{
     }
   };
 
+  const handlePfpRemove = async () => {
+    try {
+      const response = await fetch(`${config.API_BASE_URL}/profile/photo`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+
+      if (response.ok) {
+        setPfpLink("");
+        localStorage.removeItem("pfpLink");
+        console.log('pfp removed')
+      } else {
+        const errorMessage = await response.text();
+        console.error(`Error: ${response.status} - ${errorMessage}`);
+        throw new Error("Failed to remove profile picture.");
+      }
+    } catch (error) {
+      console.error("Error removing profile picture:", error);
+      alert("Failed to remove profile picture.");
+    }
+  }
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -377,7 +401,7 @@ const ProfilePageEdit: React.FC<{
                             accept="image/*"
                           />
                         </li>
-                        <li>Remove photo</li>
+                        <li onClick={handlePfpRemove}>Remove photo</li>
                       </ul>
                     </div>
                   )}

@@ -40,9 +40,9 @@ const Layout: React.FC = () => {
   );
 
   const [audioCount, setAudioCount] = useState<string>("0");
-  const [lastVideoUpdateDate, setLastVideoUpdateDate] = useState<string>(new Date(2000/10/10).toDateString());
+  const [lastVideoUpdateDate, setLastVideoUpdateDate] = useState<string>(new Date().toDateString());
   const [videoCount, setVideoCount] = useState<string>("0");
-  const [lastAudioUpdateDate, setLastAudioUpdateDate] = useState<string>(new Date(2000/10/10).toDateString());
+  const [lastAudioUpdateDate, setLastAudioUpdateDate] = useState<string>(new Date().toDateString());
 
   const [title, setTitle] = useState("Dashboard");
   title
@@ -103,7 +103,8 @@ const Layout: React.FC = () => {
           },
         });
         const { pfpUrl } = await response.json();
-        setPfpLink(pfpUrl);
+        console.log({pfpUrl})
+        setPfpLink(pfpUrl ? pfpUrl : ""); 
         setPfpLoading(false);
       } catch (error: any) {
         setError(error.message || "Something went wrong");

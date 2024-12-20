@@ -98,7 +98,7 @@ const Dash: React.FC = () => {
   };
 
   return (
-    <div className={`${dash.container} ${dash.small_grid} ${menuOpen ? dash.single_grid : ""}`}>
+    <div className={`${dash.container}  ${dash.small_grid} ${menuOpen ? dash.single_grid : ""}`}>
       <div className={`${dash.audio_video_wrapper} ${dash.small_flex}`}>
         {/* Videos Section */}
         <div className={`${dash.pill}`}>

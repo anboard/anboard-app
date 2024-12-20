@@ -26,10 +26,16 @@
   scrollbar-width: none;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 6rem 40px 40px;
+  display: grid;
+  /* justify-content: center; */
+  padding: 8rem 40px 40px;
   flex: 1;
-
   transition: margin-left 0.3 ease;
+
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .main_content::-webkit-scrollbar {
@@ -59,6 +65,10 @@ body {
 .layout {
   overflow-y: hidden;
   display: flex;
+}
+
+.clickable {
+  cursor: pointer;
 }
 
 @media (max-width: 1303px) {
@@ -98,7 +108,7 @@ body {
 
   .main_content {
     margin: 0 auto;
-    padding: 6rem 0px 180px;
+    padding: 8rem 0px 80px;
     overflow-y: scroll;
   }
 
