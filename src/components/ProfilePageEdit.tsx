@@ -3,6 +3,7 @@ import { useAuth } from "../AuthContext";
 import IProfile from "../interface/IProfile";
 import config from "../config";
 import profileView from "../styles/profilView.module.css";
+import layout from "../styles/layout.module.css";
 import { useOutletContext } from "react-router-dom";
 import { faPencil, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -39,7 +40,7 @@ const ProfilePageEdit: React.FC<{
     profileData,
     menuOpen,
     setOverlay,
-    stationData
+    stationData,
   }: LayoutContext = useOutletContext();
 
   // PROFILE DATA STATES
@@ -76,6 +77,7 @@ const ProfilePageEdit: React.FC<{
   const { accessToken } = useAuth();
   const [isSaved, setIsSaved] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
+  const [pfpIsSaving, setPfpIsSaving] = useState(false);
 
   const handleInputChange = (
     setter: (value: string) => void,
@@ -95,6 +97,7 @@ const ProfilePageEdit: React.FC<{
       return;
     }
 
+    setPfpIsSaving(true);
     const formData = new FormData();
     formData.append("pfp", photoFile);
 
@@ -110,7 +113,6 @@ const ProfilePageEdit: React.FC<{
       if (response.ok) {
         const { pfpUrl } = await response.json();
         setPfpLink(pfpUrl);
-        localStorage.setItem("pfpLink", pfpUrl);
       } else {
         const errorMessage = await response.text();
         console.error(`Error: ${response.status} - ${errorMessage}`);
@@ -120,6 +122,7 @@ const ProfilePageEdit: React.FC<{
       console.error("Error saving profile picture:", error);
       alert("Failed to save profile picture.");
     } finally {
+      setPfpIsSaving(false);
       setImageSrc("");
       setCroppedImageUrl(null);
       setOverlay(false);
@@ -138,7 +141,7 @@ const ProfilePageEdit: React.FC<{
       if (response.ok) {
         setPfpLink("");
         localStorage.removeItem("pfpLink");
-        console.log('pfp removed')
+        console.log("pfp removed");
       } else {
         const errorMessage = await response.text();
         console.error(`Error: ${response.status} - ${errorMessage}`);
@@ -148,7 +151,7 @@ const ProfilePageEdit: React.FC<{
       console.error("Error removing profile picture:", error);
       alert("Failed to remove profile picture.");
     }
-  }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -157,7 +160,7 @@ const ProfilePageEdit: React.FC<{
 
     try {
       console.log(profileData);
-      delete profileData?.upn
+      delete profileData?.upn;
       const response = await fetch(`${config.API_BASE_URL}/profile`, {
         method: "POST",
         headers: {
@@ -237,6 +240,7 @@ const ProfilePageEdit: React.FC<{
       reader.addEventListener("load", () => {
         const imageUrl = reader.result?.toString() || "";
         setImageSrc(imageUrl);
+        setPfpLink(imageUrl)
       });
 
       reader.readAsDataURL(file);
@@ -335,6 +339,7 @@ const ProfilePageEdit: React.FC<{
                 setImageSrc("");
                 setCroppedImageUrl(null);
                 setOverlay(false);
+                setPfpLink('');
               }}
             >
               <FontAwesomeIcon icon={faXmark} />
@@ -365,7 +370,9 @@ const ProfilePageEdit: React.FC<{
           </div>
 
           <div className={`${profileView.crop_bottom}`}>
-            <div onClick={handlePfpSave}>Set new profile picture </div>
+            <div onClick={handlePfpSave}>{
+              pfpIsSaving ? "Saving profile picture..." : "Save profile picture"
+              }</div>
           </div>
         </div>
       )}
@@ -380,7 +387,7 @@ const ProfilePageEdit: React.FC<{
             />
             <div className={`${profileView.profile_pic_edit_wrapper}`}>
               <div
-                className={`${profileView.profile_pic_edit}`}
+                className={`${profileView.profile_pic_edit} ${layout.clickable}`}
                 onClick={toggleDropdown}
               >
                 <FontAwesomeIcon icon={faPencil} />
@@ -391,7 +398,10 @@ const ProfilePageEdit: React.FC<{
                     <div>
                       <div className={`${profileView.dropdown_point}`}></div>
                       <ul>
-                        <li onClick={handleUploadPicClick}>
+                        <li
+                          onClick={handleUploadPicClick}
+                          className={`${layout.clickable}`}
+                        >
                           Upload a photo...
                           <input
                             type="file"
@@ -401,7 +411,12 @@ const ProfilePageEdit: React.FC<{
                             accept="image/*"
                           />
                         </li>
-                        <li onClick={handlePfpRemove}>Remove photo</li>
+                        <li
+                          onClick={handlePfpRemove}
+                          className={`${layout.clickable}`}
+                        >
+                          Remove photo
+                        </li>
                       </ul>
                     </div>
                   )}
