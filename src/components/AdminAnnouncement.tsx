@@ -7,7 +7,7 @@ const AdminAnnouncement: React.FC = () => {
   const { accessToken } = useAuth();
   // Use the accessToken
   accessToken;
-  const sanityLink = `${config.API_ADMIN_SANITY}`;
+  const sanityLink = `${config.SANITY_ANNOUNCEMENT_URL}`;
 
 
   return (
