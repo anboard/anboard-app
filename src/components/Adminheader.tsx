@@ -45,7 +45,6 @@ admin
 
 
   useEffect(() => {
-    console.log("menuOpen state changed:", menuOpen);
   }, [menuOpen]);
 
   const handleOutsideClick = (event: MouseEvent) => {

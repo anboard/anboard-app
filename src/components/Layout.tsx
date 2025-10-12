@@ -103,7 +103,6 @@ const Layout: React.FC = () => {
           },
         });
         const { pfpUrl } = await response.json();
-        console.log({pfpUrl})
         setPfpLink(pfpUrl ? pfpUrl : ""); 
         setPfpLoading(false);
       } catch (error: any) {

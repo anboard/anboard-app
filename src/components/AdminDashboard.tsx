@@ -56,11 +56,8 @@ const AdminDashboard: React.FC = () => {
             "Content-Type": "application/json",
           },
         });
-        const responseData = await response.json();
         
-        // Log the response to verify the structure
-        console.log("Fetched data:", responseData);
-  
+        const responseData = await response.json();
         if (responseData.status === "success") {
           const data = responseData.data;
   

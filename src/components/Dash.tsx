@@ -82,7 +82,6 @@ const Dash: React.FC = () => {
       const POSTS_QUERY = `*[ _type == "anboard_news"]|order(publishedAt desc)[0...12]{_id, title, image, description,body, publishedAt}`;
       const options = { next: { revalidate: 30 } };
       const posts = await client.fetch<SanityDocument[]>(POSTS_QUERY, {}, options as unknown as FilteredResponseQueryOptions);
-      console.log(posts);
       setAnboardNews(posts);
       sections[1] = { title: "ANBROAD News", items: posts };
     };

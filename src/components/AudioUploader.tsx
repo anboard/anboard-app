@@ -67,7 +67,6 @@ const AudioUploader: React.FC = () => {
         setAudioFile(null);
 
         setAudios(data.audios)
-        console.log('in handleUpload: ', data.audios.length)
         setAudioCount(data.audios.length)        
         setTimeout(() => {
           navigate("/api/anb-broadcaster/audios");

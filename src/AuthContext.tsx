@@ -67,7 +67,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
             const newAccessToken = fetchData.data.accessToken;
             const newRefreshToken = fetchData.data.refreshToken;
 
-            console.log('New Access Token:', newAccessToken);
             login(newAccessToken, newRefreshToken, fetchData.data.role); // Pass role
         } catch (error) {
             logout();
@@ -95,7 +94,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         }
     }, [accessToken]);
 
-    console.log('AuthContext Values:', { accessToken, role, authError });
 
     return (
         <AuthContext.Provider value={{ role, setRole, accessToken, setAccessToken, login, logout, refreshAccessToken, authError, setAuthError }}>
